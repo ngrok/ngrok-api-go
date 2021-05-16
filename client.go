@@ -18,15 +18,16 @@ const (
 )
 
 type Client struct {
-	cfg *clientConfig
+	cfg    *clientConfig
+	apiKey string
 }
 
-func NewClient(opts ...ClientOption) (*Client, error) {
+func NewClient(apiKey string, opts ...ClientOption) (*Client, error) {
 	var cfg clientConfig
 	if err := cfg.parseOptions(opts); err != nil {
 		return nil, err
 	}
-	return &Client{cfg: &cfg}, nil
+	return &Client{apiKey: apiKey, cfg: &cfg}, nil
 }
 
 func (c *Client) Do(ctx context.Context, method string, reqURL *url.URL, reqBody interface{}, respBody interface{}) error {
@@ -55,8 +56,8 @@ func (c *Client) buildRequest(ctx context.Context, method string, reqURL *url.UR
 		return nil, err
 	}
 
-	r.Header.Set("authorization", fmt.Sprintf("Bearer %s", c.cfg.apiKey))
-	//r.Header.Set("user-agent", "github.com/ngrok/ngrok-api-go")
+	r.Header.Set("authorization", fmt.Sprintf("Bearer %s", c.apiKey))
+	r.Header.Set("user-agent", "github.com/ngrok/ngrok-api-go")
 	r.Header.Set("ngrok-version", apiVersion)
 	if body != nil {
 		r.Header.Set("content-type", "application/json")
