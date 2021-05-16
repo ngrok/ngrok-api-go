@@ -33,7 +33,7 @@ func example(ctx context.Context) error {
         policyRules := ip_policy_rules.NewClient(apiClient)
 
         // create the ip policy
-        policy, err := ng.ip_policies.create(ctx, &ngrok.IPPolicyCreate{
+        policy, err := policies.Create(ctx, &ngrok.IPPolicyCreate{
                 Action: "allow",
         })
         if err != nil {
