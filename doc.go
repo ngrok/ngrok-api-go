@@ -1,6 +1,4 @@
-// Package ngrok
-//
-// This package makes it easy to work with the ngrok API from Go. The package
+// Package ngrok makes it easy to work with the ngrok API from Go. The package
 // is fully code generated and should always be up to date with the latest
 // ngrok API.
 //
@@ -15,7 +13,12 @@
 //
 // Quickstart
 //
+// The following example code demonstrates typical initialization and usage of
+// the package to make an API call:
+//
 //     import (
+//         "context"
+//         "fmt"
 //         "math/rand"
 //
 //         "github.com/ngrok/ngrok-api-go/v2"
@@ -31,7 +34,7 @@
 //             if err != nil {
 //                     return err
 //             }
-//             fmt.Println("reserved domain", d.Name)
+//             fmt.Println("reserved domain", d.Domain)
 //             return nil
 //     }
 //
