@@ -21,8 +21,9 @@ func NewClient(apiClient *ngrok.Client) *Client {
 
 // Create a new IP whitelist entry that will restrict traffic to all tunnel
 // endpoints on the account.
-func (c *Client) Create(
-	ctx context.Context, arg *ngrok.IPWhitelistEntryCreate) (*ngrok.IPWhitelistEntry, error) {
+//
+// https://ngrok.com/docs/api#api-ip-whitelist-create
+func (c *Client) Create(ctx context.Context, arg *ngrok.IPWhitelistEntryCreate) (*ngrok.IPWhitelistEntry, error) {
 	if arg == nil {
 		arg = new(ngrok.IPWhitelistEntryCreate)
 	}
@@ -45,8 +46,9 @@ func (c *Client) Create(
 }
 
 // Delete an IP whitelist entry.
-func (c *Client) Delete(
-	ctx context.Context, id string) error {
+//
+// https://ngrok.com/docs/api#api-ip-whitelist-delete
+func (c *Client) Delete(ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -67,8 +69,9 @@ func (c *Client) Delete(
 }
 
 // Get detailed information about an IP whitelist entry by ID.
-func (c *Client) Get(
-	ctx context.Context, id string) (*ngrok.IPWhitelistEntry, error) {
+//
+// https://ngrok.com/docs/api#api-ip-whitelist-get
+func (c *Client) Get(ctx context.Context, id string) (*ngrok.IPWhitelistEntry, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.IPWhitelistEntry
@@ -90,6 +93,8 @@ func (c *Client) Get(
 }
 
 // List all IP whitelist entries on this account
+//
+// https://ngrok.com/docs/api#api-ip-whitelist-list
 func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.IPWhitelistEntryList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
@@ -120,6 +125,8 @@ func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.IPWhitelis
 }
 
 // List all IP whitelist entries on this account
+//
+// https://ngrok.com/docs/api#api-ip-whitelist-list
 func (c *Client) List(ctx context.Context, paging *ngrok.Paging) *Iter {
 	if paging == nil {
 		paging = new(ngrok.Paging)
@@ -156,9 +163,11 @@ func (it *Iter) Next() bool {
 		return false
 	}
 
-	// are there items remaining?
-	if it.n < len(it.items)-1 {
-		it.n += 1
+	// advance the iterator
+	it.n += 1
+
+	// is there an available item?
+	if it.n < len(it.items) {
 		it.lastItemID = ngrok.String(it.Item().ID)
 		return true
 	}
@@ -172,9 +181,15 @@ func (it *Iter) Next() bool {
 		it.err = err
 		return false
 	}
-	it.n = 0
+
+	// page with zero items means there are no more
+	if len(resp.Whitelist) == 0 {
+		return false
+	}
+
+	it.n = -1
 	it.items = resp.Whitelist
-	return len(it.items) > 0
+	return it.Next()
 }
 
 // Item() returns the IPWhitelistEntry currently
@@ -191,8 +206,9 @@ func (it *Iter) Err() error {
 }
 
 // Update attributes of an IP whitelist entry by ID
-func (c *Client) Update(
-	ctx context.Context, arg *ngrok.IPWhitelistEntryUpdate) (*ngrok.IPWhitelistEntry, error) {
+//
+// https://ngrok.com/docs/api#api-ip-whitelist-update
+func (c *Client) Update(ctx context.Context, arg *ngrok.IPWhitelistEntryUpdate) (*ngrok.IPWhitelistEntry, error) {
 	if arg == nil {
 		arg = new(ngrok.IPWhitelistEntryUpdate)
 	}

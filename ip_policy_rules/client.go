@@ -20,8 +20,9 @@ func NewClient(apiClient *ngrok.Client) *Client {
 }
 
 // Create a new IP policy rule attached to an IP Policy.
-func (c *Client) Create(
-	ctx context.Context, arg *ngrok.IPPolicyRuleCreate) (*ngrok.IPPolicyRule, error) {
+//
+// https://ngrok.com/docs/api#api-ip-policy-rules-create
+func (c *Client) Create(ctx context.Context, arg *ngrok.IPPolicyRuleCreate) (*ngrok.IPPolicyRule, error) {
 	var res ngrok.IPPolicyRule
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/ip_policy_rules")).Execute(&path, arg); err != nil {
@@ -41,8 +42,9 @@ func (c *Client) Create(
 }
 
 // Delete an IP policy rule.
-func (c *Client) Delete(
-	ctx context.Context, id string) error {
+//
+// https://ngrok.com/docs/api#api-ip-policy-rules-delete
+func (c *Client) Delete(ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -63,8 +65,9 @@ func (c *Client) Delete(
 }
 
 // Get detailed information about an IP policy rule by ID.
-func (c *Client) Get(
-	ctx context.Context, id string) (*ngrok.IPPolicyRule, error) {
+//
+// https://ngrok.com/docs/api#api-ip-policy-rules-get
+func (c *Client) Get(ctx context.Context, id string) (*ngrok.IPPolicyRule, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.IPPolicyRule
@@ -86,6 +89,8 @@ func (c *Client) Get(
 }
 
 // List all IP policy rules on this account
+//
+// https://ngrok.com/docs/api#api-ip-policy-rules-list
 func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.IPPolicyRuleList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
@@ -116,6 +121,8 @@ func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.IPPolicyRu
 }
 
 // List all IP policy rules on this account
+//
+// https://ngrok.com/docs/api#api-ip-policy-rules-list
 func (c *Client) List(ctx context.Context, paging *ngrok.Paging) *Iter {
 	if paging == nil {
 		paging = new(ngrok.Paging)
@@ -152,9 +159,11 @@ func (it *Iter) Next() bool {
 		return false
 	}
 
-	// are there items remaining?
-	if it.n < len(it.items)-1 {
-		it.n += 1
+	// advance the iterator
+	it.n += 1
+
+	// is there an available item?
+	if it.n < len(it.items) {
 		it.lastItemID = ngrok.String(it.Item().ID)
 		return true
 	}
@@ -168,9 +177,15 @@ func (it *Iter) Next() bool {
 		it.err = err
 		return false
 	}
-	it.n = 0
+
+	// page with zero items means there are no more
+	if len(resp.IPPolicyRules) == 0 {
+		return false
+	}
+
+	it.n = -1
 	it.items = resp.IPPolicyRules
-	return len(it.items) > 0
+	return it.Next()
 }
 
 // Item() returns the IPPolicyRule currently
@@ -187,8 +202,9 @@ func (it *Iter) Err() error {
 }
 
 // Update attributes of an IP policy rule by ID
-func (c *Client) Update(
-	ctx context.Context, arg *ngrok.IPPolicyRuleUpdate) (*ngrok.IPPolicyRule, error) {
+//
+// https://ngrok.com/docs/api#api-ip-policy-rules-update
+func (c *Client) Update(ctx context.Context, arg *ngrok.IPPolicyRuleUpdate) (*ngrok.IPPolicyRule, error) {
 	if arg == nil {
 		arg = new(ngrok.IPPolicyRuleUpdate)
 	}

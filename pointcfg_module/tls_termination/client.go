@@ -19,8 +19,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 	return &Client{apiClient: apiClient}
 }
 
-func (c *Client) Replace(
-	ctx context.Context, arg *ngrok.EndpointTLSTerminationReplace) (*ngrok.EndpointTLSTermination, error) {
+func (c *Client) Replace(ctx context.Context, arg *ngrok.EndpointTLSTerminationReplace) (*ngrok.EndpointTLSTermination, error) {
 	if arg == nil {
 		arg = new(ngrok.EndpointTLSTerminationReplace)
 	}
@@ -43,8 +42,7 @@ func (c *Client) Replace(
 	return &res, nil
 }
 
-func (c *Client) Get(
-	ctx context.Context, id string) (*ngrok.EndpointTLSTermination, error) {
+func (c *Client) Get(ctx context.Context, id string) (*ngrok.EndpointTLSTermination, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.EndpointTLSTermination
@@ -65,8 +63,7 @@ func (c *Client) Get(
 	return &res, nil
 }
 
-func (c *Client) Delete(
-	ctx context.Context, id string) error {
+func (c *Client) Delete(ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer

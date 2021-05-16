@@ -20,6 +20,8 @@ func NewClient(apiClient *ngrok.Client) *Client {
 }
 
 // List all online tunnels currently running on the account.
+//
+// https://ngrok.com/docs/api#api-tunnels-list
 func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.TunnelList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
@@ -50,6 +52,8 @@ func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.TunnelList
 }
 
 // List all online tunnels currently running on the account.
+//
+// https://ngrok.com/docs/api#api-tunnels-list
 func (c *Client) List(ctx context.Context, paging *ngrok.Paging) *Iter {
 	if paging == nil {
 		paging = new(ngrok.Paging)
@@ -86,9 +90,11 @@ func (it *Iter) Next() bool {
 		return false
 	}
 
-	// are there items remaining?
-	if it.n < len(it.items)-1 {
-		it.n += 1
+	// advance the iterator
+	it.n += 1
+
+	// is there an available item?
+	if it.n < len(it.items) {
 		it.lastItemID = ngrok.String(it.Item().ID)
 		return true
 	}
@@ -102,9 +108,15 @@ func (it *Iter) Next() bool {
 		it.err = err
 		return false
 	}
-	it.n = 0
+
+	// page with zero items means there are no more
+	if len(resp.Tunnels) == 0 {
+		return false
+	}
+
+	it.n = -1
 	it.items = resp.Tunnels
-	return len(it.items) > 0
+	return it.Next()
 }
 
 // Item() returns the Tunnel currently

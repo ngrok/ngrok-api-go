@@ -22,8 +22,9 @@ func NewClient(apiClient *ngrok.Client) *Client {
 // Creates a new abuse report which will be reviewed by our system and abuse
 // response team. This API is only available to authorized accounts. Contact
 // abuse@ngrok.com to request access
-func (c *Client) Create(
-	ctx context.Context, arg *ngrok.AbuseReportCreate) (*ngrok.AbuseReport, error) {
+//
+// https://ngrok.com/docs/api#api-abuse-reports-create
+func (c *Client) Create(ctx context.Context, arg *ngrok.AbuseReportCreate) (*ngrok.AbuseReport, error) {
 	var res ngrok.AbuseReport
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/abuse_reports")).Execute(&path, arg); err != nil {
@@ -43,8 +44,9 @@ func (c *Client) Create(
 }
 
 // Get the detailed status of abuse report by ID.
-func (c *Client) Get(
-	ctx context.Context, id string) (*ngrok.AbuseReport, error) {
+//
+// https://ngrok.com/docs/api#api-abuse-reports-get
+func (c *Client) Get(ctx context.Context, id string) (*ngrok.AbuseReport, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.AbuseReport

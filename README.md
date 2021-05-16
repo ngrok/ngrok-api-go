@@ -20,15 +20,28 @@ Please consult the [documentation](https://pkg.go.dev/github.com/ngrok/ngrok-api
 ### Create an IP Policy that allows traffic from some subnets
 
 ```go
+package main
+
 import (
+        "context"
+        "fmt"
+        "os"
+
         "github.com/ngrok/ngrok-api-go/v2"
-        "github.com/ngrok/ngrok-api-go/v2/ip_policy"
+        "github.com/ngrok/ngrok-api-go/v2/ip_policies"
         "github.com/ngrok/ngrok-api-go/v2/ip_policy_rules"
 )
 
+func main() {
+        fmt.Println(example(context.Background()))
+}
+
 func example(ctx context.Context) error {
         // create clients to api resources
-        apiClient := ngrok.NewClient("<API KEY>")
+        apiClient, err := ngrok.NewClient(os.Getenv("NGROK_API_KEY"))
+        if err != nil {
+                return err
+        }
         policies := ip_policies.NewClient(apiClient)
         policyRules := ip_policy_rules.NewClient(apiClient)
 
@@ -39,13 +52,18 @@ func example(ctx context.Context) error {
         if err != nil {
                 return err
         }
+        fmt.Println(policy)
 
         // create rules for each cidr
         for _, cidr := range []string{"24.0.0.0/8", "12.0.0.0/8"} {
-                policyRules.Create(ctx, &ngrok.IPPolicyRuleCreate{
-                        CIDR: cidr,
+                rule, err := policyRules.Create(ctx, &ngrok.IPPolicyRuleCreate{
+                        CIDR:       cidr,
                         IPPolicyID: policy.ID,
                 })
+                if err != nil {
+                        return err
+                }
+                fmt.Println(rule)
         }
         return nil
 }
@@ -54,14 +72,27 @@ func example(ctx context.Context) error {
 ### List all online tunnels
 
 ```go
+package main
+
 import (
+        "context"
+        "fmt"
+        "os"
+
         "github.com/ngrok/ngrok-api-go/v2"
         "github.com/ngrok/ngrok-api-go/v2/tunnels"
 )
 
+func main() {
+        fmt.Println(example(context.Background()))
+}
+
 func example(ctx context.Context) error {
         // construct the api client
-        apiClient := ngrok.NewClient("<API KEY>")
+        apiClient, err := ngrok.NewClient(os.Getenv("NGROK_API_KEY"))
+        if err != nil {
+                return err
+        }
 
         // list all online tunnels
         tunnels := tunnels.NewClient(apiClient)

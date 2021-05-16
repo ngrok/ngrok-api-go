@@ -20,6 +20,8 @@ func NewClient(apiClient *ngrok.Client) *Client {
 }
 
 // List all online tunnel sessions running on this account.
+//
+// https://ngrok.com/docs/api#api-tunnel-sessions-list
 func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.TunnelSessionList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
@@ -50,6 +52,8 @@ func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.TunnelSess
 }
 
 // List all online tunnel sessions running on this account.
+//
+// https://ngrok.com/docs/api#api-tunnel-sessions-list
 func (c *Client) List(ctx context.Context, paging *ngrok.Paging) *Iter {
 	if paging == nil {
 		paging = new(ngrok.Paging)
@@ -86,9 +90,11 @@ func (it *Iter) Next() bool {
 		return false
 	}
 
-	// are there items remaining?
-	if it.n < len(it.items)-1 {
-		it.n += 1
+	// advance the iterator
+	it.n += 1
+
+	// is there an available item?
+	if it.n < len(it.items) {
 		it.lastItemID = ngrok.String(it.Item().ID)
 		return true
 	}
@@ -102,9 +108,15 @@ func (it *Iter) Next() bool {
 		it.err = err
 		return false
 	}
-	it.n = 0
+
+	// page with zero items means there are no more
+	if len(resp.TunnelSessions) == 0 {
+		return false
+	}
+
+	it.n = -1
 	it.items = resp.TunnelSessions
-	return len(it.items) > 0
+	return it.Next()
 }
 
 // Item() returns the TunnelSession currently
@@ -121,8 +133,9 @@ func (it *Iter) Err() error {
 }
 
 // Get the detailed status of a tunnel session by ID
-func (c *Client) Get(
-	ctx context.Context, id string) (*ngrok.TunnelSession, error) {
+//
+// https://ngrok.com/docs/api#api-tunnel-sessions-get
+func (c *Client) Get(ctx context.Context, id string) (*ngrok.TunnelSession, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.TunnelSession
@@ -147,8 +160,9 @@ func (c *Client) Get(
 // itself by calling exec() on platforms that support it. This operation is notably
 // not supported on Windows. When an agent restarts, it reconnects with a new
 // tunnel session ID.
-func (c *Client) Restart(
-	ctx context.Context, id string) error {
+//
+// https://ngrok.com/docs/api#api-tunnel-sessions-restart
+func (c *Client) Restart(ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -171,8 +185,9 @@ func (c *Client) Restart(
 
 // Issues a command instructing the ngrok agent that started this tunnel session to
 // exit.
-func (c *Client) Stop(
-	ctx context.Context, id string) error {
+//
+// https://ngrok.com/docs/api#api-tunnel-sessions-stop
+func (c *Client) Stop(ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -205,8 +220,9 @@ func (c *Client) Stop(
 // circumstances: there is no update available the ngrok agent's configuration
 // disabled update checks the agent is currently in process of updating the agent
 // has already successfully updated but has not yet been restarted
-func (c *Client) Update(
-	ctx context.Context, id string) error {
+//
+// https://ngrok.com/docs/api#api-tunnel-sessions-update
+func (c *Client) Update(ctx context.Context, id string) error {
 	arg := &ngrok.TunnelSessionsUpdate{ID: id}
 
 	var path bytes.Buffer

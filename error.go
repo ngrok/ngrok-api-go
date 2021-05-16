@@ -14,6 +14,7 @@ func IsNotFound(err error) bool {
 }
 
 // Returns true if the given error is caused by any of the specified ngrok error codes.
+// All ngrok error codes are documented at https://ngrok.com/docs/errors
 func IsErrorCode(err error, codes ...int) bool {
 	if ee, ok := err.(*Error); ok {
 		for _, code := range codes {

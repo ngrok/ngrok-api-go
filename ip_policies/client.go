@@ -21,8 +21,9 @@ func NewClient(apiClient *ngrok.Client) *Client {
 
 // Create a new IP policy. It will not apply to any traffic until you associate to
 // a traffic source via an endpoint configuration or IP restriction.
-func (c *Client) Create(
-	ctx context.Context, arg *ngrok.IPPolicyCreate) (*ngrok.IPPolicy, error) {
+//
+// https://ngrok.com/docs/api#api-ip-policies-create
+func (c *Client) Create(ctx context.Context, arg *ngrok.IPPolicyCreate) (*ngrok.IPPolicy, error) {
 	var res ngrok.IPPolicy
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/ip_policies")).Execute(&path, arg); err != nil {
@@ -44,8 +45,9 @@ func (c *Client) Create(
 // Delete an IP policy. If the IP policy is referenced by another object for the
 // purposes of traffic restriction it will be treated as if the IP policy remains
 // but has zero rules.
-func (c *Client) Delete(
-	ctx context.Context, id string) error {
+//
+// https://ngrok.com/docs/api#api-ip-policies-delete
+func (c *Client) Delete(ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -66,8 +68,9 @@ func (c *Client) Delete(
 }
 
 // Get detailed information about an IP policy by ID.
-func (c *Client) Get(
-	ctx context.Context, id string) (*ngrok.IPPolicy, error) {
+//
+// https://ngrok.com/docs/api#api-ip-policies-get
+func (c *Client) Get(ctx context.Context, id string) (*ngrok.IPPolicy, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.IPPolicy
@@ -89,6 +92,8 @@ func (c *Client) Get(
 }
 
 // List all IP policies on this account
+//
+// https://ngrok.com/docs/api#api-ip-policies-list
 func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.IPPolicyList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
@@ -119,6 +124,8 @@ func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.IPPolicyLi
 }
 
 // List all IP policies on this account
+//
+// https://ngrok.com/docs/api#api-ip-policies-list
 func (c *Client) List(ctx context.Context, paging *ngrok.Paging) *Iter {
 	if paging == nil {
 		paging = new(ngrok.Paging)
@@ -155,9 +162,11 @@ func (it *Iter) Next() bool {
 		return false
 	}
 
-	// are there items remaining?
-	if it.n < len(it.items)-1 {
-		it.n += 1
+	// advance the iterator
+	it.n += 1
+
+	// is there an available item?
+	if it.n < len(it.items) {
 		it.lastItemID = ngrok.String(it.Item().ID)
 		return true
 	}
@@ -171,9 +180,15 @@ func (it *Iter) Next() bool {
 		it.err = err
 		return false
 	}
-	it.n = 0
+
+	// page with zero items means there are no more
+	if len(resp.IPPolicies) == 0 {
+		return false
+	}
+
+	it.n = -1
 	it.items = resp.IPPolicies
-	return len(it.items) > 0
+	return it.Next()
 }
 
 // Item() returns the IPPolicy currently
@@ -190,8 +205,9 @@ func (it *Iter) Err() error {
 }
 
 // Update attributes of an IP policy by ID
-func (c *Client) Update(
-	ctx context.Context, arg *ngrok.IPPolicyUpdate) (*ngrok.IPPolicy, error) {
+//
+// https://ngrok.com/docs/api#api-ip-policies-update
+func (c *Client) Update(ctx context.Context, arg *ngrok.IPPolicyUpdate) (*ngrok.IPPolicy, error) {
 	if arg == nil {
 		arg = new(ngrok.IPPolicyUpdate)
 	}
