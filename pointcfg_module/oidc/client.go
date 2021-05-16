@@ -8,7 +8,7 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go"
+	"github.com/ngrok/ngrok-api-go/v2"
 )
 
 type Client struct {

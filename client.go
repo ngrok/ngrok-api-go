@@ -57,7 +57,7 @@ func (c *Client) buildRequest(ctx context.Context, method string, reqURL *url.UR
 	}
 
 	r.Header.Set("authorization", fmt.Sprintf("Bearer %s", c.apiKey))
-	r.Header.Set("user-agent", "github.com/ngrok/ngrok-api-go")
+	r.Header.Set("user-agent", "github.com/ngrok/ngrok-api-go/v2")
 	r.Header.Set("ngrok-version", apiVersion)
 	if body != nil {
 		r.Header.Set("content-type", "application/json")

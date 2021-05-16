@@ -7,23 +7,23 @@ easier to consume in Go.
 
 Installation is as simple as using `go get`.
 
-    go get github.com/ngrok/ngrok-api-go
+    go get github.com/ngrok/ngrok-api-go/v2
 
 ## Documentation
 
-A quickstart guide and a full API reference are included in the [ngrok go API documentation on pkg.go.dev](https://pkg.go.dev/github.com/ngrok/ngrok-api-go)
+A quickstart guide and a full API reference are included in the [ngrok go API documentation on pkg.go.dev](https://pkg.go.dev/github.com/ngrok/ngrok-api-go/v2)
 
 ## Quickstart
 
-Please consult the [documentation](https://pkg.go.dev/github.com/ngrok/ngrok-api-go) for additional examples.
+Please consult the [documentation](https://pkg.go.dev/github.com/ngrok/ngrok-api-go/v2) for additional examples.
 
 ### Create an IP Policy that allows traffic from some subnets
 
 ```go
 import (
-        "github.com/ngrok/ngrok-api-go"
-        "github.com/ngrok/ngrok-api-go/ip_policy"
-        "github.com/ngrok/ngrok-api-go/ip_policy_rules"
+        "github.com/ngrok/ngrok-api-go/v2"
+        "github.com/ngrok/ngrok-api-go/v2/ip_policy"
+        "github.com/ngrok/ngrok-api-go/v2/ip_policy_rules"
 )
 
 func example(ctx context.Context) error {
@@ -55,8 +55,8 @@ func example(ctx context.Context) error {
 
 ```go
 import (
-        "github.com/ngrok/ngrok-api-go"
-        "github.com/ngrok/ngrok-api-go/tunnels"
+        "github.com/ngrok/ngrok-api-go/v2"
+        "github.com/ngrok/ngrok-api-go/v2/tunnels"
 )
 
 func example(ctx context.Context) error {
