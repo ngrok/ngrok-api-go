@@ -3,7 +3,6 @@ package ngrok
 import (
 	"net/http"
 	"net/url"
-	"os"
 )
 
 var (
@@ -11,9 +10,7 @@ var (
 )
 
 type clientConfig struct {
-	apiKey     string
 	baseURL    *url.URL
-	debug      Debug
 	httpClient *http.Client
 	err        error
 }
@@ -35,26 +32,11 @@ func (c *clientConfig) setDefaults() {
 	if c.baseURL == nil {
 		c.baseURL = defaultBaseURL
 	}
-	if c.apiKey == "" {
-		c.apiKey = os.Getenv("NGROK_API_KEY")
-	}
-}
-
-func WithAPIKey(apiKey string) ClientOption {
-	return func(cc *clientConfig) {
-		cc.apiKey = apiKey
-	}
 }
 
 func WithBaseURL(baseURL string) ClientOption {
 	return func(cc *clientConfig) {
 		cc.baseURL, cc.err = url.Parse(baseURL)
-	}
-}
-
-func WithDebug(debug Debug) ClientOption {
-	return func(cc *clientConfig) {
-		cc.debug = debug
 	}
 }
 

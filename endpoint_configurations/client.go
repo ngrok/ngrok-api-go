@@ -5,7 +5,6 @@ package endpoint_configurations
 import (
 	"bytes"
 	"context"
-	"fmt"
 	"net/url"
 	"text/template"
 
@@ -27,9 +26,13 @@ func NewClient(apiClient *ngrok.Client) *Client {
 
 // Create a new endpoint configuration
 func (c *Client) Create(
+
 	ctx context.Context,
 	arg *ngrok.EndpointConfigurationCreate,
 ) (*ngrok.EndpointConfiguration, error) {
+	if arg == nil {
+		arg = new(ngrok.EndpointConfigurationCreate)
+	}
 	var res ngrok.EndpointConfiguration
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/endpoint_configurations")).Execute(&path, arg); err != nil {
@@ -51,11 +54,13 @@ func (c *Client) Create(
 // Delete an endpoint configuration. This operation will fail if the endpoint
 // configuration is still referenced by any reserved domain or reserved address.
 func (c *Client) Delete(
+
 	ctx context.Context,
 	id string,
 
 ) error {
 	arg := &ngrok.Item{ID: id}
+
 	var path bytes.Buffer
 	if err := template.Must(template.New("delete_path").Parse("/endpoint_configurations/{{ .ID }}")).Execute(&path, arg); err != nil {
 		panic(err)
@@ -75,11 +80,13 @@ func (c *Client) Delete(
 
 // Returns detailed information about an endpoint configuration
 func (c *Client) Get(
+
 	ctx context.Context,
 	id string,
 
 ) (*ngrok.EndpointConfiguration, error) {
 	arg := &ngrok.Item{ID: id}
+
 	var res ngrok.EndpointConfiguration
 	var path bytes.Buffer
 	if err := template.Must(template.New("get_path").Parse("/endpoint_configurations/{{ .ID }}")).Execute(&path, arg); err != nil {
@@ -99,10 +106,13 @@ func (c *Client) Get(
 }
 
 // Returns a list of all endpoint configurations on this account
-func (c *Client) List(
+func (c *Client) list(
 	ctx context.Context,
-	arg *ngrok.Page,
+	arg *ngrok.Paging,
 ) (*ngrok.EndpointConfigurationList, error) {
+	if arg == nil {
+		arg = new(ngrok.Paging)
+	}
 	var res ngrok.EndpointConfigurationList
 	var path bytes.Buffer
 	if err := template.Must(template.New("list_path").Parse("/endpoint_configurations")).Execute(&path, arg); err != nil {
@@ -128,24 +138,37 @@ func (c *Client) List(
 	return &res, nil
 }
 
-func (c *Client) Iter(ctx context.Context) *Iter {
+// Returns a list of all endpoint configurations on this account
+func (c *Client) List(ctx context.Context, paging *ngrok.Paging) *Iter {
+	if paging == nil {
+		paging = new(ngrok.Paging)
+	}
+	if paging.Limit == nil {
+		paging.Limit = ngrok.String("100")
+	}
 	return &Iter{
-		client: c,
-		ctx:    ctx,
-		limit:  100,
-		n:      -1,
+		client:     c,
+		ctx:        ctx,
+		limit:      paging.Limit,
+		lastItemID: paging.BeforeID,
+		n:          -1,
 	}
 }
 
+// Iter allows the caller to iterate through a list of values while
+// automatically fetching new pages worth of values from the API.
 type Iter struct {
-	client *Client
-	ctx    context.Context
-	n      int
-	limit  int
-	items  []ngrok.EndpointConfiguration
-	err    error
+	client     *Client
+	ctx        context.Context
+	n          int
+	items      []ngrok.EndpointConfiguration
+	err        error
+	limit      *string
+	lastItemID *string
 }
 
+// Next() returns true if there is another value available in the iterator. If it
+// returs true it also advances the iterator to that next available item.
 func (it *Iter) Next() bool {
 	// no more if there is an error
 	if it.err != nil {
@@ -155,18 +178,14 @@ func (it *Iter) Next() bool {
 	// are there items remaining?
 	if it.n < len(it.items)-1 {
 		it.n += 1
+		it.lastItemID = ngrok.String(it.Item().ID)
 		return true
 	}
 
 	// fetch the next page
-	lastItemID := ""
-	if it.n > 0 {
-		lastItemID = it.items[it.n].ID
-	}
-	fmt.Println("lastItemID", lastItemID, "n", it.n)
-	resp, err := it.client.List(it.ctx, &ngrok.Page{
-		BeforeID: ngrok.String(lastItemID),
-		Limit:    ngrok.String(fmt.Sprintf("%d", it.limit)),
+	resp, err := it.client.list(it.ctx, &ngrok.Paging{
+		BeforeID: it.lastItemID,
+		Limit:    it.limit,
 	})
 	if err != nil {
 		it.err = err
@@ -174,14 +193,18 @@ func (it *Iter) Next() bool {
 	}
 	it.n = 0
 	it.items = resp.EndpointConfigurations
-	fmt.Println(len(it.items), it.items)
 	return len(it.items) > 0
 }
 
+// Item() returns the EndpointConfiguration currently
+// pointed to by the iterator.
 func (it *Iter) Item() *ngrok.EndpointConfiguration {
 	return &it.items[it.n]
 }
 
+// If Next() returned false because an error was encountered while fetching the
+// next value Err() will return that error. A caller should always check Err()
+// after Next() returns false.
 func (it *Iter) Err() error {
 	return it.err
 }
@@ -191,9 +214,13 @@ func (it *Iter) Err() error {
 // will completely replace the existing value. There is no way to delete an
 // existing module via this API, instead use the delete module API.
 func (c *Client) Update(
+
 	ctx context.Context,
 	arg *ngrok.EndpointConfigurationUpdate,
 ) (*ngrok.EndpointConfiguration, error) {
+	if arg == nil {
+		arg = new(ngrok.EndpointConfigurationUpdate)
+	}
 	var res ngrok.EndpointConfiguration
 	var path bytes.Buffer
 	if err := template.Must(template.New("update_path").Parse("/endpoint_configurations/{{ .ID }}")).Execute(&path, arg); err != nil {

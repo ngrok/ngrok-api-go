@@ -2,7 +2,26 @@
 
 package ngrok
 
+import (
+	"bytes"
+	"fmt"
+	"text/tabwriter"
+)
+
 type Empty struct {
+}
+
+func (x *Empty) String() string {
+	return x.GoString()
+}
+
+func (x *Empty) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "Empty {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type Item struct {
@@ -10,9 +29,39 @@ type Item struct {
 	ID string `json:"id,omitempty"`
 }
 
-type Page struct {
+func (x *Item) String() string {
+	return fmt.Sprintf("Item{ID: %v}", x.ID)
+
+}
+
+func (x *Item) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "Item {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type Paging struct {
 	BeforeID *string `json:"before_id,omitempty"`
 	Limit    *string `json:"limit,omitempty"`
+}
+
+func (x *Paging) String() string {
+	return x.GoString()
+}
+
+func (x *Paging) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "Paging {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tBeforeID\t%v\n", x.BeforeID)
+	fmt.Fprintf(tw, "\tLimit\t%v\n", x.Limit)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type Error struct {
@@ -22,11 +71,44 @@ type Error struct {
 	Details    map[string]string `json:"details,omitempty"`
 }
 
+func (x *Error) String() string {
+	return x.GoString()
+}
+
+func (x *Error) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "Error {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tErrorCode\t%v\n", x.ErrorCode)
+	fmt.Fprintf(tw, "\tStatusCode\t%v\n", x.StatusCode)
+	fmt.Fprintf(tw, "\tMsg\t%v\n", x.Msg)
+	fmt.Fprintf(tw, "\tDetails\t%v\n", x.Details)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type Ref struct {
 	// a resource identifier
 	ID string `json:"id,omitempty"`
 	// a uri for locating a resource
 	URI string `json:"uri,omitempty"`
+}
+
+func (x *Ref) String() string {
+	return fmt.Sprintf("Ref{ID: %v}", x.ID)
+
+}
+
+func (x *Ref) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "Ref {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type AbuseReport struct {
@@ -47,6 +129,27 @@ type AbuseReport struct {
 	Hostnames []AbuseReportHostname `json:"hostnames,omitempty"`
 }
 
+func (x *AbuseReport) String() string {
+	return fmt.Sprintf("AbuseReport{ID: %v}", x.ID)
+
+}
+
+func (x *AbuseReport) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AbuseReport {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tURLs\t%v\n", x.URLs)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tStatus\t%v\n", x.Status)
+	fmt.Fprintf(tw, "\tHostnames\t%v\n", x.Hostnames)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type AbuseReportHostname struct {
 	// the hostname ngrok has parsed out of one of the reported URLs in this abuse
 	// report
@@ -56,11 +159,41 @@ type AbuseReportHostname struct {
 	Status string `json:"status,omitempty"`
 }
 
+func (x *AbuseReportHostname) String() string {
+	return x.GoString()
+}
+
+func (x *AbuseReportHostname) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AbuseReportHostname {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tHostname\t%v\n", x.Hostname)
+	fmt.Fprintf(tw, "\tStatus\t%v\n", x.Status)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type AbuseReportCreate struct {
 	// a list of URLs containing suspected abusive content
 	URLs []string `json:"urls,omitempty"`
 	// arbitrary user-defined data about this abuse report. Optional, max 4096 bytes.
 	Metadata string `json:"metadata,omitempty"`
+}
+
+func (x *AbuseReportCreate) String() string {
+	return x.GoString()
+}
+
+func (x *AbuseReportCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AbuseReportCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tURLs\t%v\n", x.URLs)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type APIKeyCreate struct {
@@ -71,6 +204,21 @@ type APIKeyCreate struct {
 	Metadata string `json:"metadata,omitempty"`
 }
 
+func (x *APIKeyCreate) String() string {
+	return x.GoString()
+}
+
+func (x *APIKeyCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "APIKeyCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type APIKeyUpdate struct {
 	ID string `json:"id,omitempty"`
 	// human-readable description of what uses the API key to authenticate. optional,
@@ -78,6 +226,23 @@ type APIKeyUpdate struct {
 	Description *string `json:"description,omitempty"`
 	// arbitrary user-defined data of this API key. optional, max 4096 bytes
 	Metadata *string `json:"metadata,omitempty"`
+}
+
+func (x *APIKeyUpdate) String() string {
+	return fmt.Sprintf("APIKeyUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *APIKeyUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "APIKeyUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type APIKey struct {
@@ -98,6 +263,26 @@ type APIKey struct {
 	Token *string `json:"token,omitempty"`
 }
 
+func (x *APIKey) String() string {
+	return fmt.Sprintf("APIKey{ID: %v}", x.ID)
+
+}
+
+func (x *APIKey) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "APIKey {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tToken\t%v\n", x.Token)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type APIKeyList struct {
 	// the list of API keys for this account
 	Keys []APIKey `json:"keys,omitempty"`
@@ -107,179 +292,20 @@ type APIKeyList struct {
 	NextPageURI *string `json:"next_page_uri,omitempty"`
 }
 
-type PriorityBackend struct {
-	// unique identifier for this Priority backend
-	ID string `json:"id,omitempty"`
-	// timestamp when the backend was created, RFC 3339 format
-	CreatedAt string `json:"created_at,omitempty"`
-	// human-readable description of this backend. Optional
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this backend. Optional
-	Metadata string `json:"metadata,omitempty"`
-	// the ids of the child backends in order
-	Backends []string `json:"backends,omitempty"`
+func (x *APIKeyList) String() string {
+	return x.GoString()
 }
 
-type PriorityBackendCreate struct {
-	// human-readable description of this backend. Optional
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this backend. Optional
-	Metadata string `json:"metadata,omitempty"`
-	// the ids of the child backends in order
-	Backends []string `json:"backends,omitempty"`
-}
-
-type PriorityBackendUpdate struct {
-	ID string `json:"id,omitempty"`
-	// human-readable description of this backend. Optional
-	Description *string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this backend. Optional
-	Metadata *string `json:"metadata,omitempty"`
-	// the ids of the child backends in order
-	Backends []string `json:"backends,omitempty"`
-}
-
-type PriorityBackendList struct {
-	// the list of all Priority backends on this account
-	Backends []PriorityBackend `json:"backends,omitempty"`
-	// URI of the Priority backends list API resource
-	URI string `json:"uri,omitempty"`
-	// URI of the next page, or null if there is no next page
-	NextPageURI *string `json:"next_page_uri,omitempty"`
-}
-
-type StaticBackend struct {
-	// unique identifier for this static backend
-	ID string `json:"id,omitempty"`
-	// timestamp when the backend was created, RFC 3339 format
-	CreatedAt string `json:"created_at,omitempty"`
-	// human-readable description of this backend. Optional
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this backend. Optional
-	Metadata string `json:"metadata,omitempty"`
-	// the address to forward to
-	Address string `json:"address,omitempty"`
-	// tls configuration to use
-	TLS StaticBackendTLS `json:"tls,omitempty"`
-}
-
-type StaticBackendTLS struct {
-	// if tls is checked
-	Enabled bool `json:"enabled,omitempty"`
-}
-
-type StaticBackendCreate struct {
-	// human-readable description of this backend. Optional
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this backend. Optional
-	Metadata string `json:"metadata,omitempty"`
-	// the address to forward to
-	Address string `json:"address,omitempty"`
-	// tls configuration to use
-	TLS StaticBackendTLS `json:"tls,omitempty"`
-}
-
-type StaticBackendUpdate struct {
-	ID string `json:"id,omitempty"`
-	// human-readable description of this backend. Optional
-	Description *string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this backend. Optional
-	Metadata *string `json:"metadata,omitempty"`
-	// the address to forward to
-	Address string `json:"address,omitempty"`
-	// tls configuration to use
-	TLS StaticBackendTLS `json:"tls,omitempty"`
-}
-
-type StaticBackendList struct {
-	// the list of all static backends on this account
-	Backends []StaticBackend `json:"backends,omitempty"`
-	// URI of the static backends list API resource
-	URI string `json:"uri,omitempty"`
-	// URI of the next page, or null if there is no next page
-	NextPageURI *string `json:"next_page_uri,omitempty"`
-}
-
-type TunnelGroupBackend struct {
-	// unique identifier for this TunnelGroup backend
-	ID string `json:"id,omitempty"`
-	// timestamp when the backend was created, RFC 3339 format
-	CreatedAt string `json:"created_at,omitempty"`
-	// human-readable description of this backend. Optional
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this backend. Optional
-	Metadata string `json:"metadata,omitempty"`
-	// labels to watch for tunnels on, e.g. app->foo, dc->bar
-	Labels map[string]string `json:"labels,omitempty"`
-}
-
-type TunnelGroupBackendCreate struct {
-	// human-readable description of this backend. Optional
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this backend. Optional
-	Metadata string `json:"metadata,omitempty"`
-	// labels to watch for tunnels on, e.g. app->foo, dc->bar
-	Labels map[string]string `json:"labels,omitempty"`
-}
-
-type TunnelGroupBackendUpdate struct {
-	ID string `json:"id,omitempty"`
-	// human-readable description of this backend. Optional
-	Description *string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this backend. Optional
-	Metadata *string `json:"metadata,omitempty"`
-	// labels to watch for tunnels on, e.g. app->foo, dc->bar
-	Labels map[string]string `json:"labels,omitempty"`
-}
-
-type TunnelGroupBackendList struct {
-	// the list of all TunnelGroup backends on this account
-	Backends []TunnelGroupBackend `json:"backends,omitempty"`
-	// URI of the TunnelGroup backends list API resource
-	URI string `json:"uri,omitempty"`
-	// URI of the next page, or null if there is no next page
-	NextPageURI *string `json:"next_page_uri,omitempty"`
-}
-
-type WeightedBackend struct {
-	// unique identifier for this Weighted backend
-	ID string `json:"id,omitempty"`
-	// timestamp when the backend was created, RFC 3339 format
-	CreatedAt string `json:"created_at,omitempty"`
-	// human-readable description of this backend. Optional
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this backend. Optional
-	Metadata string `json:"metadata,omitempty"`
-	// the ids of the child backends to their weights (0-10000)
-	Backends map[string]int64 `json:"backends,omitempty"`
-}
-
-type WeightedBackendCreate struct {
-	// human-readable description of this backend. Optional
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this backend. Optional
-	Metadata string `json:"metadata,omitempty"`
-	// the ids of the child backends to their weights (0-10000)
-	Backends map[string]int64 `json:"backends,omitempty"`
-}
-
-type WeightedBackendUpdate struct {
-	ID string `json:"id,omitempty"`
-	// human-readable description of this backend. Optional
-	Description *string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this backend. Optional
-	Metadata *string `json:"metadata,omitempty"`
-	// the ids of the child backends to their weights (0-10000)
-	Backends map[string]int64 `json:"backends,omitempty"`
-}
-
-type WeightedBackendList struct {
-	// the list of all Weighted backends on this account
-	Backends []WeightedBackend `json:"backends,omitempty"`
-	// URI of the Weighted backends list API resource
-	URI string `json:"uri,omitempty"`
-	// URI of the next page, or null if there is no next page
-	NextPageURI *string `json:"next_page_uri,omitempty"`
+func (x *APIKeyList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "APIKeyList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tKeys\t%v\n", x.Keys)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type CertificateAuthorityCreate struct {
@@ -293,6 +319,22 @@ type CertificateAuthorityCreate struct {
 	CAPEM string `json:"ca_pem,omitempty"`
 }
 
+func (x *CertificateAuthorityCreate) String() string {
+	return x.GoString()
+}
+
+func (x *CertificateAuthorityCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "CertificateAuthorityCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCAPEM\t%v\n", x.CAPEM)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type CertificateAuthorityUpdate struct {
 	ID string `json:"id,omitempty"`
 	// human-readable description of this Certificate Authority. optional, max 255
@@ -301,6 +343,23 @@ type CertificateAuthorityUpdate struct {
 	// arbitrary user-defined machine-readable data of this Certificate Authority.
 	// optional, max 4096 bytes.
 	Metadata *string `json:"metadata,omitempty"`
+}
+
+func (x *CertificateAuthorityUpdate) String() string {
+	return fmt.Sprintf("CertificateAuthorityUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *CertificateAuthorityUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "CertificateAuthorityUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type CertificateAuthority struct {
@@ -331,6 +390,31 @@ type CertificateAuthority struct {
 	ExtendedKeyUsages []string `json:"extended_key_usages,omitempty"`
 }
 
+func (x *CertificateAuthority) String() string {
+	return fmt.Sprintf("CertificateAuthority{ID: %v}", x.ID)
+
+}
+
+func (x *CertificateAuthority) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "CertificateAuthority {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCAPEM\t%v\n", x.CAPEM)
+	fmt.Fprintf(tw, "\tSubjectCommonName\t%v\n", x.SubjectCommonName)
+	fmt.Fprintf(tw, "\tNotBefore\t%v\n", x.NotBefore)
+	fmt.Fprintf(tw, "\tNotAfter\t%v\n", x.NotAfter)
+	fmt.Fprintf(tw, "\tKeyUsages\t%v\n", x.KeyUsages)
+	fmt.Fprintf(tw, "\tExtendedKeyUsages\t%v\n", x.ExtendedKeyUsages)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type CertificateAuthorityList struct {
 	// the list of all certificate authorities on this account
 	CertificateAuthorities []CertificateAuthority `json:"certificate_authorities,omitempty"`
@@ -338,6 +422,22 @@ type CertificateAuthorityList struct {
 	URI string `json:"uri,omitempty"`
 	// URI of the next page, or null if there is no next page
 	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *CertificateAuthorityList) String() string {
+	return x.GoString()
+}
+
+func (x *CertificateAuthorityList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "CertificateAuthorityList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tCertificateAuthorities\t%v\n", x.CertificateAuthorities)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type CredentialCreate struct {
@@ -359,6 +459,22 @@ type CredentialCreate struct {
 	ACL []string `json:"acl,omitempty"`
 }
 
+func (x *CredentialCreate) String() string {
+	return x.GoString()
+}
+
+func (x *CredentialCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "CredentialCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tACL\t%v\n", x.ACL)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type CredentialUpdate struct {
 	ID string `json:"id,omitempty"`
 	// human-readable description of who or what will use the credential to
@@ -377,6 +493,24 @@ type CredentialUpdate struct {
 	// allow x.example.com, y.example.com, *.example.com, etc. A rule of '*' is
 	// equivalent to no acl at all and will explicitly permit all actions.
 	ACL *[]string `json:"acl,omitempty"`
+}
+
+func (x *CredentialUpdate) String() string {
+	return fmt.Sprintf("CredentialUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *CredentialUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "CredentialUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tACL\t%v\n", x.ACL)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type Credential struct {
@@ -408,6 +542,27 @@ type Credential struct {
 	ACL []string `json:"acl,omitempty"`
 }
 
+func (x *Credential) String() string {
+	return fmt.Sprintf("Credential{ID: %v}", x.ID)
+
+}
+
+func (x *Credential) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "Credential {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tToken\t%v\n", x.Token)
+	fmt.Fprintf(tw, "\tACL\t%v\n", x.ACL)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type CredentialList struct {
 	// the list of all tunnel credentials on this account
 	Credentials []Credential `json:"credentials,omitempty"`
@@ -415,6 +570,22 @@ type CredentialList struct {
 	URI string `json:"uri,omitempty"`
 	// URI of the next page, or null if there is no next page
 	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *CredentialList) String() string {
+	return x.GoString()
+}
+
+func (x *CredentialList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "CredentialList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tCredentials\t%v\n", x.Credentials)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EventStreamCreate struct {
@@ -436,6 +607,25 @@ type EventStreamCreate struct {
 	SamplingRate float64 `json:"sampling_rate,omitempty"`
 }
 
+func (x *EventStreamCreate) String() string {
+	return x.GoString()
+}
+
+func (x *EventStreamCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventStreamCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tFields\t%v\n", x.Fields)
+	fmt.Fprintf(tw, "\tEventType\t%v\n", x.EventType)
+	fmt.Fprintf(tw, "\tDestinationIDs\t%v\n", x.DestinationIDs)
+	fmt.Fprintf(tw, "\tSamplingRate\t%v\n", x.SamplingRate)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EventStreamUpdate struct {
 	// Unique identifier for this Event Stream.
 	ID string `json:"id,omitempty"`
@@ -454,6 +644,26 @@ type EventStreamUpdate struct {
 	SamplingRate *float64 `json:"sampling_rate,omitempty"`
 }
 
+func (x *EventStreamUpdate) String() string {
+	return fmt.Sprintf("EventStreamUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *EventStreamUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventStreamUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tFields\t%v\n", x.Fields)
+	fmt.Fprintf(tw, "\tDestinationIDs\t%v\n", x.DestinationIDs)
+	fmt.Fprintf(tw, "\tSamplingRate\t%v\n", x.SamplingRate)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EventStreamList struct {
 	// The list of all Event Streams on this account.
 	EventStreams []EventStream `json:"event_streams,omitempty"`
@@ -461,6 +671,22 @@ type EventStreamList struct {
 	URI string `json:"uri,omitempty"`
 	// URI of the next page, or null if there is no next page.
 	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *EventStreamList) String() string {
+	return x.GoString()
+}
+
+func (x *EventStreamList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventStreamList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEventStreams\t%v\n", x.EventStreams)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EventStream struct {
@@ -488,6 +714,29 @@ type EventStream struct {
 	SamplingRate float64 `json:"sampling_rate,omitempty"`
 }
 
+func (x *EventStream) String() string {
+	return fmt.Sprintf("EventStream{ID: %v}", x.ID)
+
+}
+
+func (x *EventStream) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventStream {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tFields\t%v\n", x.Fields)
+	fmt.Fprintf(tw, "\tEventType\t%v\n", x.EventType)
+	fmt.Fprintf(tw, "\tDestinationIDs\t%v\n", x.DestinationIDs)
+	fmt.Fprintf(tw, "\tSamplingRate\t%v\n", x.SamplingRate)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EventDestinationCreate struct {
 	// Arbitrary user-defined machine-readable data of this Event Destination.
 	// Optional, max 4096 bytes.
@@ -500,8 +749,24 @@ type EventDestinationCreate struct {
 	// An object that encapsulates where and how to send your events. An event
 	// destination must contain exactly one of the following objects, leaving the rest
 	// null: kinesis, firehose, cloudwatch_logs, or s3.
-	Target              EventTarget `json:"target,omitempty"`
-	VerifyWithTestEvent *bool       `json:"verify_with_test_event,omitempty"`
+	Target EventTarget `json:"target,omitempty"`
+}
+
+func (x *EventDestinationCreate) String() string {
+	return x.GoString()
+}
+
+func (x *EventDestinationCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventDestinationCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tFormat\t%v\n", x.Format)
+	fmt.Fprintf(tw, "\tTarget\t%v\n", x.Target)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EventDestinationUpdate struct {
@@ -518,8 +783,26 @@ type EventDestinationUpdate struct {
 	// An object that encapsulates where and how to send your events. An event
 	// destination must contain exactly one of the following objects, leaving the rest
 	// null: kinesis, firehose, cloudwatch_logs, or s3.
-	Target              *EventTarget `json:"target,omitempty"`
-	VerifyWithTestEvent *bool        `json:"verify_with_test_event,omitempty"`
+	Target *EventTarget `json:"target,omitempty"`
+}
+
+func (x *EventDestinationUpdate) String() string {
+	return fmt.Sprintf("EventDestinationUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *EventDestinationUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventDestinationUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tFormat\t%v\n", x.Format)
+	fmt.Fprintf(tw, "\tTarget\t%v\n", x.Target)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EventDestination struct {
@@ -543,6 +826,27 @@ type EventDestination struct {
 	URI string `json:"uri,omitempty"`
 }
 
+func (x *EventDestination) String() string {
+	return fmt.Sprintf("EventDestination{ID: %v}", x.ID)
+
+}
+
+func (x *EventDestination) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventDestination {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tFormat\t%v\n", x.Format)
+	fmt.Fprintf(tw, "\tTarget\t%v\n", x.Target)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EventDestinationList struct {
 	// The list of all Event Destinations on this account.
 	EventDestinations []EventDestination `json:"event_destinations,omitempty"`
@@ -552,6 +856,22 @@ type EventDestinationList struct {
 	NextPageURI *string `json:"next_page_uri,omitempty"`
 }
 
+func (x *EventDestinationList) String() string {
+	return x.GoString()
+}
+
+func (x *EventDestinationList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventDestinationList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEventDestinations\t%v\n", x.EventDestinations)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EventTarget struct {
 	// Configuration used to send events to Amazon Kinesis Data Firehose.
 	Firehose *EventTargetFirehose `json:"firehose,omitempty"`
@@ -559,8 +879,22 @@ type EventTarget struct {
 	Kinesis *EventTargetKinesis `json:"kinesis,omitempty"`
 	// Configuration used to send events to Amazon CloudWatch Logs.
 	CloudwatchLogs *EventTargetCloudwatchLogs `json:"cloudwatch_logs,omitempty"`
-	// Configuration used for internal debugging.
-	Debug *EventTargetDebug `json:"debug,omitempty"`
+}
+
+func (x *EventTarget) String() string {
+	return x.GoString()
+}
+
+func (x *EventTarget) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventTarget {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tFirehose\t%v\n", x.Firehose)
+	fmt.Fprintf(tw, "\tKinesis\t%v\n", x.Kinesis)
+	fmt.Fprintf(tw, "\tCloudwatchLogs\t%v\n", x.CloudwatchLogs)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EventTargetFirehose struct {
@@ -572,12 +906,42 @@ type EventTargetFirehose struct {
 	DeliveryStreamARN string `json:"delivery_stream_arn,omitempty"`
 }
 
+func (x *EventTargetFirehose) String() string {
+	return x.GoString()
+}
+
+func (x *EventTargetFirehose) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventTargetFirehose {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tAuth\t%v\n", x.Auth)
+	fmt.Fprintf(tw, "\tDeliveryStreamARN\t%v\n", x.DeliveryStreamARN)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EventTargetKinesis struct {
 	// Configuration for how to authenticate into your AWS account. Exactly one of role
 	// or creds should be configured.
 	Auth AWSAuth `json:"auth,omitempty"`
 	// An Amazon Resource Name specifying the Kinesis stream to deposit events into.
 	StreamARN string `json:"stream_arn,omitempty"`
+}
+
+func (x *EventTargetKinesis) String() string {
+	return x.GoString()
+}
+
+func (x *EventTargetKinesis) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventTargetKinesis {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tAuth\t%v\n", x.Auth)
+	fmt.Fprintf(tw, "\tStreamARN\t%v\n", x.StreamARN)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EventTargetCloudwatchLogs struct {
@@ -589,27 +953,19 @@ type EventTargetCloudwatchLogs struct {
 	LogGroupARN string `json:"log_group_arn,omitempty"`
 }
 
-type EventTargetS3 struct {
-	// Configuration for how to authenticate into your AWS account. Exactly one of role
-	// or creds should be configured.
-	Auth AWSAuth `json:"auth,omitempty"`
-	// An Amazon Resource Name specifying the S3 bucket to deposit events into.
-	BucketARN string `json:"bucket_arn,omitempty"`
-	// An optional prefix to prepend to S3 object keys.
-	ObjectPrefix string `json:"object_prefix,omitempty"`
-	// Whether or not to compress files with gzip.
-	Compression bool `json:"compression,omitempty"`
-	// How many bytes we should accumulate into a single file before sending to S3.
-	MaxFileSize int64 `json:"max_file_size,omitempty"`
-	// How many seconds we should batch up events before sending them to S3.
-	MaxFileAge int64 `json:"max_file_age,omitempty"`
+func (x *EventTargetCloudwatchLogs) String() string {
+	return x.GoString()
 }
 
-type EventTargetDebug struct {
-	// Whether or not to output to publisher service logs.
-	Log bool `json:"log,omitempty"`
-	// URL to send events to.
-	CallbackURL string `json:"callback_url,omitempty"`
+func (x *EventTargetCloudwatchLogs) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventTargetCloudwatchLogs {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tAuth\t%v\n", x.Auth)
+	fmt.Fprintf(tw, "\tLogGroupARN\t%v\n", x.LogGroupARN)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type AWSAuth struct {
@@ -621,10 +977,39 @@ type AWSAuth struct {
 	Creds *AWSCredentials `json:"creds,omitempty"`
 }
 
+func (x *AWSAuth) String() string {
+	return x.GoString()
+}
+
+func (x *AWSAuth) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AWSAuth {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tRole\t%v\n", x.Role)
+	fmt.Fprintf(tw, "\tCreds\t%v\n", x.Creds)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type AWSRole struct {
 	// An ARN that specifies the role that ngrok should use to deliver to the
 	// configured target.
 	RoleARN string `json:"role_arn,omitempty"`
+}
+
+func (x *AWSRole) String() string {
+	return x.GoString()
+}
+
+func (x *AWSRole) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AWSRole {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tRoleARN\t%v\n", x.RoleARN)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type AWSCredentials struct {
@@ -634,127 +1019,19 @@ type AWSCredentials struct {
 	AWSSecretAccessKey *string `json:"aws_secret_access_key,omitempty"`
 }
 
-type SentEvent struct {
-	EventID string `json:"event_id,omitempty"`
+func (x *AWSCredentials) String() string {
+	return x.GoString()
 }
 
-type EventSubscriptionCreate struct {
-	// Arbitrary customer supplied information intended to be machine readable.
-	// Optional, max 4096 chars.
-	Metadata string `json:"metadata,omitempty"`
-	// Arbitrary customer supplied information intended to be human readable. Optional,
-	// max 255 chars.
-	Description string `json:"description,omitempty"`
-	// TODO
-	Sources []EventSourceReplace `json:"sources,omitempty"`
-	// TODO
-	DestinationIDs []string `json:"destination_ids,omitempty"`
-}
-
-type EventSubscriptionUpdate struct {
-	// Unique identifier for this Event Subscription.
-	ID string `json:"id,omitempty"`
-	// Arbitrary customer supplied information intended to be machine readable.
-	// Optional, max 4096 chars.
-	Metadata *string `json:"metadata,omitempty"`
-	// Arbitrary customer supplied information intended to be human readable. Optional,
-	// max 255 chars.
-	Description *string `json:"description,omitempty"`
-	// TODO
-	Sources *[]EventSourceReplace `json:"sources,omitempty"`
-	// TODO
-	DestinationIDs *[]string `json:"destination_ids,omitempty"`
-}
-
-type EventSubscriptionList struct {
-	// The list of all Event Subscriptions on this account.
-	EventSubscriptions []EventSubscription `json:"event_subscriptions,omitempty"`
-	// URI of the Event Subscriptions list API resource.
-	URI string `json:"uri,omitempty"`
-	// URI of next page, or null if there is no next page.
-	NextPageURI *string `json:"next_page_uri,omitempty"`
-}
-
-type EventSubscription struct {
-	// Unique identifier for this Event Subscription.
-	ID string `json:"id,omitempty"`
-	// URI of the Event Subscription API resource.
-	URI string `json:"uri,omitempty"`
-	// When the Event Subscription was created (RFC 3339 format).
-	CreatedAt string `json:"created_at,omitempty"`
-	// Arbitrary customer supplied information intended to be machine readable.
-	// Optional, max 4096 chars.
-	Metadata string `json:"metadata,omitempty"`
-	// Arbitrary customer supplied information intended to be human readable. Optional,
-	// max 255 chars.
-	Description string `json:"description,omitempty"`
-	// TODO
-	Sources []EventSource `json:"sources,omitempty"`
-	// TODO
-	Destinations []Ref `json:"destinations,omitempty"`
-}
-
-type EventSourceReplace struct {
-	// TODO
-	Type string `json:"type,omitempty"`
-	// TODO
-	Filter string `json:"filter,omitempty"`
-	// TODO
-	Fields []string `json:"fields,omitempty"`
-}
-
-type EventSource struct {
-	// TODO
-	Type string `json:"type,omitempty"`
-	// TODO
-	Filter string `json:"filter,omitempty"`
-	// TODO
-	Fields []string `json:"fields,omitempty"`
-	// TODO
-	URI string `json:"uri,omitempty"`
-}
-
-type EventSourceList struct {
-	// TODO
-	Sources []EventSource `json:"sources,omitempty"`
-	// TODO
-	URI string `json:"uri,omitempty"`
-}
-
-type EventSourceCreate struct {
-	// TODO
-	SubscriptionID string `json:"subscription_id,omitempty"`
-	// TODO
-	Type string `json:"type,omitempty"`
-	// TODO
-	Filter string `json:"filter,omitempty"`
-	// TODO
-	Fields []string `json:"fields,omitempty"`
-}
-
-type EventSourceUpdate struct {
-	// TODO
-	SubscriptionID string `json:"subscription_id,omitempty"`
-	// TODO
-	Type string `json:"type,omitempty"`
-	// TODO
-	Filter *string `json:"filter,omitempty"`
-	// TODO
-	Fields *[]string `json:"fields,omitempty"`
-}
-
-// This is needed instead of Item because the parameters are different.
-type EventSourceItem struct {
-	// TODO
-	SubscriptionID string `json:"subscription_id,omitempty"`
-	// TODO
-	Type string `json:"type,omitempty"`
-}
-
-// This is needed instead of Page because the parameters are different. We also don't need the typical pagination params because pagination of this isn't necessary or supported.
-type EventSourcePage struct {
-	// TODO
-	SubscriptionID string `json:"subscription_id,omitempty"`
+func (x *AWSCredentials) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AWSCredentials {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tAWSAccessKeyID\t%v\n", x.AWSAccessKeyID)
+	fmt.Fprintf(tw, "\tAWSSecretAccessKey\t%v\n", x.AWSSecretAccessKey)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type IPPolicyCreate struct {
@@ -768,6 +1045,22 @@ type IPPolicyCreate struct {
 	Action string `json:"action,omitempty"`
 }
 
+func (x *IPPolicyCreate) String() string {
+	return x.GoString()
+}
+
+func (x *IPPolicyCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPPolicyCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tAction\t%v\n", x.Action)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type IPPolicyUpdate struct {
 	ID string `json:"id,omitempty"`
 	// human-readable description of the source IPs of this IP policy. optional, max
@@ -776,6 +1069,23 @@ type IPPolicyUpdate struct {
 	// arbitrary user-defined machine-readable data of this IP policy. optional, max
 	// 4096 bytes.
 	Metadata *string `json:"metadata,omitempty"`
+}
+
+func (x *IPPolicyUpdate) String() string {
+	return fmt.Sprintf("IPPolicyUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *IPPolicyUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPPolicyUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type IPPolicy struct {
@@ -795,6 +1105,26 @@ type IPPolicy struct {
 	Action string `json:"action,omitempty"`
 }
 
+func (x *IPPolicy) String() string {
+	return fmt.Sprintf("IPPolicy{ID: %v}", x.ID)
+
+}
+
+func (x *IPPolicy) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPPolicy {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tAction\t%v\n", x.Action)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type IPPolicyList struct {
 	// the list of all IP policies on this account
 	IPPolicies []IPPolicy `json:"ip_policies,omitempty"`
@@ -802,6 +1132,22 @@ type IPPolicyList struct {
 	URI string `json:"uri,omitempty"`
 	// URI of the next page, or null if there is no next page
 	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *IPPolicyList) String() string {
+	return x.GoString()
+}
+
+func (x *IPPolicyList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPPolicyList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tIPPolicies\t%v\n", x.IPPolicies)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type IPPolicyRuleCreate struct {
@@ -817,6 +1163,23 @@ type IPPolicyRuleCreate struct {
 	IPPolicyID string `json:"ip_policy_id,omitempty"`
 }
 
+func (x *IPPolicyRuleCreate) String() string {
+	return x.GoString()
+}
+
+func (x *IPPolicyRuleCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPPolicyRuleCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCIDR\t%v\n", x.CIDR)
+	fmt.Fprintf(tw, "\tIPPolicyID\t%v\n", x.IPPolicyID)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type IPPolicyRuleUpdate struct {
 	ID string `json:"id,omitempty"`
 	// human-readable description of the source IPs of this IP rule. optional, max 255
@@ -827,6 +1190,24 @@ type IPPolicyRuleUpdate struct {
 	Metadata *string `json:"metadata,omitempty"`
 	// an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported.
 	CIDR *string `json:"cidr,omitempty"`
+}
+
+func (x *IPPolicyRuleUpdate) String() string {
+	return fmt.Sprintf("IPPolicyRuleUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *IPPolicyRuleUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPPolicyRuleUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCIDR\t%v\n", x.CIDR)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type IPPolicyRule struct {
@@ -848,6 +1229,27 @@ type IPPolicyRule struct {
 	IPPolicy Ref `json:"ip_policy,omitempty"`
 }
 
+func (x *IPPolicyRule) String() string {
+	return fmt.Sprintf("IPPolicyRule{ID: %v}", x.ID)
+
+}
+
+func (x *IPPolicyRule) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPPolicyRule {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCIDR\t%v\n", x.CIDR)
+	fmt.Fprintf(tw, "\tIPPolicy\t%v\n", x.IPPolicy)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type IPPolicyRuleList struct {
 	// the list of all IP policy rules on this account
 	IPPolicyRules []IPPolicyRule `json:"ip_policy_rules,omitempty"`
@@ -855,6 +1257,22 @@ type IPPolicyRuleList struct {
 	URI string `json:"uri,omitempty"`
 	// URI of the next page, or null if there is no next page
 	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *IPPolicyRuleList) String() string {
+	return x.GoString()
+}
+
+func (x *IPPolicyRuleList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPPolicyRuleList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tIPPolicyRules\t%v\n", x.IPPolicyRules)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type IPRestrictionCreate struct {
@@ -874,6 +1292,24 @@ type IPRestrictionCreate struct {
 	IPPolicyIDs []string `json:"ip_policy_ids,omitempty"`
 }
 
+func (x *IPRestrictionCreate) String() string {
+	return x.GoString()
+}
+
+func (x *IPRestrictionCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPRestrictionCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tEnforced\t%v\n", x.Enforced)
+	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
+	fmt.Fprintf(tw, "\tIPPolicyIDs\t%v\n", x.IPPolicyIDs)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type IPRestrictionUpdate struct {
 	ID string `json:"id,omitempty"`
 	// human-readable description of this IP restriction. optional, max 255 bytes.
@@ -886,6 +1322,25 @@ type IPRestrictionUpdate struct {
 	Enforced *bool `json:"enforced,omitempty"`
 	// the set of IP policy identifiers that are used to enforce the restriction
 	IPPolicyIDs []string `json:"ip_policy_ids,omitempty"`
+}
+
+func (x *IPRestrictionUpdate) String() string {
+	return fmt.Sprintf("IPRestrictionUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *IPRestrictionUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPRestrictionUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tEnforced\t%v\n", x.Enforced)
+	fmt.Fprintf(tw, "\tIPPolicyIDs\t%v\n", x.IPPolicyIDs)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type IPRestriction struct {
@@ -911,6 +1366,28 @@ type IPRestriction struct {
 	IPPolicies []Ref `json:"ip_policies,omitempty"`
 }
 
+func (x *IPRestriction) String() string {
+	return fmt.Sprintf("IPRestriction{ID: %v}", x.ID)
+
+}
+
+func (x *IPRestriction) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPRestriction {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tEnforced\t%v\n", x.Enforced)
+	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
+	fmt.Fprintf(tw, "\tIPPolicies\t%v\n", x.IPPolicies)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type IPRestrictionList struct {
 	// the list of all IP restrictions on this account
 	IPRestrictions []IPRestriction `json:"ip_restrictions,omitempty"`
@@ -918,6 +1395,22 @@ type IPRestrictionList struct {
 	URI string `json:"uri,omitempty"`
 	// URI of the next page, or null if there is no next page
 	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *IPRestrictionList) String() string {
+	return x.GoString()
+}
+
+func (x *IPRestrictionList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPRestrictionList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tIPRestrictions\t%v\n", x.IPRestrictions)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type IPWhitelistEntryCreate struct {
@@ -933,6 +1426,22 @@ type IPWhitelistEntryCreate struct {
 	IPNet string `json:"ip_net,omitempty"`
 }
 
+func (x *IPWhitelistEntryCreate) String() string {
+	return x.GoString()
+}
+
+func (x *IPWhitelistEntryCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPWhitelistEntryCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tIPNet\t%v\n", x.IPNet)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type IPWhitelistEntryUpdate struct {
 	ID string `json:"id,omitempty"`
 	// human-readable description of the source IPs for this IP whitelist entry.
@@ -941,6 +1450,23 @@ type IPWhitelistEntryUpdate struct {
 	// arbitrary user-defined machine-readable data of this IP whitelist entry.
 	// optional, max 4096 bytes.
 	Metadata *string `json:"metadata,omitempty"`
+}
+
+func (x *IPWhitelistEntryUpdate) String() string {
+	return fmt.Sprintf("IPWhitelistEntryUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *IPWhitelistEntryUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPWhitelistEntryUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type IPWhitelistEntry struct {
@@ -962,6 +1488,26 @@ type IPWhitelistEntry struct {
 	IPNet string `json:"ip_net,omitempty"`
 }
 
+func (x *IPWhitelistEntry) String() string {
+	return fmt.Sprintf("IPWhitelistEntry{ID: %v}", x.ID)
+
+}
+
+func (x *IPWhitelistEntry) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPWhitelistEntry {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tIPNet\t%v\n", x.IPNet)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type IPWhitelistEntryList struct {
 	// the list of all IP whitelist entries on this account
 	Whitelist []IPWhitelistEntry `json:"whitelist,omitempty"`
@@ -969,6 +1515,22 @@ type IPWhitelistEntryList struct {
 	URI string `json:"uri,omitempty"`
 	// URI of the next page, or null if there is no next page
 	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *IPWhitelistEntryList) String() string {
+	return x.GoString()
+}
+
+func (x *IPWhitelistEntryList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPWhitelistEntryList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tWhitelist\t%v\n", x.Whitelist)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointConfiguration struct {
@@ -987,8 +1549,6 @@ type EndpointConfiguration struct {
 	CreatedAt string `json:"created_at,omitempty"`
 	// URI of the endpoint configuration API resource
 	URI string `json:"uri,omitempty"`
-	// basic auth module configuration or null
-	BasicAuth *EndpointBasicAuth `json:"basic_auth,omitempty"`
 	// circuit breaker module configuration or null
 	CircuitBreaker *EndpointCircuitBreaker `json:"circuit_breaker,omitempty"`
 	// compression module configuration or null
@@ -1013,8 +1573,38 @@ type EndpointConfiguration struct {
 	SAML *EndpointSAML `json:"saml,omitempty"`
 	// oidc module configuration or null
 	OIDC *EndpointOIDC `json:"oidc,omitempty"`
-	// backend module configuration or null
-	Backend *EndpointBackend `json:"backend,omitempty"`
+}
+
+func (x *EndpointConfiguration) String() string {
+	return fmt.Sprintf("EndpointConfiguration{ID: %v}", x.ID)
+
+}
+
+func (x *EndpointConfiguration) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointConfiguration {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCircuitBreaker\t%v\n", x.CircuitBreaker)
+	fmt.Fprintf(tw, "\tCompression\t%v\n", x.Compression)
+	fmt.Fprintf(tw, "\tRequestHeaders\t%v\n", x.RequestHeaders)
+	fmt.Fprintf(tw, "\tResponseHeaders\t%v\n", x.ResponseHeaders)
+	fmt.Fprintf(tw, "\tIPPolicy\t%v\n", x.IPPolicy)
+	fmt.Fprintf(tw, "\tMutualTLS\t%v\n", x.MutualTLS)
+	fmt.Fprintf(tw, "\tTLSTermination\t%v\n", x.TLSTermination)
+	fmt.Fprintf(tw, "\tWebhookValidation\t%v\n", x.WebhookValidation)
+	fmt.Fprintf(tw, "\tOAuth\t%v\n", x.OAuth)
+	fmt.Fprintf(tw, "\tLogging\t%v\n", x.Logging)
+	fmt.Fprintf(tw, "\tSAML\t%v\n", x.SAML)
+	fmt.Fprintf(tw, "\tOIDC\t%v\n", x.OIDC)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointConfigurationList struct {
@@ -1026,6 +1616,22 @@ type EndpointConfigurationList struct {
 	NextPageURI *string `json:"next_page_uri,omitempty"`
 }
 
+func (x *EndpointConfigurationList) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointConfigurationList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointConfigurationList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEndpointConfigurations\t%v\n", x.EndpointConfigurations)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointConfigurationUpdate struct {
 	// unique identifier of this endpoint configuration
 	ID string `json:"id,omitempty"`
@@ -1035,8 +1641,6 @@ type EndpointConfigurationUpdate struct {
 	// arbitrary user-defined machine-readable data of this endpoint configuration.
 	// Optional, max 4096 bytes.
 	Metadata *string `json:"metadata,omitempty"`
-	// basic auth module configuration or null
-	BasicAuth *EndpointBasicAuth `json:"basic_auth,omitempty"`
 	// circuit breaker module configuration or null
 	CircuitBreaker *EndpointCircuitBreaker `json:"circuit_breaker,omitempty"`
 	// compression module configuration or null
@@ -1061,8 +1665,35 @@ type EndpointConfigurationUpdate struct {
 	SAML *EndpointSAMLMutate `json:"saml,omitempty"`
 	// oidc module configuration or null
 	OIDC *EndpointOIDC `json:"oidc,omitempty"`
-	// backend module configuration or null
-	Backend *EndpointBackendMutate `json:"backend,omitempty"`
+}
+
+func (x *EndpointConfigurationUpdate) String() string {
+	return fmt.Sprintf("EndpointConfigurationUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *EndpointConfigurationUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointConfigurationUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCircuitBreaker\t%v\n", x.CircuitBreaker)
+	fmt.Fprintf(tw, "\tCompression\t%v\n", x.Compression)
+	fmt.Fprintf(tw, "\tRequestHeaders\t%v\n", x.RequestHeaders)
+	fmt.Fprintf(tw, "\tResponseHeaders\t%v\n", x.ResponseHeaders)
+	fmt.Fprintf(tw, "\tIPPolicy\t%v\n", x.IPPolicy)
+	fmt.Fprintf(tw, "\tMutualTLS\t%v\n", x.MutualTLS)
+	fmt.Fprintf(tw, "\tTLSTermination\t%v\n", x.TLSTermination)
+	fmt.Fprintf(tw, "\tWebhookValidation\t%v\n", x.WebhookValidation)
+	fmt.Fprintf(tw, "\tOAuth\t%v\n", x.OAuth)
+	fmt.Fprintf(tw, "\tLogging\t%v\n", x.Logging)
+	fmt.Fprintf(tw, "\tSAML\t%v\n", x.SAML)
+	fmt.Fprintf(tw, "\tOIDC\t%v\n", x.OIDC)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointConfigurationCreate struct {
@@ -1075,8 +1706,6 @@ type EndpointConfigurationCreate struct {
 	// arbitrary user-defined machine-readable data of this endpoint configuration.
 	// Optional, max 4096 bytes.
 	Metadata string `json:"metadata,omitempty"`
-	// basic auth module configuration or null
-	BasicAuth *EndpointBasicAuth `json:"basic_auth,omitempty"`
 	// circuit breaker module configuration or null
 	CircuitBreaker *EndpointCircuitBreaker `json:"circuit_breaker,omitempty"`
 	// compression module configuration or null
@@ -1101,8 +1730,34 @@ type EndpointConfigurationCreate struct {
 	SAML *EndpointSAMLMutate `json:"saml,omitempty"`
 	// oidc module configuration or null
 	OIDC *EndpointOIDC `json:"oidc,omitempty"`
-	// backend module configuration or null
-	Backend *EndpointBackendMutate `json:"backend,omitempty"`
+}
+
+func (x *EndpointConfigurationCreate) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointConfigurationCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointConfigurationCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCircuitBreaker\t%v\n", x.CircuitBreaker)
+	fmt.Fprintf(tw, "\tCompression\t%v\n", x.Compression)
+	fmt.Fprintf(tw, "\tRequestHeaders\t%v\n", x.RequestHeaders)
+	fmt.Fprintf(tw, "\tResponseHeaders\t%v\n", x.ResponseHeaders)
+	fmt.Fprintf(tw, "\tIPPolicy\t%v\n", x.IPPolicy)
+	fmt.Fprintf(tw, "\tMutualTLS\t%v\n", x.MutualTLS)
+	fmt.Fprintf(tw, "\tTLSTermination\t%v\n", x.TLSTermination)
+	fmt.Fprintf(tw, "\tWebhookValidation\t%v\n", x.WebhookValidation)
+	fmt.Fprintf(tw, "\tOAuth\t%v\n", x.OAuth)
+	fmt.Fprintf(tw, "\tLogging\t%v\n", x.Logging)
+	fmt.Fprintf(tw, "\tSAML\t%v\n", x.SAML)
+	fmt.Fprintf(tw, "\tOIDC\t%v\n", x.OIDC)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointWebhookValidation struct {
@@ -1118,10 +1773,40 @@ type EndpointWebhookValidation struct {
 	Secret string `json:"secret,omitempty"`
 }
 
+func (x *EndpointWebhookValidation) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointWebhookValidation) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointWebhookValidation {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tProvider\t%v\n", x.Provider)
+	fmt.Fprintf(tw, "\tSecret\t%v\n", x.Secret)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointCompression struct {
 	// true if the module will be applied to traffic, false to disable. default true if
 	// unspecified
 	Enabled *bool `json:"enabled,omitempty"`
+}
+
+func (x *EndpointCompression) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointCompression) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointCompression {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointMutualTLS struct {
@@ -1133,6 +1818,21 @@ type EndpointMutualTLS struct {
 	CertificateAuthorities []Ref `json:"certificate_authorities,omitempty"`
 }
 
+func (x *EndpointMutualTLS) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointMutualTLS) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointMutualTLS {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tCertificateAuthorities\t%v\n", x.CertificateAuthorities)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointMutualTLSMutate struct {
 	// true if the module will be applied to traffic, false to disable. default true if
 	// unspecified
@@ -1140,6 +1840,21 @@ type EndpointMutualTLSMutate struct {
 	// list of certificate authorities that will be used to validate the TLS client
 	// certificate presnted by the initiatiator of the TLS connection
 	CertificateAuthorityIDs []string `json:"certificate_authority_ids,omitempty"`
+}
+
+func (x *EndpointMutualTLSMutate) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointMutualTLSMutate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointMutualTLSMutate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tCertificateAuthorityIDs\t%v\n", x.CertificateAuthorityIDs)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointTLSTermination struct {
@@ -1157,20 +1872,20 @@ type EndpointTLSTermination struct {
 	MinVersion *string `json:"min_version,omitempty"`
 }
 
-type EndpointBasicAuth struct {
-	// true if the module will be applied to traffic, false to disable. default true if
-	// unspecified
-	Enabled *bool `json:"enabled,omitempty"`
-	// determines how the basic auth credentials are validated. Currently only the
-	// value agent is supported which means that credentials will be validated against
-	// the username and password specified by the ngrok agent's -auth flag, if any.
-	AuthProviderID string `json:"auth_provider_id,omitempty"`
-	// an arbitrary string to be specified in as the 'realm' value in the
-	// WWW-Authenticate header. default is ngrok
-	Realm string `json:"realm,omitempty"`
-	// true or false indicating whether to allow OPTIONS requests through without
-	// authentication which is necessary for CORS. default is false
-	AllowOptions bool `json:"allow_options,omitempty"`
+func (x *EndpointTLSTermination) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointTLSTermination) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointTLSTermination {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tTerminateAt\t%v\n", x.TerminateAt)
+	fmt.Fprintf(tw, "\tMinVersion\t%v\n", x.MinVersion)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointLogging struct {
@@ -1182,6 +1897,21 @@ type EndpointLogging struct {
 	EventStreams []Ref `json:"event_streams,omitempty"`
 }
 
+func (x *EndpointLogging) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointLogging) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointLogging {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tEventStreams\t%v\n", x.EventStreams)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointLoggingMutate struct {
 	// true if the module will be applied to traffic, false to disable. default true if
 	// unspecified
@@ -1189,6 +1919,21 @@ type EndpointLoggingMutate struct {
 	// list of all EventStreams that will be used to configure and export this
 	// endpoint's logs
 	EventStreamIDs []string `json:"event_stream_ids,omitempty"`
+}
+
+func (x *EndpointLoggingMutate) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointLoggingMutate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointLoggingMutate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tEventStreamIDs\t%v\n", x.EventStreamIDs)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointRequestHeaders struct {
@@ -1203,6 +1948,22 @@ type EndpointRequestHeaders struct {
 	Remove []string `json:"remove,omitempty"`
 }
 
+func (x *EndpointRequestHeaders) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointRequestHeaders) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointRequestHeaders {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tAdd\t%v\n", x.Add)
+	fmt.Fprintf(tw, "\tRemove\t%v\n", x.Remove)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointResponseHeaders struct {
 	// true if the module will be applied to traffic, false to disable. default true if
 	// unspecified
@@ -1215,11 +1976,42 @@ type EndpointResponseHeaders struct {
 	Remove []string `json:"remove,omitempty"`
 }
 
+func (x *EndpointResponseHeaders) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointResponseHeaders) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointResponseHeaders {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tAdd\t%v\n", x.Add)
+	fmt.Fprintf(tw, "\tRemove\t%v\n", x.Remove)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointIPPolicy struct {
 	// true if the module will be applied to traffic, false to disable. default true if
 	// unspecified
 	Enabled    *bool `json:"enabled,omitempty"`
 	IPPolicies []Ref `json:"ip_policies,omitempty"`
+}
+
+func (x *EndpointIPPolicy) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointIPPolicy) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointIPPolicy {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tIPPolicies\t%v\n", x.IPPolicies)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointIPPolicyMutate struct {
@@ -1229,6 +2021,21 @@ type EndpointIPPolicyMutate struct {
 	// list of all IP policies that will be used to check if a source IP is allowed
 	// access to the endpoint
 	IPPolicyIDs []string `json:"ip_policy_ids,omitempty"`
+}
+
+func (x *EndpointIPPolicyMutate) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointIPPolicyMutate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointIPPolicyMutate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tIPPolicyIDs\t%v\n", x.IPPolicyIDs)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointCircuitBreaker struct {
@@ -1248,6 +2055,25 @@ type EndpointCircuitBreaker struct {
 	VolumeThreshold uint32 `json:"volume_threshold,omitempty"`
 	// Error threshold percentage should be between 0 - 1.0, not 0-100.0
 	ErrorThresholdPercentage float64 `json:"error_threshold_percentage,omitempty"`
+}
+
+func (x *EndpointCircuitBreaker) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointCircuitBreaker) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointCircuitBreaker {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tTrippedDuration\t%v\n", x.TrippedDuration)
+	fmt.Fprintf(tw, "\tRollingWindow\t%v\n", x.RollingWindow)
+	fmt.Fprintf(tw, "\tNumBuckets\t%v\n", x.NumBuckets)
+	fmt.Fprintf(tw, "\tVolumeThreshold\t%v\n", x.VolumeThreshold)
+	fmt.Fprintf(tw, "\tErrorThresholdPercentage\t%v\n", x.ErrorThresholdPercentage)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointOAuth struct {
@@ -1278,6 +2104,26 @@ type EndpointOAuth struct {
 	AuthCheckInterval uint32 `json:"auth_check_interval,omitempty"`
 }
 
+func (x *EndpointOAuth) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointOAuth) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointOAuth {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tProvider\t%v\n", x.Provider)
+	fmt.Fprintf(tw, "\tOptionsPassthrough\t%v\n", x.OptionsPassthrough)
+	fmt.Fprintf(tw, "\tCookiePrefix\t%v\n", x.CookiePrefix)
+	fmt.Fprintf(tw, "\tInactivityTimeout\t%v\n", x.InactivityTimeout)
+	fmt.Fprintf(tw, "\tMaximumDuration\t%v\n", x.MaximumDuration)
+	fmt.Fprintf(tw, "\tAuthCheckInterval\t%v\n", x.AuthCheckInterval)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointOAuthProvider struct {
 	// configuration for using github as the identity provider
 	Github *EndpointOAuthGitHub `json:"github,omitempty"`
@@ -1287,6 +2133,23 @@ type EndpointOAuthProvider struct {
 	Microsoft *EndpointOAuthMicrosoft `json:"microsoft,omitempty"`
 	// configuration for using google as the identity provider
 	Google *EndpointOAuthGoogle `json:"google,omitempty"`
+}
+
+func (x *EndpointOAuthProvider) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointOAuthProvider) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointOAuthProvider {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tGithub\t%v\n", x.Github)
+	fmt.Fprintf(tw, "\tFacebook\t%v\n", x.Facebook)
+	fmt.Fprintf(tw, "\tMicrosoft\t%v\n", x.Microsoft)
+	fmt.Fprintf(tw, "\tGoogle\t%v\n", x.Google)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointOAuthGitHub struct {
@@ -1320,6 +2183,26 @@ type EndpointOAuthGitHub struct {
 	Organizations []string `json:"organizations,omitempty"`
 }
 
+func (x *EndpointOAuthGitHub) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointOAuthGitHub) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointOAuthGitHub {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tClientID\t%v\n", x.ClientID)
+	fmt.Fprintf(tw, "\tClientSecret\t%v\n", x.ClientSecret)
+	fmt.Fprintf(tw, "\tScopes\t%v\n", x.Scopes)
+	fmt.Fprintf(tw, "\tEmailAddresses\t%v\n", x.EmailAddresses)
+	fmt.Fprintf(tw, "\tEmailDomains\t%v\n", x.EmailDomains)
+	fmt.Fprintf(tw, "\tTeams\t%v\n", x.Teams)
+	fmt.Fprintf(tw, "\tOrganizations\t%v\n", x.Organizations)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointOAuthFacebook struct {
 	// the OAuth app client ID. retrieve it from the identity provider's dashboard
 	// where you created your own OAuth app. optional. if unspecified, ngrok will use
@@ -1341,6 +2224,24 @@ type EndpointOAuthFacebook struct {
 	// a list of email domains of users authenticated by identity provider who are
 	// allowed access to the endpoint
 	EmailDomains []string `json:"email_domains,omitempty"`
+}
+
+func (x *EndpointOAuthFacebook) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointOAuthFacebook) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointOAuthFacebook {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tClientID\t%v\n", x.ClientID)
+	fmt.Fprintf(tw, "\tClientSecret\t%v\n", x.ClientSecret)
+	fmt.Fprintf(tw, "\tScopes\t%v\n", x.Scopes)
+	fmt.Fprintf(tw, "\tEmailAddresses\t%v\n", x.EmailAddresses)
+	fmt.Fprintf(tw, "\tEmailDomains\t%v\n", x.EmailDomains)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointOAuthMicrosoft struct {
@@ -1366,6 +2267,24 @@ type EndpointOAuthMicrosoft struct {
 	EmailDomains []string `json:"email_domains,omitempty"`
 }
 
+func (x *EndpointOAuthMicrosoft) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointOAuthMicrosoft) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointOAuthMicrosoft {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tClientID\t%v\n", x.ClientID)
+	fmt.Fprintf(tw, "\tClientSecret\t%v\n", x.ClientSecret)
+	fmt.Fprintf(tw, "\tScopes\t%v\n", x.Scopes)
+	fmt.Fprintf(tw, "\tEmailAddresses\t%v\n", x.EmailAddresses)
+	fmt.Fprintf(tw, "\tEmailDomains\t%v\n", x.EmailDomains)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointOAuthGoogle struct {
 	// the OAuth app client ID. retrieve it from the identity provider's dashboard
 	// where you created your own OAuth app. optional. if unspecified, ngrok will use
@@ -1389,6 +2308,24 @@ type EndpointOAuthGoogle struct {
 	EmailDomains []string `json:"email_domains,omitempty"`
 }
 
+func (x *EndpointOAuthGoogle) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointOAuthGoogle) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointOAuthGoogle {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tClientID\t%v\n", x.ClientID)
+	fmt.Fprintf(tw, "\tClientSecret\t%v\n", x.ClientSecret)
+	fmt.Fprintf(tw, "\tScopes\t%v\n", x.Scopes)
+	fmt.Fprintf(tw, "\tEmailAddresses\t%v\n", x.EmailAddresses)
+	fmt.Fprintf(tw, "\tEmailDomains\t%v\n", x.EmailDomains)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointSAML struct {
 	// true if the module will be applied to traffic, false to disable. default true if
 	// unspecified
@@ -1406,11 +2343,6 @@ type EndpointSAML struct {
 	// Integer number of seconds of the maximum duration of an authenticated session.
 	// After this period is exceeded, a user must reauthenticate.
 	MaximumDuration uint32 `json:"maximum_duration,omitempty"`
-	// The IdP's metadata URL which returns the XML IdP EntityDescriptor. The IdP's
-	// metadata URL specifies how to connect to the IdP as well as its public key which
-	// is then used to validate the signature on incoming SAML assertions to the ACS
-	// endpoint.
-	IdPMetadataURL string `json:"idp_metadata_url,omitempty"`
 	// The full XML IdP EntityDescriptor. Your IdP may provide this to you as a a file
 	// to download or as a URL.
 	IdPMetadata string `json:"idp_metadata,omitempty"`
@@ -1448,6 +2380,33 @@ type EndpointSAML struct {
 	MetadataURL string `json:"metadata_url,omitempty"`
 }
 
+func (x *EndpointSAML) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointSAML) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointSAML {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tOptionsPassthrough\t%v\n", x.OptionsPassthrough)
+	fmt.Fprintf(tw, "\tCookiePrefix\t%v\n", x.CookiePrefix)
+	fmt.Fprintf(tw, "\tInactivityTimeout\t%v\n", x.InactivityTimeout)
+	fmt.Fprintf(tw, "\tMaximumDuration\t%v\n", x.MaximumDuration)
+	fmt.Fprintf(tw, "\tIdPMetadata\t%v\n", x.IdPMetadata)
+	fmt.Fprintf(tw, "\tForceAuthn\t%v\n", x.ForceAuthn)
+	fmt.Fprintf(tw, "\tAllowIdPInitiated\t%v\n", x.AllowIdPInitiated)
+	fmt.Fprintf(tw, "\tAuthorizedGroups\t%v\n", x.AuthorizedGroups)
+	fmt.Fprintf(tw, "\tEntityID\t%v\n", x.EntityID)
+	fmt.Fprintf(tw, "\tAssertionConsumerServiceURL\t%v\n", x.AssertionConsumerServiceURL)
+	fmt.Fprintf(tw, "\tSingleLogoutURL\t%v\n", x.SingleLogoutURL)
+	fmt.Fprintf(tw, "\tRequestSigningCertificatePEM\t%v\n", x.RequestSigningCertificatePEM)
+	fmt.Fprintf(tw, "\tMetadataURL\t%v\n", x.MetadataURL)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointSAMLMutate struct {
 	// true if the module will be applied to traffic, false to disable. default true if
 	// unspecified
@@ -1465,11 +2424,6 @@ type EndpointSAMLMutate struct {
 	// Integer number of seconds of the maximum duration of an authenticated session.
 	// After this period is exceeded, a user must reauthenticate.
 	MaximumDuration uint32 `json:"maximum_duration,omitempty"`
-	// The IdP's metadata URL which returns the XML IdP EntityDescriptor. The IdP's
-	// metadata URL specifies how to connect to the IdP as well as its public key which
-	// is then used to validate the signature on incoming SAML assertions to the ACS
-	// endpoint.
-	IdPMetadataURL string `json:"idp_metadata_url,omitempty"`
 	// The full XML IdP EntityDescriptor. Your IdP may provide this to you as a a file
 	// to download or as a URL.
 	IdPMetadata string `json:"idp_metadata,omitempty"`
@@ -1485,6 +2439,28 @@ type EndpointSAMLMutate struct {
 	// If present, only users who are a member of one of the listed groups may access
 	// the target endpoint.
 	AuthorizedGroups []string `json:"authorized_groups,omitempty"`
+}
+
+func (x *EndpointSAMLMutate) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointSAMLMutate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointSAMLMutate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tOptionsPassthrough\t%v\n", x.OptionsPassthrough)
+	fmt.Fprintf(tw, "\tCookiePrefix\t%v\n", x.CookiePrefix)
+	fmt.Fprintf(tw, "\tInactivityTimeout\t%v\n", x.InactivityTimeout)
+	fmt.Fprintf(tw, "\tMaximumDuration\t%v\n", x.MaximumDuration)
+	fmt.Fprintf(tw, "\tIdPMetadata\t%v\n", x.IdPMetadata)
+	fmt.Fprintf(tw, "\tForceAuthn\t%v\n", x.ForceAuthn)
+	fmt.Fprintf(tw, "\tAllowIdPInitiated\t%v\n", x.AllowIdPInitiated)
+	fmt.Fprintf(tw, "\tAuthorizedGroups\t%v\n", x.AuthorizedGroups)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointOIDC struct {
@@ -1514,20 +2490,26 @@ type EndpointOIDC struct {
 	Scopes []string `json:"scopes,omitempty"`
 }
 
-type EndpointBackend struct {
-	// true if the module will be applied to traffic, false to disable. default true if
-	// unspecified
-	Enabled *bool `json:"enabled,omitempty"`
-	// backend to be used to back this endpoint
-	Backend Ref `json:"backend,omitempty"`
+func (x *EndpointOIDC) String() string {
+	return x.GoString()
 }
 
-type EndpointBackendMutate struct {
-	// true if the module will be applied to traffic, false to disable. default true if
-	// unspecified
-	Enabled *bool `json:"enabled,omitempty"`
-	// backend to be used to back this endpoint
-	BackendID string `json:"backend_id,omitempty"`
+func (x *EndpointOIDC) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointOIDC {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tOptionsPassthrough\t%v\n", x.OptionsPassthrough)
+	fmt.Fprintf(tw, "\tCookiePrefix\t%v\n", x.CookiePrefix)
+	fmt.Fprintf(tw, "\tInactivityTimeout\t%v\n", x.InactivityTimeout)
+	fmt.Fprintf(tw, "\tMaximumDuration\t%v\n", x.MaximumDuration)
+	fmt.Fprintf(tw, "\tIssuer\t%v\n", x.Issuer)
+	fmt.Fprintf(tw, "\tClientID\t%v\n", x.ClientID)
+	fmt.Fprintf(tw, "\tClientSecret\t%v\n", x.ClientSecret)
+	fmt.Fprintf(tw, "\tScopes\t%v\n", x.Scopes)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointLoggingReplace struct {
@@ -1535,9 +2517,20 @@ type EndpointLoggingReplace struct {
 	Module EndpointLoggingMutate `json:"module,omitempty"`
 }
 
-type EndpointBasicAuthReplace struct {
-	ID     string            `json:"id,omitempty"`
-	Module EndpointBasicAuth `json:"module,omitempty"`
+func (x *EndpointLoggingReplace) String() string {
+	return fmt.Sprintf("EndpointLoggingReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EndpointLoggingReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointLoggingReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointCircuitBreakerReplace struct {
@@ -1545,9 +2538,41 @@ type EndpointCircuitBreakerReplace struct {
 	Module EndpointCircuitBreaker `json:"module,omitempty"`
 }
 
+func (x *EndpointCircuitBreakerReplace) String() string {
+	return fmt.Sprintf("EndpointCircuitBreakerReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EndpointCircuitBreakerReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointCircuitBreakerReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointCompressionReplace struct {
 	ID     string              `json:"id,omitempty"`
 	Module EndpointCompression `json:"module,omitempty"`
+}
+
+func (x *EndpointCompressionReplace) String() string {
+	return fmt.Sprintf("EndpointCompressionReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EndpointCompressionReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointCompressionReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointTLSTerminationReplace struct {
@@ -1555,9 +2580,41 @@ type EndpointTLSTerminationReplace struct {
 	Module EndpointTLSTermination `json:"module,omitempty"`
 }
 
+func (x *EndpointTLSTerminationReplace) String() string {
+	return fmt.Sprintf("EndpointTLSTerminationReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EndpointTLSTerminationReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointTLSTerminationReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointIPPolicyReplace struct {
 	ID     string                 `json:"id,omitempty"`
 	Module EndpointIPPolicyMutate `json:"module,omitempty"`
+}
+
+func (x *EndpointIPPolicyReplace) String() string {
+	return fmt.Sprintf("EndpointIPPolicyReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EndpointIPPolicyReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointIPPolicyReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointMutualTLSReplace struct {
@@ -1565,9 +2622,41 @@ type EndpointMutualTLSReplace struct {
 	Module EndpointMutualTLSMutate `json:"module,omitempty"`
 }
 
+func (x *EndpointMutualTLSReplace) String() string {
+	return fmt.Sprintf("EndpointMutualTLSReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EndpointMutualTLSReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointMutualTLSReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointRequestHeadersReplace struct {
 	ID     string                 `json:"id,omitempty"`
 	Module EndpointRequestHeaders `json:"module,omitempty"`
+}
+
+func (x *EndpointRequestHeadersReplace) String() string {
+	return fmt.Sprintf("EndpointRequestHeadersReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EndpointRequestHeadersReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointRequestHeadersReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointResponseHeadersReplace struct {
@@ -1575,9 +2664,41 @@ type EndpointResponseHeadersReplace struct {
 	Module EndpointResponseHeaders `json:"module,omitempty"`
 }
 
+func (x *EndpointResponseHeadersReplace) String() string {
+	return fmt.Sprintf("EndpointResponseHeadersReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EndpointResponseHeadersReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointResponseHeadersReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointOAuthReplace struct {
 	ID     string        `json:"id,omitempty"`
 	Module EndpointOAuth `json:"module,omitempty"`
+}
+
+func (x *EndpointOAuthReplace) String() string {
+	return fmt.Sprintf("EndpointOAuthReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EndpointOAuthReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointOAuthReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointWebhookValidationReplace struct {
@@ -1585,9 +2706,41 @@ type EndpointWebhookValidationReplace struct {
 	Module EndpointWebhookValidation `json:"module,omitempty"`
 }
 
+func (x *EndpointWebhookValidationReplace) String() string {
+	return fmt.Sprintf("EndpointWebhookValidationReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EndpointWebhookValidationReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointWebhookValidationReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointSAMLReplace struct {
 	ID     string             `json:"id,omitempty"`
 	Module EndpointSAMLMutate `json:"module,omitempty"`
+}
+
+func (x *EndpointSAMLReplace) String() string {
+	return fmt.Sprintf("EndpointSAMLReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EndpointSAMLReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointSAMLReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type EndpointOIDCReplace struct {
@@ -1595,9 +2748,20 @@ type EndpointOIDCReplace struct {
 	Module EndpointOIDC `json:"module,omitempty"`
 }
 
-type EndpointBackendReplace struct {
-	ID     string                `json:"id,omitempty"`
-	Module EndpointBackendMutate `json:"module,omitempty"`
+func (x *EndpointOIDCReplace) String() string {
+	return fmt.Sprintf("EndpointOIDCReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EndpointOIDCReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointOIDCReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type ReservedAddrCreate struct {
@@ -1614,6 +2778,23 @@ type ReservedAddrCreate struct {
 	EndpointConfigurationID string `json:"endpoint_configuration_id,omitempty"`
 }
 
+func (x *ReservedAddrCreate) String() string {
+	return x.GoString()
+}
+
+func (x *ReservedAddrCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ReservedAddrCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
+	fmt.Fprintf(tw, "\tEndpointConfigurationID\t%v\n", x.EndpointConfigurationID)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type ReservedAddrUpdate struct {
 	ID string `json:"id,omitempty"`
 	// human-readable description of what this reserved address will be used for
@@ -1624,6 +2805,24 @@ type ReservedAddrUpdate struct {
 	// ID of an endpoint configuration of type tcp that will be used to handle inbound
 	// traffic to this address
 	EndpointConfigurationID *string `json:"endpoint_configuration_id,omitempty"`
+}
+
+func (x *ReservedAddrUpdate) String() string {
+	return fmt.Sprintf("ReservedAddrUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *ReservedAddrUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ReservedAddrUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tEndpointConfigurationID\t%v\n", x.EndpointConfigurationID)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type ReservedAddr struct {
@@ -1648,6 +2847,28 @@ type ReservedAddr struct {
 	EndpointConfiguration *Ref `json:"endpoint_configuration,omitempty"`
 }
 
+func (x *ReservedAddr) String() string {
+	return fmt.Sprintf("ReservedAddr{ID: %v}", x.ID)
+
+}
+
+func (x *ReservedAddr) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ReservedAddr {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tAddr\t%v\n", x.Addr)
+	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
+	fmt.Fprintf(tw, "\tEndpointConfiguration\t%v\n", x.EndpointConfiguration)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type ReservedAddrList struct {
 	// the list of all reserved addresses on this account
 	ReservedAddrs []ReservedAddr `json:"reserved_addrs,omitempty"`
@@ -1655,6 +2876,22 @@ type ReservedAddrList struct {
 	URI string `json:"uri,omitempty"`
 	// URI of the next page, or null if there is no next page
 	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *ReservedAddrList) String() string {
+	return x.GoString()
+}
+
+func (x *ReservedAddrList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ReservedAddrList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tReservedAddrs\t%v\n", x.ReservedAddrs)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type ReservedDomainCreate struct {
@@ -1684,6 +2921,27 @@ type ReservedDomainCreate struct {
 	CertificateManagementPolicy *ReservedDomainCertPolicy `json:"certificate_management_policy,omitempty"`
 }
 
+func (x *ReservedDomainCreate) String() string {
+	return x.GoString()
+}
+
+func (x *ReservedDomainCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ReservedDomainCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tHTTPEndpointConfigurationID\t%v\n", x.HTTPEndpointConfigurationID)
+	fmt.Fprintf(tw, "\tHTTPSEndpointConfigurationID\t%v\n", x.HTTPSEndpointConfigurationID)
+	fmt.Fprintf(tw, "\tCertificateID\t%v\n", x.CertificateID)
+	fmt.Fprintf(tw, "\tCertificateManagementPolicy\t%v\n", x.CertificateManagementPolicy)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type ReservedDomainUpdate struct {
 	ID string `json:"id,omitempty"`
 	// human-readable description of what this reserved domain will be used for
@@ -1704,6 +2962,27 @@ type ReservedDomainUpdate struct {
 	// null if automatic management is disabled. Optional, mutually exclusive with
 	// certificate_id.
 	CertificateManagementPolicy *ReservedDomainCertPolicy `json:"certificate_management_policy,omitempty"`
+}
+
+func (x *ReservedDomainUpdate) String() string {
+	return fmt.Sprintf("ReservedDomainUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *ReservedDomainUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ReservedDomainUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tHTTPEndpointConfigurationID\t%v\n", x.HTTPEndpointConfigurationID)
+	fmt.Fprintf(tw, "\tHTTPSEndpointConfigurationID\t%v\n", x.HTTPSEndpointConfigurationID)
+	fmt.Fprintf(tw, "\tCertificateID\t%v\n", x.CertificateID)
+	fmt.Fprintf(tw, "\tCertificateManagementPolicy\t%v\n", x.CertificateManagementPolicy)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type ReservedDomain struct {
@@ -1744,6 +3023,33 @@ type ReservedDomain struct {
 	CertificateManagementStatus *ReservedDomainCertStatus `json:"certificate_management_status,omitempty"`
 }
 
+func (x *ReservedDomain) String() string {
+	return fmt.Sprintf("ReservedDomain{ID: %v}", x.ID)
+
+}
+
+func (x *ReservedDomain) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ReservedDomain {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDomain\t%v\n", x.Domain)
+	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
+	fmt.Fprintf(tw, "\tCNAMETarget\t%v\n", x.CNAMETarget)
+	fmt.Fprintf(tw, "\tHTTPEndpointConfiguration\t%v\n", x.HTTPEndpointConfiguration)
+	fmt.Fprintf(tw, "\tHTTPSEndpointConfiguration\t%v\n", x.HTTPSEndpointConfiguration)
+	fmt.Fprintf(tw, "\tCertificate\t%v\n", x.Certificate)
+	fmt.Fprintf(tw, "\tCertificateManagementPolicy\t%v\n", x.CertificateManagementPolicy)
+	fmt.Fprintf(tw, "\tCertificateManagementStatus\t%v\n", x.CertificateManagementStatus)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type ReservedDomainList struct {
 	// the list of all reserved domains on this account
 	ReservedDomains []ReservedDomain `json:"reserved_domains,omitempty"`
@@ -1751,6 +3057,22 @@ type ReservedDomainList struct {
 	URI string `json:"uri,omitempty"`
 	// URI of the next page, or null if there is no next page
 	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *ReservedDomainList) String() string {
+	return x.GoString()
+}
+
+func (x *ReservedDomainList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ReservedDomainList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tReservedDomains\t%v\n", x.ReservedDomains)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type ReservedDomainCertPolicy struct {
@@ -1762,6 +3084,21 @@ type ReservedDomainCertPolicy struct {
 	PrivateKeyType string `json:"private_key_type,omitempty"`
 }
 
+func (x *ReservedDomainCertPolicy) String() string {
+	return x.GoString()
+}
+
+func (x *ReservedDomainCertPolicy) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ReservedDomainCertPolicy {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tAuthority\t%v\n", x.Authority)
+	fmt.Fprintf(tw, "\tPrivateKeyType\t%v\n", x.PrivateKeyType)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type ReservedDomainCertStatus struct {
 	// timestamp when the next renewal will be requested, RFC 3339 format
 	RenewsAt *string `json:"renews_at,omitempty"`
@@ -1770,11 +3107,41 @@ type ReservedDomainCertStatus struct {
 	ProvisioningJob *ReservedDomainCertJob `json:"provisioning_job,omitempty"`
 }
 
+func (x *ReservedDomainCertStatus) String() string {
+	return x.GoString()
+}
+
+func (x *ReservedDomainCertStatus) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ReservedDomainCertStatus {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tRenewsAt\t%v\n", x.RenewsAt)
+	fmt.Fprintf(tw, "\tProvisioningJob\t%v\n", x.ProvisioningJob)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type ReservedDomainCertNSTarget struct {
 	// the zone that the nameservers need to be applied to
 	Zone string `json:"zone,omitempty"`
 	// the nameservers the user must add
 	Nameservers []string `json:"nameservers,omitempty"`
+}
+
+func (x *ReservedDomainCertNSTarget) String() string {
+	return x.GoString()
+}
+
+func (x *ReservedDomainCertNSTarget) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ReservedDomainCertNSTarget {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tZone\t%v\n", x.Zone)
+	fmt.Fprintf(tw, "\tNameservers\t%v\n", x.Nameservers)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type ReservedDomainCertJob struct {
@@ -1793,9 +3160,22 @@ type ReservedDomainCertJob struct {
 	NSTargets []ReservedDomainCertNSTarget `json:"ns_targets,omitempty"`
 }
 
-type RootResponse struct {
-	URI             string            `json:"uri,omitempty"`
-	SubresourceURIs map[string]string `json:"subresource_uris,omitempty"`
+func (x *ReservedDomainCertJob) String() string {
+	return x.GoString()
+}
+
+func (x *ReservedDomainCertJob) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ReservedDomainCertJob {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tErrorCode\t%v\n", x.ErrorCode)
+	fmt.Fprintf(tw, "\tMsg\t%v\n", x.Msg)
+	fmt.Fprintf(tw, "\tStartedAt\t%v\n", x.StartedAt)
+	fmt.Fprintf(tw, "\tRetriesAt\t%v\n", x.RetriesAt)
+	fmt.Fprintf(tw, "\tNSTargets\t%v\n", x.NSTargets)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type SSHCertificateAuthorityCreate struct {
@@ -1813,6 +3193,24 @@ type SSHCertificateAuthorityCreate struct {
 	KeySize int64 `json:"key_size,omitempty"`
 }
 
+func (x *SSHCertificateAuthorityCreate) String() string {
+	return x.GoString()
+}
+
+func (x *SSHCertificateAuthorityCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SSHCertificateAuthorityCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tPrivateKeyType\t%v\n", x.PrivateKeyType)
+	fmt.Fprintf(tw, "\tEllipticCurve\t%v\n", x.EllipticCurve)
+	fmt.Fprintf(tw, "\tKeySize\t%v\n", x.KeySize)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type SSHCertificateAuthorityUpdate struct {
 	ID string `json:"id,omitempty"`
 	// human-readable description of this SSH Certificate Authority. optional, max 255
@@ -1821,6 +3219,23 @@ type SSHCertificateAuthorityUpdate struct {
 	// arbitrary user-defined machine-readable data of this SSH Certificate Authority.
 	// optional, max 4096 bytes.
 	Metadata *string `json:"metadata,omitempty"`
+}
+
+func (x *SSHCertificateAuthorityUpdate) String() string {
+	return fmt.Sprintf("SSHCertificateAuthorityUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *SSHCertificateAuthorityUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SSHCertificateAuthorityUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type SSHCertificateAuthority struct {
@@ -1843,6 +3258,27 @@ type SSHCertificateAuthority struct {
 	KeyType string `json:"key_type,omitempty"`
 }
 
+func (x *SSHCertificateAuthority) String() string {
+	return fmt.Sprintf("SSHCertificateAuthority{ID: %v}", x.ID)
+
+}
+
+func (x *SSHCertificateAuthority) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SSHCertificateAuthority {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tPublicKey\t%v\n", x.PublicKey)
+	fmt.Fprintf(tw, "\tKeyType\t%v\n", x.KeyType)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type SSHCertificateAuthorityList struct {
 	// the list of all certificate authorities on this account
 	SSHCertificateAuthorities []SSHCertificateAuthority `json:"ssh_certificate_authorities,omitempty"`
@@ -1850,6 +3286,22 @@ type SSHCertificateAuthorityList struct {
 	URI string `json:"uri,omitempty"`
 	// URI of the next page, or null if there is no next page
 	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *SSHCertificateAuthorityList) String() string {
+	return x.GoString()
+}
+
+func (x *SSHCertificateAuthorityList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SSHCertificateAuthorityList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tSSHCertificateAuthorities\t%v\n", x.SSHCertificateAuthorities)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type SSHCredentialCreate struct {
@@ -1873,6 +3325,23 @@ type SSHCredentialCreate struct {
 	PublicKey string `json:"public_key,omitempty"`
 }
 
+func (x *SSHCredentialCreate) String() string {
+	return x.GoString()
+}
+
+func (x *SSHCredentialCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SSHCredentialCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tACL\t%v\n", x.ACL)
+	fmt.Fprintf(tw, "\tPublicKey\t%v\n", x.PublicKey)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type SSHCredentialUpdate struct {
 	ID string `json:"id,omitempty"`
 	// human-readable description of who or what will use the ssh credential to
@@ -1891,6 +3360,24 @@ type SSHCredentialUpdate struct {
 	// allow x.example.com, y.example.com, *.example.com, etc. A rule of '*' is
 	// equivalent to no acl at all and will explicitly permit all actions.
 	ACL *[]string `json:"acl,omitempty"`
+}
+
+func (x *SSHCredentialUpdate) String() string {
+	return fmt.Sprintf("SSHCredentialUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *SSHCredentialUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SSHCredentialUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tACL\t%v\n", x.ACL)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type SSHCredential struct {
@@ -1920,6 +3407,27 @@ type SSHCredential struct {
 	ACL []string `json:"acl,omitempty"`
 }
 
+func (x *SSHCredential) String() string {
+	return fmt.Sprintf("SSHCredential{ID: %v}", x.ID)
+
+}
+
+func (x *SSHCredential) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SSHCredential {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tPublicKey\t%v\n", x.PublicKey)
+	fmt.Fprintf(tw, "\tACL\t%v\n", x.ACL)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type SSHCredentialList struct {
 	// the list of all ssh credentials on this account
 	SSHCredentials []SSHCredential `json:"ssh_credentials,omitempty"`
@@ -1927,6 +3435,22 @@ type SSHCredentialList struct {
 	URI string `json:"uri,omitempty"`
 	// URI of the next page, or null if there is no next page
 	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *SSHCredentialList) String() string {
+	return x.GoString()
+}
+
+func (x *SSHCredentialList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SSHCredentialList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tSSHCredentials\t%v\n", x.SSHCredentials)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type SSHHostCertificateCreate struct {
@@ -1954,6 +3478,26 @@ type SSHHostCertificateCreate struct {
 	Metadata string `json:"metadata,omitempty"`
 }
 
+func (x *SSHHostCertificateCreate) String() string {
+	return x.GoString()
+}
+
+func (x *SSHHostCertificateCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SSHHostCertificateCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tSSHCertificateAuthorityID\t%v\n", x.SSHCertificateAuthorityID)
+	fmt.Fprintf(tw, "\tPublicKey\t%v\n", x.PublicKey)
+	fmt.Fprintf(tw, "\tPrincipals\t%v\n", x.Principals)
+	fmt.Fprintf(tw, "\tValidAfter\t%v\n", x.ValidAfter)
+	fmt.Fprintf(tw, "\tValidUntil\t%v\n", x.ValidUntil)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type SSHHostCertificateUpdate struct {
 	ID string `json:"id,omitempty"`
 	// human-readable description of this SSH Host Certificate. optional, max 255
@@ -1962,6 +3506,23 @@ type SSHHostCertificateUpdate struct {
 	// arbitrary user-defined machine-readable data of this SSH Host Certificate.
 	// optional, max 4096 bytes.
 	Metadata *string `json:"metadata,omitempty"`
+}
+
+func (x *SSHHostCertificateUpdate) String() string {
+	return fmt.Sprintf("SSHHostCertificateUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *SSHHostCertificateUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SSHHostCertificateUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type SSHHostCertificate struct {
@@ -2000,6 +3561,32 @@ type SSHHostCertificate struct {
 	Certificate string `json:"certificate,omitempty"`
 }
 
+func (x *SSHHostCertificate) String() string {
+	return fmt.Sprintf("SSHHostCertificate{ID: %v}", x.ID)
+
+}
+
+func (x *SSHHostCertificate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SSHHostCertificate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tPublicKey\t%v\n", x.PublicKey)
+	fmt.Fprintf(tw, "\tKeyType\t%v\n", x.KeyType)
+	fmt.Fprintf(tw, "\tSSHCertificateAuthorityID\t%v\n", x.SSHCertificateAuthorityID)
+	fmt.Fprintf(tw, "\tPrincipals\t%v\n", x.Principals)
+	fmt.Fprintf(tw, "\tValidAfter\t%v\n", x.ValidAfter)
+	fmt.Fprintf(tw, "\tValidUntil\t%v\n", x.ValidUntil)
+	fmt.Fprintf(tw, "\tCertificate\t%v\n", x.Certificate)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type SSHHostCertificateList struct {
 	// the list of all ssh host certificates on this account
 	SSHHostCertificates []SSHHostCertificate `json:"ssh_host_certificates,omitempty"`
@@ -2007,6 +3594,22 @@ type SSHHostCertificateList struct {
 	URI string `json:"uri,omitempty"`
 	// URI of the next page, or null if there is no next page
 	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *SSHHostCertificateList) String() string {
+	return x.GoString()
+}
+
+func (x *SSHHostCertificateList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SSHHostCertificateList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tSSHHostCertificates\t%v\n", x.SSHHostCertificates)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type SSHUserCertificateCreate struct {
@@ -2048,6 +3651,28 @@ type SSHUserCertificateCreate struct {
 	Metadata string `json:"metadata,omitempty"`
 }
 
+func (x *SSHUserCertificateCreate) String() string {
+	return x.GoString()
+}
+
+func (x *SSHUserCertificateCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SSHUserCertificateCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tSSHCertificateAuthorityID\t%v\n", x.SSHCertificateAuthorityID)
+	fmt.Fprintf(tw, "\tPublicKey\t%v\n", x.PublicKey)
+	fmt.Fprintf(tw, "\tPrincipals\t%v\n", x.Principals)
+	fmt.Fprintf(tw, "\tCriticalOptions\t%v\n", x.CriticalOptions)
+	fmt.Fprintf(tw, "\tExtensions\t%v\n", x.Extensions)
+	fmt.Fprintf(tw, "\tValidAfter\t%v\n", x.ValidAfter)
+	fmt.Fprintf(tw, "\tValidUntil\t%v\n", x.ValidUntil)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type SSHUserCertificateUpdate struct {
 	ID string `json:"id,omitempty"`
 	// human-readable description of this SSH User Certificate. optional, max 255
@@ -2056,6 +3681,23 @@ type SSHUserCertificateUpdate struct {
 	// arbitrary user-defined machine-readable data of this SSH User Certificate.
 	// optional, max 4096 bytes.
 	Metadata *string `json:"metadata,omitempty"`
+}
+
+func (x *SSHUserCertificateUpdate) String() string {
+	return fmt.Sprintf("SSHUserCertificateUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *SSHUserCertificateUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SSHUserCertificateUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type SSHUserCertificate struct {
@@ -2108,6 +3750,34 @@ type SSHUserCertificate struct {
 	Certificate string `json:"certificate,omitempty"`
 }
 
+func (x *SSHUserCertificate) String() string {
+	return fmt.Sprintf("SSHUserCertificate{ID: %v}", x.ID)
+
+}
+
+func (x *SSHUserCertificate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SSHUserCertificate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tPublicKey\t%v\n", x.PublicKey)
+	fmt.Fprintf(tw, "\tKeyType\t%v\n", x.KeyType)
+	fmt.Fprintf(tw, "\tSSHCertificateAuthorityID\t%v\n", x.SSHCertificateAuthorityID)
+	fmt.Fprintf(tw, "\tPrincipals\t%v\n", x.Principals)
+	fmt.Fprintf(tw, "\tCriticalOptions\t%v\n", x.CriticalOptions)
+	fmt.Fprintf(tw, "\tExtensions\t%v\n", x.Extensions)
+	fmt.Fprintf(tw, "\tValidAfter\t%v\n", x.ValidAfter)
+	fmt.Fprintf(tw, "\tValidUntil\t%v\n", x.ValidUntil)
+	fmt.Fprintf(tw, "\tCertificate\t%v\n", x.Certificate)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type SSHUserCertificateList struct {
 	// the list of all ssh user certificates on this account
 	SSHUserCertificates []SSHUserCertificate `json:"ssh_user_certificates,omitempty"`
@@ -2115,6 +3785,22 @@ type SSHUserCertificateList struct {
 	URI string `json:"uri,omitempty"`
 	// URI of the next page, or null if there is no next page
 	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *SSHUserCertificateList) String() string {
+	return x.GoString()
+}
+
+func (x *SSHUserCertificateList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SSHUserCertificateList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tSSHUserCertificates\t%v\n", x.SSHUserCertificates)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type TLSCertificateCreate struct {
@@ -2131,6 +3817,23 @@ type TLSCertificateCreate struct {
 	PrivateKeyPEM string `json:"private_key_pem,omitempty"`
 }
 
+func (x *TLSCertificateCreate) String() string {
+	return x.GoString()
+}
+
+func (x *TLSCertificateCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TLSCertificateCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCertificatePEM\t%v\n", x.CertificatePEM)
+	fmt.Fprintf(tw, "\tPrivateKeyPEM\t%v\n", x.PrivateKeyPEM)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type TLSCertificateUpdate struct {
 	ID string `json:"id,omitempty"`
 	// human-readable description of this TLS certificate. optional, max 255 bytes.
@@ -2138,6 +3841,23 @@ type TLSCertificateUpdate struct {
 	// arbitrary user-defined machine-readable data of this TLS certificate. optional,
 	// max 4096 bytes.
 	Metadata *string `json:"metadata,omitempty"`
+}
+
+func (x *TLSCertificateUpdate) String() string {
+	return fmt.Sprintf("TLSCertificateUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *TLSCertificateUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TLSCertificateUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type TLSCertificate struct {
@@ -2188,6 +3908,41 @@ type TLSCertificate struct {
 	SubjectCountry string `json:"subject_country,omitempty"`
 }
 
+func (x *TLSCertificate) String() string {
+	return fmt.Sprintf("TLSCertificate{ID: %v}", x.ID)
+
+}
+
+func (x *TLSCertificate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TLSCertificate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCertificatePEM\t%v\n", x.CertificatePEM)
+	fmt.Fprintf(tw, "\tSubjectCommonName\t%v\n", x.SubjectCommonName)
+	fmt.Fprintf(tw, "\tSubjectAlternativeNames\t%v\n", x.SubjectAlternativeNames)
+	fmt.Fprintf(tw, "\tIssuedAt\t%v\n", x.IssuedAt)
+	fmt.Fprintf(tw, "\tNotBefore\t%v\n", x.NotBefore)
+	fmt.Fprintf(tw, "\tNotAfter\t%v\n", x.NotAfter)
+	fmt.Fprintf(tw, "\tKeyUsages\t%v\n", x.KeyUsages)
+	fmt.Fprintf(tw, "\tExtendedKeyUsages\t%v\n", x.ExtendedKeyUsages)
+	fmt.Fprintf(tw, "\tPrivateKeyType\t%v\n", x.PrivateKeyType)
+	fmt.Fprintf(tw, "\tIssuerCommonName\t%v\n", x.IssuerCommonName)
+	fmt.Fprintf(tw, "\tSerialNumber\t%v\n", x.SerialNumber)
+	fmt.Fprintf(tw, "\tSubjectOrganization\t%v\n", x.SubjectOrganization)
+	fmt.Fprintf(tw, "\tSubjectOrganizationalUnit\t%v\n", x.SubjectOrganizationalUnit)
+	fmt.Fprintf(tw, "\tSubjectLocality\t%v\n", x.SubjectLocality)
+	fmt.Fprintf(tw, "\tSubjectProvince\t%v\n", x.SubjectProvince)
+	fmt.Fprintf(tw, "\tSubjectCountry\t%v\n", x.SubjectCountry)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type TLSCertificateList struct {
 	// the list of all TLS certificates on this account
 	TLSCertificates []TLSCertificate `json:"tls_certificates,omitempty"`
@@ -2197,12 +3952,43 @@ type TLSCertificateList struct {
 	NextPageURI *string `json:"next_page_uri,omitempty"`
 }
 
+func (x *TLSCertificateList) String() string {
+	return x.GoString()
+}
+
+func (x *TLSCertificateList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TLSCertificateList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tTLSCertificates\t%v\n", x.TLSCertificates)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type TLSCertificateSANs struct {
 	// set of additional domains (including wildcards) this TLS certificate is valid
 	// for
 	DNSNames []string `json:"dns_names,omitempty"`
 	// set of IP addresses this TLS certificate is also valid for
 	IPs []string `json:"ips,omitempty"`
+}
+
+func (x *TLSCertificateSANs) String() string {
+	return x.GoString()
+}
+
+func (x *TLSCertificateSANs) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TLSCertificateSANs {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDNSNames\t%v\n", x.DNSNames)
+	fmt.Fprintf(tw, "\tIPs\t%v\n", x.IPs)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type TunnelSession struct {
@@ -2230,6 +4016,30 @@ type TunnelSession struct {
 	URI string `json:"uri,omitempty"`
 }
 
+func (x *TunnelSession) String() string {
+	return fmt.Sprintf("TunnelSession{ID: %v}", x.ID)
+
+}
+
+func (x *TunnelSession) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TunnelSession {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tAgentVersion\t%v\n", x.AgentVersion)
+	fmt.Fprintf(tw, "\tCredential\t%v\n", x.Credential)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tIP\t%v\n", x.IP)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tOS\t%v\n", x.OS)
+	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
+	fmt.Fprintf(tw, "\tStartedAt\t%v\n", x.StartedAt)
+	fmt.Fprintf(tw, "\tTransport\t%v\n", x.Transport)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type TunnelSessionList struct {
 	// list of all tunnel sessions on this account
 	TunnelSessions []TunnelSession `json:"tunnel_sessions,omitempty"`
@@ -2239,11 +4049,39 @@ type TunnelSessionList struct {
 	NextPageURI *string `json:"next_page_uri,omitempty"`
 }
 
+func (x *TunnelSessionList) String() string {
+	return x.GoString()
+}
+
+func (x *TunnelSessionList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TunnelSessionList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tTunnelSessions\t%v\n", x.TunnelSessions)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type TunnelSessionsUpdate struct {
 	ID string `json:"id,omitempty"`
-	// request that the ngrok agent update to this specific version instead of the
-	// latest available version
-	Version string `json:"version,omitempty"`
+}
+
+func (x *TunnelSessionsUpdate) String() string {
+	return fmt.Sprintf("TunnelSessionsUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *TunnelSessionsUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TunnelSessionsUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
 
 type Tunnel struct {
@@ -2267,6 +4105,27 @@ type Tunnel struct {
 	TunnelSession Ref `json:"tunnel_session,omitempty"`
 }
 
+func (x *Tunnel) String() string {
+	return fmt.Sprintf("Tunnel{ID: %v}", x.ID)
+
+}
+
+func (x *Tunnel) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "Tunnel {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tPublicURL\t%v\n", x.PublicURL)
+	fmt.Fprintf(tw, "\tStartedAt\t%v\n", x.StartedAt)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tProto\t%v\n", x.Proto)
+	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
+	fmt.Fprintf(tw, "\tTunnelSession\t%v\n", x.TunnelSession)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type TunnelList struct {
 	// the list of all online tunnels on this account
 	Tunnels []Tunnel `json:"tunnels,omitempty"`
@@ -2274,4 +4133,20 @@ type TunnelList struct {
 	URI string `json:"uri,omitempty"`
 	// URI of the next page, or null if there is no next page
 	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *TunnelList) String() string {
+	return x.GoString()
+}
+
+func (x *TunnelList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TunnelList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tTunnels\t%v\n", x.Tunnels)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
 }
