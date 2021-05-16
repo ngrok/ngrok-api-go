@@ -7,15 +7,15 @@ easier to consume in Go.
 
 Installation is as simple as using `go get`.
 
-    go get github.com/ngrok/ngrok-api/go
+    go get github.com/ngrok/ngrok-api-go
 
 ## Documentation
 
-A quickstart guide and a full API reference are included in the [ngrok go API documentation on pkg.go.dev](https://github.com/ngrok/ngrok-api-go)
+A quickstart guide and a full API reference are included in the [ngrok go API documentation on pkg.go.dev](https://pkg.go.dev/github.com/ngrok/ngrok-api-go)
 
 ## Quickstart
 
-Please consult the [documentation](https://github.com/ngrok/ngrok-api-go) for additional examples.
+Please consult the [documentation](https://pkg.go.dev/github.com/ngrok/ngrok-api-go) for additional examples.
 
 ### Create an IP Policy that allows traffic from some subnets
 
