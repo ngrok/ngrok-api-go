@@ -21,10 +21,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 
 // Create a new reserved address.
 func (c *Client) Create(
-
-	ctx context.Context,
-	arg *ngrok.ReservedAddrCreate,
-) (*ngrok.ReservedAddr, error) {
+	ctx context.Context, arg *ngrok.ReservedAddrCreate) (*ngrok.ReservedAddr, error) {
 	if arg == nil {
 		arg = new(ngrok.ReservedAddrCreate)
 	}
@@ -48,11 +45,7 @@ func (c *Client) Create(
 
 // Delete a reserved address.
 func (c *Client) Delete(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -74,11 +67,7 @@ func (c *Client) Delete(
 
 // Get the details of a reserved address.
 func (c *Client) Get(
-
-	ctx context.Context,
-	id string,
-
-) (*ngrok.ReservedAddr, error) {
+	ctx context.Context, id string) (*ngrok.ReservedAddr, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.ReservedAddr
@@ -100,10 +89,7 @@ func (c *Client) Get(
 }
 
 // List all reserved addresses on this account.
-func (c *Client) list(
-	ctx context.Context,
-	arg *ngrok.Paging,
-) (*ngrok.ReservedAddrList, error) {
+func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.ReservedAddrList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
 	}
@@ -205,10 +191,7 @@ func (it *Iter) Err() error {
 
 // Update the attributes of a reserved address.
 func (c *Client) Update(
-
-	ctx context.Context,
-	arg *ngrok.ReservedAddrUpdate,
-) (*ngrok.ReservedAddr, error) {
+	ctx context.Context, arg *ngrok.ReservedAddrUpdate) (*ngrok.ReservedAddr, error) {
 	if arg == nil {
 		arg = new(ngrok.ReservedAddrUpdate)
 	}
@@ -233,11 +216,7 @@ func (c *Client) Update(
 
 // Detach the endpoint configuration attached to a reserved address.
 func (c *Client) DeleteEndpointConfig(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer

@@ -21,10 +21,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 
 // Create a new SSH Certificate Authority
 func (c *Client) Create(
-
-	ctx context.Context,
-	arg *ngrok.SSHCertificateAuthorityCreate,
-) (*ngrok.SSHCertificateAuthority, error) {
+	ctx context.Context, arg *ngrok.SSHCertificateAuthorityCreate) (*ngrok.SSHCertificateAuthority, error) {
 	if arg == nil {
 		arg = new(ngrok.SSHCertificateAuthorityCreate)
 	}
@@ -48,11 +45,7 @@ func (c *Client) Create(
 
 // Delete an SSH Certificate Authority
 func (c *Client) Delete(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -74,11 +67,7 @@ func (c *Client) Delete(
 
 // Get detailed information about an SSH Certficate Authority
 func (c *Client) Get(
-
-	ctx context.Context,
-	id string,
-
-) (*ngrok.SSHCertificateAuthority, error) {
+	ctx context.Context, id string) (*ngrok.SSHCertificateAuthority, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.SSHCertificateAuthority
@@ -100,10 +89,7 @@ func (c *Client) Get(
 }
 
 // List all SSH Certificate Authorities on this account
-func (c *Client) list(
-	ctx context.Context,
-	arg *ngrok.Paging,
-) (*ngrok.SSHCertificateAuthorityList, error) {
+func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.SSHCertificateAuthorityList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
 	}
@@ -205,10 +191,7 @@ func (it *Iter) Err() error {
 
 // Update an SSH Certificate Authority
 func (c *Client) Update(
-
-	ctx context.Context,
-	arg *ngrok.SSHCertificateAuthorityUpdate,
-) (*ngrok.SSHCertificateAuthority, error) {
+	ctx context.Context, arg *ngrok.SSHCertificateAuthorityUpdate) (*ngrok.SSHCertificateAuthority, error) {
 	if arg == nil {
 		arg = new(ngrok.SSHCertificateAuthorityUpdate)
 	}

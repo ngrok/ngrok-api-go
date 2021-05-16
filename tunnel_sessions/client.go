@@ -20,10 +20,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 }
 
 // List all online tunnel sessions running on this account.
-func (c *Client) list(
-	ctx context.Context,
-	arg *ngrok.Paging,
-) (*ngrok.TunnelSessionList, error) {
+func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.TunnelSessionList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
 	}
@@ -125,11 +122,7 @@ func (it *Iter) Err() error {
 
 // Get the detailed status of a tunnel session by ID
 func (c *Client) Get(
-
-	ctx context.Context,
-	id string,
-
-) (*ngrok.TunnelSession, error) {
+	ctx context.Context, id string) (*ngrok.TunnelSession, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.TunnelSession
@@ -155,11 +148,7 @@ func (c *Client) Get(
 // not supported on Windows. When an agent restarts, it reconnects with a new
 // tunnel session ID.
 func (c *Client) Restart(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -183,11 +172,7 @@ func (c *Client) Restart(
 // Issues a command instructing the ngrok agent that started this tunnel session to
 // exit.
 func (c *Client) Stop(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -221,11 +206,7 @@ func (c *Client) Stop(
 // disabled update checks the agent is currently in process of updating the agent
 // has already successfully updated but has not yet been restarted
 func (c *Client) Update(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.TunnelSessionsUpdate{ID: id}
 
 	var path bytes.Buffer

@@ -21,10 +21,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 
 // Create a new IP policy rule attached to an IP Policy.
 func (c *Client) Create(
-
-	ctx context.Context,
-	arg *ngrok.IPPolicyRuleCreate,
-) (*ngrok.IPPolicyRule, error) {
+	ctx context.Context, arg *ngrok.IPPolicyRuleCreate) (*ngrok.IPPolicyRule, error) {
 	var res ngrok.IPPolicyRule
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/ip_policy_rules")).Execute(&path, arg); err != nil {
@@ -45,11 +42,7 @@ func (c *Client) Create(
 
 // Delete an IP policy rule.
 func (c *Client) Delete(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -71,11 +64,7 @@ func (c *Client) Delete(
 
 // Get detailed information about an IP policy rule by ID.
 func (c *Client) Get(
-
-	ctx context.Context,
-	id string,
-
-) (*ngrok.IPPolicyRule, error) {
+	ctx context.Context, id string) (*ngrok.IPPolicyRule, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.IPPolicyRule
@@ -97,10 +86,7 @@ func (c *Client) Get(
 }
 
 // List all IP policy rules on this account
-func (c *Client) list(
-	ctx context.Context,
-	arg *ngrok.Paging,
-) (*ngrok.IPPolicyRuleList, error) {
+func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.IPPolicyRuleList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
 	}
@@ -202,10 +188,7 @@ func (it *Iter) Err() error {
 
 // Update attributes of an IP policy rule by ID
 func (c *Client) Update(
-
-	ctx context.Context,
-	arg *ngrok.IPPolicyRuleUpdate,
-) (*ngrok.IPPolicyRule, error) {
+	ctx context.Context, arg *ngrok.IPPolicyRuleUpdate) (*ngrok.IPPolicyRule, error) {
 	if arg == nil {
 		arg = new(ngrok.IPPolicyRuleUpdate)
 	}

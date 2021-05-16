@@ -22,10 +22,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 // Create a new API key. The generated API key can be used to authenticate to the
 // ngrok API.
 func (c *Client) Create(
-
-	ctx context.Context,
-	arg *ngrok.APIKeyCreate,
-) (*ngrok.APIKey, error) {
+	ctx context.Context, arg *ngrok.APIKeyCreate) (*ngrok.APIKey, error) {
 	if arg == nil {
 		arg = new(ngrok.APIKeyCreate)
 	}
@@ -49,11 +46,7 @@ func (c *Client) Create(
 
 // Delete an API key by ID
 func (c *Client) Delete(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -75,11 +68,7 @@ func (c *Client) Delete(
 
 // Get the details of an API key by ID.
 func (c *Client) Get(
-
-	ctx context.Context,
-	id string,
-
-) (*ngrok.APIKey, error) {
+	ctx context.Context, id string) (*ngrok.APIKey, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.APIKey
@@ -101,10 +90,7 @@ func (c *Client) Get(
 }
 
 // List all API keys owned by this account
-func (c *Client) list(
-	ctx context.Context,
-	arg *ngrok.Paging,
-) (*ngrok.APIKeyList, error) {
+func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.APIKeyList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
 	}
@@ -206,10 +192,7 @@ func (it *Iter) Err() error {
 
 // Update attributes of an API key by ID.
 func (c *Client) Update(
-
-	ctx context.Context,
-	arg *ngrok.APIKeyUpdate,
-) (*ngrok.APIKey, error) {
+	ctx context.Context, arg *ngrok.APIKeyUpdate) (*ngrok.APIKey, error) {
 	if arg == nil {
 		arg = new(ngrok.APIKeyUpdate)
 	}

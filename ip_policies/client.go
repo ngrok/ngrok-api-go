@@ -22,10 +22,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 // Create a new IP policy. It will not apply to any traffic until you associate to
 // a traffic source via an endpoint configuration or IP restriction.
 func (c *Client) Create(
-
-	ctx context.Context,
-	arg *ngrok.IPPolicyCreate,
-) (*ngrok.IPPolicy, error) {
+	ctx context.Context, arg *ngrok.IPPolicyCreate) (*ngrok.IPPolicy, error) {
 	var res ngrok.IPPolicy
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/ip_policies")).Execute(&path, arg); err != nil {
@@ -48,11 +45,7 @@ func (c *Client) Create(
 // purposes of traffic restriction it will be treated as if the IP policy remains
 // but has zero rules.
 func (c *Client) Delete(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -74,11 +67,7 @@ func (c *Client) Delete(
 
 // Get detailed information about an IP policy by ID.
 func (c *Client) Get(
-
-	ctx context.Context,
-	id string,
-
-) (*ngrok.IPPolicy, error) {
+	ctx context.Context, id string) (*ngrok.IPPolicy, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.IPPolicy
@@ -100,10 +89,7 @@ func (c *Client) Get(
 }
 
 // List all IP policies on this account
-func (c *Client) list(
-	ctx context.Context,
-	arg *ngrok.Paging,
-) (*ngrok.IPPolicyList, error) {
+func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.IPPolicyList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
 	}
@@ -205,10 +191,7 @@ func (it *Iter) Err() error {
 
 // Update attributes of an IP policy by ID
 func (c *Client) Update(
-
-	ctx context.Context,
-	arg *ngrok.IPPolicyUpdate,
-) (*ngrok.IPPolicy, error) {
+	ctx context.Context, arg *ngrok.IPPolicyUpdate) (*ngrok.IPPolicy, error) {
 	if arg == nil {
 		arg = new(ngrok.IPPolicyUpdate)
 	}

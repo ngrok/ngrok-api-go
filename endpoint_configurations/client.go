@@ -26,10 +26,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 
 // Create a new endpoint configuration
 func (c *Client) Create(
-
-	ctx context.Context,
-	arg *ngrok.EndpointConfigurationCreate,
-) (*ngrok.EndpointConfiguration, error) {
+	ctx context.Context, arg *ngrok.EndpointConfigurationCreate) (*ngrok.EndpointConfiguration, error) {
 	if arg == nil {
 		arg = new(ngrok.EndpointConfigurationCreate)
 	}
@@ -54,11 +51,7 @@ func (c *Client) Create(
 // Delete an endpoint configuration. This operation will fail if the endpoint
 // configuration is still referenced by any reserved domain or reserved address.
 func (c *Client) Delete(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -80,11 +73,7 @@ func (c *Client) Delete(
 
 // Returns detailed information about an endpoint configuration
 func (c *Client) Get(
-
-	ctx context.Context,
-	id string,
-
-) (*ngrok.EndpointConfiguration, error) {
+	ctx context.Context, id string) (*ngrok.EndpointConfiguration, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.EndpointConfiguration
@@ -106,10 +95,7 @@ func (c *Client) Get(
 }
 
 // Returns a list of all endpoint configurations on this account
-func (c *Client) list(
-	ctx context.Context,
-	arg *ngrok.Paging,
-) (*ngrok.EndpointConfigurationList, error) {
+func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.EndpointConfigurationList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
 	}
@@ -214,10 +200,7 @@ func (it *Iter) Err() error {
 // will completely replace the existing value. There is no way to delete an
 // existing module via this API, instead use the delete module API.
 func (c *Client) Update(
-
-	ctx context.Context,
-	arg *ngrok.EndpointConfigurationUpdate,
-) (*ngrok.EndpointConfiguration, error) {
+	ctx context.Context, arg *ngrok.EndpointConfigurationUpdate) (*ngrok.EndpointConfiguration, error) {
 	if arg == nil {
 		arg = new(ngrok.EndpointConfigurationUpdate)
 	}

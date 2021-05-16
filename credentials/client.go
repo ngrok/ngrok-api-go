@@ -24,10 +24,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 // the generated token is available. If you need it for future use, you must save
 // it securely yourself.
 func (c *Client) Create(
-
-	ctx context.Context,
-	arg *ngrok.CredentialCreate,
-) (*ngrok.Credential, error) {
+	ctx context.Context, arg *ngrok.CredentialCreate) (*ngrok.Credential, error) {
 	if arg == nil {
 		arg = new(ngrok.CredentialCreate)
 	}
@@ -51,11 +48,7 @@ func (c *Client) Create(
 
 // Delete a tunnel authtoken credential by ID
 func (c *Client) Delete(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -77,11 +70,7 @@ func (c *Client) Delete(
 
 // Get detailed information about a tunnel authtoken credential
 func (c *Client) Get(
-
-	ctx context.Context,
-	id string,
-
-) (*ngrok.Credential, error) {
+	ctx context.Context, id string) (*ngrok.Credential, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.Credential
@@ -103,10 +92,7 @@ func (c *Client) Get(
 }
 
 // List all tunnel authtoken credentials on this account
-func (c *Client) list(
-	ctx context.Context,
-	arg *ngrok.Paging,
-) (*ngrok.CredentialList, error) {
+func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.CredentialList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
 	}
@@ -208,10 +194,7 @@ func (it *Iter) Err() error {
 
 // Update attributes of an tunnel authtoken credential by ID
 func (c *Client) Update(
-
-	ctx context.Context,
-	arg *ngrok.CredentialUpdate,
-) (*ngrok.Credential, error) {
+	ctx context.Context, arg *ngrok.CredentialUpdate) (*ngrok.Credential, error) {
 	if arg == nil {
 		arg = new(ngrok.CredentialUpdate)
 	}
