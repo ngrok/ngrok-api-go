@@ -21,8 +21,9 @@ func NewClient(apiClient *ngrok.Client) *Client {
 
 // Create a new API key. The generated API key can be used to authenticate to the
 // ngrok API.
-func (c *Client) Create(
-	ctx context.Context, arg *ngrok.APIKeyCreate) (*ngrok.APIKey, error) {
+//
+// https://ngrok.com/docs/api#api-api-keys-create
+func (c *Client) Create(ctx context.Context, arg *ngrok.APIKeyCreate) (*ngrok.APIKey, error) {
 	if arg == nil {
 		arg = new(ngrok.APIKeyCreate)
 	}
@@ -45,8 +46,9 @@ func (c *Client) Create(
 }
 
 // Delete an API key by ID
-func (c *Client) Delete(
-	ctx context.Context, id string) error {
+//
+// https://ngrok.com/docs/api#api-api-keys-delete
+func (c *Client) Delete(ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -67,8 +69,9 @@ func (c *Client) Delete(
 }
 
 // Get the details of an API key by ID.
-func (c *Client) Get(
-	ctx context.Context, id string) (*ngrok.APIKey, error) {
+//
+// https://ngrok.com/docs/api#api-api-keys-get
+func (c *Client) Get(ctx context.Context, id string) (*ngrok.APIKey, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.APIKey
@@ -90,6 +93,8 @@ func (c *Client) Get(
 }
 
 // List all API keys owned by this account
+//
+// https://ngrok.com/docs/api#api-api-keys-list
 func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.APIKeyList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
@@ -120,6 +125,8 @@ func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.APIKeyList
 }
 
 // List all API keys owned by this account
+//
+// https://ngrok.com/docs/api#api-api-keys-list
 func (c *Client) List(ctx context.Context, paging *ngrok.Paging) *Iter {
 	if paging == nil {
 		paging = new(ngrok.Paging)
@@ -156,9 +163,11 @@ func (it *Iter) Next() bool {
 		return false
 	}
 
-	// are there items remaining?
-	if it.n < len(it.items)-1 {
-		it.n += 1
+	// advance the iterator
+	it.n += 1
+
+	// is there an available item?
+	if it.n < len(it.items) {
 		it.lastItemID = ngrok.String(it.Item().ID)
 		return true
 	}
@@ -172,9 +181,15 @@ func (it *Iter) Next() bool {
 		it.err = err
 		return false
 	}
-	it.n = 0
+
+	// page with zero items means there are no more
+	if len(resp.Keys) == 0 {
+		return false
+	}
+
+	it.n = -1
 	it.items = resp.Keys
-	return len(it.items) > 0
+	return it.Next()
 }
 
 // Item() returns the APIKey currently
@@ -191,8 +206,9 @@ func (it *Iter) Err() error {
 }
 
 // Update attributes of an API key by ID.
-func (c *Client) Update(
-	ctx context.Context, arg *ngrok.APIKeyUpdate) (*ngrok.APIKey, error) {
+//
+// https://ngrok.com/docs/api#api-api-keys-update
+func (c *Client) Update(ctx context.Context, arg *ngrok.APIKeyUpdate) (*ngrok.APIKey, error) {
 	if arg == nil {
 		arg = new(ngrok.APIKeyUpdate)
 	}

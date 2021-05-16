@@ -20,8 +20,9 @@ func NewClient(apiClient *ngrok.Client) *Client {
 }
 
 // Create a new SSH Host Certificate
-func (c *Client) Create(
-	ctx context.Context, arg *ngrok.SSHHostCertificateCreate) (*ngrok.SSHHostCertificate, error) {
+//
+// https://ngrok.com/docs/api#api-ssh-host-certificates-create
+func (c *Client) Create(ctx context.Context, arg *ngrok.SSHHostCertificateCreate) (*ngrok.SSHHostCertificate, error) {
 	var res ngrok.SSHHostCertificate
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/ssh_host_certificates")).Execute(&path, arg); err != nil {
@@ -41,8 +42,9 @@ func (c *Client) Create(
 }
 
 // Delete an SSH Host Certificate
-func (c *Client) Delete(
-	ctx context.Context, id string) error {
+//
+// https://ngrok.com/docs/api#api-ssh-host-certificates-delete
+func (c *Client) Delete(ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -63,8 +65,9 @@ func (c *Client) Delete(
 }
 
 // Get detailed information about an SSH Host Certficate
-func (c *Client) Get(
-	ctx context.Context, id string) (*ngrok.SSHHostCertificate, error) {
+//
+// https://ngrok.com/docs/api#api-ssh-host-certificates-get
+func (c *Client) Get(ctx context.Context, id string) (*ngrok.SSHHostCertificate, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.SSHHostCertificate
@@ -86,6 +89,8 @@ func (c *Client) Get(
 }
 
 // List all SSH Host Certificates issued on this account
+//
+// https://ngrok.com/docs/api#api-ssh-host-certificates-list
 func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.SSHHostCertificateList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
@@ -116,6 +121,8 @@ func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.SSHHostCer
 }
 
 // List all SSH Host Certificates issued on this account
+//
+// https://ngrok.com/docs/api#api-ssh-host-certificates-list
 func (c *Client) List(ctx context.Context, paging *ngrok.Paging) *Iter {
 	if paging == nil {
 		paging = new(ngrok.Paging)
@@ -152,9 +159,11 @@ func (it *Iter) Next() bool {
 		return false
 	}
 
-	// are there items remaining?
-	if it.n < len(it.items)-1 {
-		it.n += 1
+	// advance the iterator
+	it.n += 1
+
+	// is there an available item?
+	if it.n < len(it.items) {
 		it.lastItemID = ngrok.String(it.Item().ID)
 		return true
 	}
@@ -168,9 +177,15 @@ func (it *Iter) Next() bool {
 		it.err = err
 		return false
 	}
-	it.n = 0
+
+	// page with zero items means there are no more
+	if len(resp.SSHHostCertificates) == 0 {
+		return false
+	}
+
+	it.n = -1
 	it.items = resp.SSHHostCertificates
-	return len(it.items) > 0
+	return it.Next()
 }
 
 // Item() returns the SSHHostCertificate currently
@@ -187,8 +202,9 @@ func (it *Iter) Err() error {
 }
 
 // Update an SSH Host Certificate
-func (c *Client) Update(
-	ctx context.Context, arg *ngrok.SSHHostCertificateUpdate) (*ngrok.SSHHostCertificate, error) {
+//
+// https://ngrok.com/docs/api#api-ssh-host-certificates-update
+func (c *Client) Update(ctx context.Context, arg *ngrok.SSHHostCertificateUpdate) (*ngrok.SSHHostCertificate, error) {
 	if arg == nil {
 		arg = new(ngrok.SSHHostCertificateUpdate)
 	}

@@ -22,8 +22,9 @@ func NewClient(apiClient *ngrok.Client) *Client {
 // Create a new Event Destination. It will not apply to anything until it is
 // associated with an Event Stream, and that Event Stream is associated with an
 // Endpoint Config.
-func (c *Client) Create(
-	ctx context.Context, arg *ngrok.EventDestinationCreate) (*ngrok.EventDestination, error) {
+//
+// https://ngrok.com/docs/api#api-event-destinations-create
+func (c *Client) Create(ctx context.Context, arg *ngrok.EventDestinationCreate) (*ngrok.EventDestination, error) {
 	if arg == nil {
 		arg = new(ngrok.EventDestinationCreate)
 	}
@@ -48,8 +49,9 @@ func (c *Client) Create(
 // Delete an Event Destination. If the Event Destination is still referenced by an
 // Event Stream, this will throw an error until that Event Stream has removed that
 // reference.
-func (c *Client) Delete(
-	ctx context.Context, id string) error {
+//
+// https://ngrok.com/docs/api#api-event-destinations-delete
+func (c *Client) Delete(ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -70,8 +72,9 @@ func (c *Client) Delete(
 }
 
 // Get detailed information about an Event Destination by ID.
-func (c *Client) Get(
-	ctx context.Context, id string) (*ngrok.EventDestination, error) {
+//
+// https://ngrok.com/docs/api#api-event-destinations-get
+func (c *Client) Get(ctx context.Context, id string) (*ngrok.EventDestination, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.EventDestination
@@ -93,6 +96,8 @@ func (c *Client) Get(
 }
 
 // List all Event Destinations on this account.
+//
+// https://ngrok.com/docs/api#api-event-destinations-list
 func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.EventDestinationList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
@@ -123,6 +128,8 @@ func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.EventDesti
 }
 
 // List all Event Destinations on this account.
+//
+// https://ngrok.com/docs/api#api-event-destinations-list
 func (c *Client) List(ctx context.Context, paging *ngrok.Paging) *Iter {
 	if paging == nil {
 		paging = new(ngrok.Paging)
@@ -159,9 +166,11 @@ func (it *Iter) Next() bool {
 		return false
 	}
 
-	// are there items remaining?
-	if it.n < len(it.items)-1 {
-		it.n += 1
+	// advance the iterator
+	it.n += 1
+
+	// is there an available item?
+	if it.n < len(it.items) {
 		it.lastItemID = ngrok.String(it.Item().ID)
 		return true
 	}
@@ -175,9 +184,15 @@ func (it *Iter) Next() bool {
 		it.err = err
 		return false
 	}
-	it.n = 0
+
+	// page with zero items means there are no more
+	if len(resp.EventDestinations) == 0 {
+		return false
+	}
+
+	it.n = -1
 	it.items = resp.EventDestinations
-	return len(it.items) > 0
+	return it.Next()
 }
 
 // Item() returns the EventDestination currently
@@ -194,8 +209,9 @@ func (it *Iter) Err() error {
 }
 
 // Update attributes of an Event Destination.
-func (c *Client) Update(
-	ctx context.Context, arg *ngrok.EventDestinationUpdate) (*ngrok.EventDestination, error) {
+//
+// https://ngrok.com/docs/api#api-event-destinations-update
+func (c *Client) Update(ctx context.Context, arg *ngrok.EventDestinationUpdate) (*ngrok.EventDestination, error) {
 	if arg == nil {
 		arg = new(ngrok.EventDestinationUpdate)
 	}
