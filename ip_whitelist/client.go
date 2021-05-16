@@ -22,10 +22,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 // Create a new IP whitelist entry that will restrict traffic to all tunnel
 // endpoints on the account.
 func (c *Client) Create(
-
-	ctx context.Context,
-	arg *ngrok.IPWhitelistEntryCreate,
-) (*ngrok.IPWhitelistEntry, error) {
+	ctx context.Context, arg *ngrok.IPWhitelistEntryCreate) (*ngrok.IPWhitelistEntry, error) {
 	if arg == nil {
 		arg = new(ngrok.IPWhitelistEntryCreate)
 	}
@@ -49,11 +46,7 @@ func (c *Client) Create(
 
 // Delete an IP whitelist entry.
 func (c *Client) Delete(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -75,11 +68,7 @@ func (c *Client) Delete(
 
 // Get detailed information about an IP whitelist entry by ID.
 func (c *Client) Get(
-
-	ctx context.Context,
-	id string,
-
-) (*ngrok.IPWhitelistEntry, error) {
+	ctx context.Context, id string) (*ngrok.IPWhitelistEntry, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.IPWhitelistEntry
@@ -101,10 +90,7 @@ func (c *Client) Get(
 }
 
 // List all IP whitelist entries on this account
-func (c *Client) list(
-	ctx context.Context,
-	arg *ngrok.Paging,
-) (*ngrok.IPWhitelistEntryList, error) {
+func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.IPWhitelistEntryList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
 	}
@@ -206,10 +192,7 @@ func (it *Iter) Err() error {
 
 // Update attributes of an IP whitelist entry by ID
 func (c *Client) Update(
-
-	ctx context.Context,
-	arg *ngrok.IPWhitelistEntryUpdate,
-) (*ngrok.IPWhitelistEntry, error) {
+	ctx context.Context, arg *ngrok.IPWhitelistEntryUpdate) (*ngrok.IPWhitelistEntry, error) {
 	if arg == nil {
 		arg = new(ngrok.IPWhitelistEntryUpdate)
 	}

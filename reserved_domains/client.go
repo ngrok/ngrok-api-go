@@ -21,10 +21,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 
 // Create a new reserved domain.
 func (c *Client) Create(
-
-	ctx context.Context,
-	arg *ngrok.ReservedDomainCreate,
-) (*ngrok.ReservedDomain, error) {
+	ctx context.Context, arg *ngrok.ReservedDomainCreate) (*ngrok.ReservedDomain, error) {
 	var res ngrok.ReservedDomain
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/reserved_domains")).Execute(&path, arg); err != nil {
@@ -45,11 +42,7 @@ func (c *Client) Create(
 
 // Delete a reserved domain.
 func (c *Client) Delete(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -71,11 +64,7 @@ func (c *Client) Delete(
 
 // Get the details of a reserved domain.
 func (c *Client) Get(
-
-	ctx context.Context,
-	id string,
-
-) (*ngrok.ReservedDomain, error) {
+	ctx context.Context, id string) (*ngrok.ReservedDomain, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.ReservedDomain
@@ -97,10 +86,7 @@ func (c *Client) Get(
 }
 
 // List all reserved domains on this account.
-func (c *Client) list(
-	ctx context.Context,
-	arg *ngrok.Paging,
-) (*ngrok.ReservedDomainList, error) {
+func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.ReservedDomainList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
 	}
@@ -202,10 +188,7 @@ func (it *Iter) Err() error {
 
 // Update the attributes of a reserved domain.
 func (c *Client) Update(
-
-	ctx context.Context,
-	arg *ngrok.ReservedDomainUpdate,
-) (*ngrok.ReservedDomain, error) {
+	ctx context.Context, arg *ngrok.ReservedDomainUpdate) (*ngrok.ReservedDomain, error) {
 	if arg == nil {
 		arg = new(ngrok.ReservedDomainUpdate)
 	}
@@ -230,11 +213,7 @@ func (c *Client) Update(
 
 // Detach the certificate management policy attached to a reserved domain.
 func (c *Client) DeleteCertificateManagementPolicy(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -256,11 +235,7 @@ func (c *Client) DeleteCertificateManagementPolicy(
 
 // Detach the certificate attached to a reserved domain.
 func (c *Client) DeleteCertificate(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -282,11 +257,7 @@ func (c *Client) DeleteCertificate(
 
 // Detach the http endpoint configuration attached to a reserved domain.
 func (c *Client) DeleteHTTPEndpointConfig(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -308,11 +279,7 @@ func (c *Client) DeleteHTTPEndpointConfig(
 
 // Detach the https endpoint configuration attached to a reserved domain.
 func (c *Client) DeleteHTTPSEndpointConfig(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer

@@ -20,10 +20,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 }
 
 func (c *Client) Replace(
-
-	ctx context.Context,
-	arg *ngrok.EndpointIPPolicyReplace,
-) (*ngrok.EndpointIPPolicy, error) {
+	ctx context.Context, arg *ngrok.EndpointIPPolicyReplace) (*ngrok.EndpointIPPolicy, error) {
 	if arg == nil {
 		arg = new(ngrok.EndpointIPPolicyReplace)
 	}
@@ -47,11 +44,7 @@ func (c *Client) Replace(
 }
 
 func (c *Client) Get(
-
-	ctx context.Context,
-	id string,
-
-) (*ngrok.EndpointIPPolicy, error) {
+	ctx context.Context, id string) (*ngrok.EndpointIPPolicy, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.EndpointIPPolicy
@@ -73,11 +66,7 @@ func (c *Client) Get(
 }
 
 func (c *Client) Delete(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer

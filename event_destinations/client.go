@@ -23,10 +23,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 // associated with an Event Stream, and that Event Stream is associated with an
 // Endpoint Config.
 func (c *Client) Create(
-
-	ctx context.Context,
-	arg *ngrok.EventDestinationCreate,
-) (*ngrok.EventDestination, error) {
+	ctx context.Context, arg *ngrok.EventDestinationCreate) (*ngrok.EventDestination, error) {
 	if arg == nil {
 		arg = new(ngrok.EventDestinationCreate)
 	}
@@ -52,11 +49,7 @@ func (c *Client) Create(
 // Event Stream, this will throw an error until that Event Stream has removed that
 // reference.
 func (c *Client) Delete(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -78,11 +71,7 @@ func (c *Client) Delete(
 
 // Get detailed information about an Event Destination by ID.
 func (c *Client) Get(
-
-	ctx context.Context,
-	id string,
-
-) (*ngrok.EventDestination, error) {
+	ctx context.Context, id string) (*ngrok.EventDestination, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.EventDestination
@@ -104,10 +93,7 @@ func (c *Client) Get(
 }
 
 // List all Event Destinations on this account.
-func (c *Client) list(
-	ctx context.Context,
-	arg *ngrok.Paging,
-) (*ngrok.EventDestinationList, error) {
+func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.EventDestinationList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
 	}
@@ -209,10 +195,7 @@ func (it *Iter) Err() error {
 
 // Update attributes of an Event Destination.
 func (c *Client) Update(
-
-	ctx context.Context,
-	arg *ngrok.EventDestinationUpdate,
-) (*ngrok.EventDestination, error) {
+	ctx context.Context, arg *ngrok.EventDestinationUpdate) (*ngrok.EventDestination, error) {
 	if arg == nil {
 		arg = new(ngrok.EventDestinationUpdate)
 	}

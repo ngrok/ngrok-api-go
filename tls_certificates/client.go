@@ -21,10 +21,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 
 // Upload a new TLS certificate
 func (c *Client) Create(
-
-	ctx context.Context,
-	arg *ngrok.TLSCertificateCreate,
-) (*ngrok.TLSCertificate, error) {
+	ctx context.Context, arg *ngrok.TLSCertificateCreate) (*ngrok.TLSCertificate, error) {
 	var res ngrok.TLSCertificate
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/tls_certificates")).Execute(&path, arg); err != nil {
@@ -45,11 +42,7 @@ func (c *Client) Create(
 
 // Delete a TLS certificate
 func (c *Client) Delete(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -71,11 +64,7 @@ func (c *Client) Delete(
 
 // Get detailed information about a TLS certificate
 func (c *Client) Get(
-
-	ctx context.Context,
-	id string,
-
-) (*ngrok.TLSCertificate, error) {
+	ctx context.Context, id string) (*ngrok.TLSCertificate, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.TLSCertificate
@@ -97,10 +86,7 @@ func (c *Client) Get(
 }
 
 // List all TLS certificates on this account
-func (c *Client) list(
-	ctx context.Context,
-	arg *ngrok.Paging,
-) (*ngrok.TLSCertificateList, error) {
+func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.TLSCertificateList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
 	}
@@ -202,10 +188,7 @@ func (it *Iter) Err() error {
 
 // Update attributes of a TLS Certificate by ID
 func (c *Client) Update(
-
-	ctx context.Context,
-	arg *ngrok.TLSCertificateUpdate,
-) (*ngrok.TLSCertificate, error) {
+	ctx context.Context, arg *ngrok.TLSCertificateUpdate) (*ngrok.TLSCertificate, error) {
 	if arg == nil {
 		arg = new(ngrok.TLSCertificateUpdate)
 	}

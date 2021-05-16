@@ -22,10 +22,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 // Create a new ssh_credential from an uploaded public SSH key. This ssh credential
 // can be used to start new tunnels via ngrok's SSH gateway.
 func (c *Client) Create(
-
-	ctx context.Context,
-	arg *ngrok.SSHCredentialCreate,
-) (*ngrok.SSHCredential, error) {
+	ctx context.Context, arg *ngrok.SSHCredentialCreate) (*ngrok.SSHCredential, error) {
 	var res ngrok.SSHCredential
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/ssh_credentials")).Execute(&path, arg); err != nil {
@@ -46,11 +43,7 @@ func (c *Client) Create(
 
 // Delete an ssh_credential by ID
 func (c *Client) Delete(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -72,11 +65,7 @@ func (c *Client) Delete(
 
 // Get detailed information about an ssh_credential
 func (c *Client) Get(
-
-	ctx context.Context,
-	id string,
-
-) (*ngrok.SSHCredential, error) {
+	ctx context.Context, id string) (*ngrok.SSHCredential, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.SSHCredential
@@ -98,10 +87,7 @@ func (c *Client) Get(
 }
 
 // List all ssh credentials on this account
-func (c *Client) list(
-	ctx context.Context,
-	arg *ngrok.Paging,
-) (*ngrok.SSHCredentialList, error) {
+func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.SSHCredentialList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
 	}
@@ -203,10 +189,7 @@ func (it *Iter) Err() error {
 
 // Update attributes of an ssh_credential by ID
 func (c *Client) Update(
-
-	ctx context.Context,
-	arg *ngrok.SSHCredentialUpdate,
-) (*ngrok.SSHCredential, error) {
+	ctx context.Context, arg *ngrok.SSHCredentialUpdate) (*ngrok.SSHCredential, error) {
 	if arg == nil {
 		arg = new(ngrok.SSHCredentialUpdate)
 	}

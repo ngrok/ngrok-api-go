@@ -21,10 +21,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 
 // Upload a new Certificate Authority
 func (c *Client) Create(
-
-	ctx context.Context,
-	arg *ngrok.CertificateAuthorityCreate,
-) (*ngrok.CertificateAuthority, error) {
+	ctx context.Context, arg *ngrok.CertificateAuthorityCreate) (*ngrok.CertificateAuthority, error) {
 	var res ngrok.CertificateAuthority
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/certificate_authorities")).Execute(&path, arg); err != nil {
@@ -45,11 +42,7 @@ func (c *Client) Create(
 
 // Delete a Certificate Authority
 func (c *Client) Delete(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -71,11 +64,7 @@ func (c *Client) Delete(
 
 // Get detailed information about a certficate authority
 func (c *Client) Get(
-
-	ctx context.Context,
-	id string,
-
-) (*ngrok.CertificateAuthority, error) {
+	ctx context.Context, id string) (*ngrok.CertificateAuthority, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.CertificateAuthority
@@ -97,10 +86,7 @@ func (c *Client) Get(
 }
 
 // List all Certificate Authority on this account
-func (c *Client) list(
-	ctx context.Context,
-	arg *ngrok.Paging,
-) (*ngrok.CertificateAuthorityList, error) {
+func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.CertificateAuthorityList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
 	}
@@ -202,10 +188,7 @@ func (it *Iter) Err() error {
 
 // Update attributes of a Certificate Authority by ID
 func (c *Client) Update(
-
-	ctx context.Context,
-	arg *ngrok.CertificateAuthorityUpdate,
-) (*ngrok.CertificateAuthority, error) {
+	ctx context.Context, arg *ngrok.CertificateAuthorityUpdate) (*ngrok.CertificateAuthority, error) {
 	if arg == nil {
 		arg = new(ngrok.CertificateAuthorityUpdate)
 	}

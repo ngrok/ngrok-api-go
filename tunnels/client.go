@@ -20,10 +20,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 }
 
 // List all online tunnels currently running on the account.
-func (c *Client) list(
-	ctx context.Context,
-	arg *ngrok.Paging,
-) (*ngrok.TunnelList, error) {
+func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.TunnelList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
 	}

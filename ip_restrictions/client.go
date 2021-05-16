@@ -21,10 +21,7 @@ func NewClient(apiClient *ngrok.Client) *Client {
 
 // Create a new IP restriction
 func (c *Client) Create(
-
-	ctx context.Context,
-	arg *ngrok.IPRestrictionCreate,
-) (*ngrok.IPRestriction, error) {
+	ctx context.Context, arg *ngrok.IPRestrictionCreate) (*ngrok.IPRestriction, error) {
 	var res ngrok.IPRestriction
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/ip_restrictions")).Execute(&path, arg); err != nil {
@@ -45,11 +42,7 @@ func (c *Client) Create(
 
 // Delete an IP restriction
 func (c *Client) Delete(
-
-	ctx context.Context,
-	id string,
-
-) error {
+	ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
@@ -71,11 +64,7 @@ func (c *Client) Delete(
 
 // Get detailed information about an IP restriction
 func (c *Client) Get(
-
-	ctx context.Context,
-	id string,
-
-) (*ngrok.IPRestriction, error) {
+	ctx context.Context, id string) (*ngrok.IPRestriction, error) {
 	arg := &ngrok.Item{ID: id}
 
 	var res ngrok.IPRestriction
@@ -97,10 +86,7 @@ func (c *Client) Get(
 }
 
 // List all IP restrictions on this account
-func (c *Client) list(
-	ctx context.Context,
-	arg *ngrok.Paging,
-) (*ngrok.IPRestrictionList, error) {
+func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.IPRestrictionList, error) {
 	if arg == nil {
 		arg = new(ngrok.Paging)
 	}
@@ -202,10 +188,7 @@ func (it *Iter) Err() error {
 
 // Update attributes of an IP restriction by ID
 func (c *Client) Update(
-
-	ctx context.Context,
-	arg *ngrok.IPRestrictionUpdate,
-) (*ngrok.IPRestriction, error) {
+	ctx context.Context, arg *ngrok.IPRestrictionUpdate) (*ngrok.IPRestriction, error) {
 	if arg == nil {
 		arg = new(ngrok.IPRestrictionUpdate)
 	}
