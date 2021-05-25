@@ -21,13 +21,12 @@
 //         "fmt"
 //         "math/rand"
 //
-//         "github.com/ngrok/ngrok-api-go/v2"
-//         "github.com/ngrok/ngrok-api-go/v2/reserved_domains"
+//         "github.com/ngrok/ngrok-api-go/v3"
+//         "github.com/ngrok/ngrok-api-go/v3/reserved_domains"
 //     )
 //
 //     func example(ctx context.Context) error {
-//             ngrokAPI := ngrok.NewClient("<API KEY>")
-//             domains := reserved_domains.NewClient(ngrokAPI)
+//             domains := reserved_domains.NewClient(ngrok.NewClientConfig("<API KEY>"))
 //             d, err := domains.Create(context.Background(), &ngrok.ReservedDomainsCreate{
 //                     Name: fmt.Sprintf("hello-gopher-%x", rand.Int()),
 //             }
@@ -52,28 +51,28 @@
 // once at initialization time.
 //
 //     import (
-//         "github.com/ngrok/ngrok-api-go/v2"
-//         "github.com/ngrok/ngrok-api-go/v2/ip_policies"
-//         "github.com/ngrok/ngrok-api-go/v2/ip_policy_rules"
+//         "github.com/ngrok/ngrok-api-go/v3"
+//         "github.com/ngrok/ngrok-api-go/v3/ip_policies"
+//         "github.com/ngrok/ngrok-api-go/v3/ip_policy_rules"
 //     )
 //
 //     // Construct the root api Client object
-//     ngrokAPI := ngrok.NewClient("<API KEY>")
+//     apiClientConfig := ngrok.NewClientConfig("<API KEY>")
 //
 //     // then construct service-specific clients
-//     policies := ip_policies.NewClient(ngrokAPI)
-//     rules := ip_policy_rules.NewClient(ngrokAPI)
+//     policies := ip_policies.NewClient(apiClientConfig)
+//     rules := ip_policy_rules.NewClient(apiClientConfig)
 //
 //
 // Functional Option Configuration
 //
-// The Client object in the root package supports functional options for
+// The ClientConfig object in the root package supports functional options for
 // configuration. The most common option to use is `WithHTTPClient()` which
-// allows the caller to specify a different net/http.Client object. This allows the
-// caller full customization over the transport if needed for use with proxies,
-// custom TLS setups, observability and tracing, etc.
+// allows the caller to specify a different net/http.Client object. This allows
+// the caller full customization over the transport if needed for use with
+// proxies, custom TLS setups, observability and tracing, etc.
 //
-//     ngrokAPI := ngrok.NewClient("<API KEY>", ngrok.WithHTTPClient(yourHTTPClient))
+//     ngrokAPI := ngrok.NewClientConfig("<API KEY>", ngrok.WithHTTPClient(yourHTTPClient))
 //
 //
 // Nullable arguments
@@ -86,8 +85,7 @@
 // types and providing convenince functions like ngrok.String() and
 // ngrok.Bool() for the caller to wrap literals as pointer values. For example:
 //
-//     ngrokAPI := ngrok.NewClient("<API KEY>")
-//     creds := credentials.NewClient(ngrokAPI)
+//     creds := credentials.NewClient(ngrok.NewClientConfig("<API KEY>"))
 //     c, err := creds.Update(ctx, &ngrok.IPPolicyUpdate{
 //             ID:          "cr_1kYzunEyn6XHHlqyMBLrj5nxkoz",
 //             Description: ngrok.String("this optional description is a pointer to a string"),
@@ -106,10 +104,9 @@
 // after Next() returns false to determine if the iterator failed to fetch the
 // next page of results.
 //
-//     ngrokAPI := ngrok.NewClient("<API KEY>")
-//     certs := tls_certificates.NewClient(ngrokAPI)
-//     certsIter := certs.List(ctx, nil)
-//     for certsIter.Next() {
+//     certs := tls_certificates.NewClient(ngrok.NewClientConfig("<API KEY>"))
+//     certsIter := certs.List(nil)
+//     for certsIter.Next(ctx) {
 //             fmt.Println(certsIter.Item())
 //     }
 //     if err := certsIter.Err(); err != nil {
@@ -130,8 +127,7 @@
 // IsNotFound and IsErrorCode. IsNotFound helps identify the common case of
 // accessing an API resource that no longer exists:
 //
-//     ngrokAPI := ngrok.NewClient("<API KEY>")
-//     domains := reserved_domains.NewClient(ngrokAPI)
+//     domains := reserved_domains.NewClient(ngrok.NewClientConfig("<API KEY>"))
 //     d, err := domains.Get(ctx, "rd_1bXG9oRzwO4wECTdws3hlVw6jCg")
 //     switch {
 //     case ngrok.IsNotFound(err):
@@ -145,8 +141,7 @@
 // https://ngrok.com/docs/errors To check for a specific error condition, you
 // would structure your code like the following example:
 //
-//     ngrokAPI := ngrok.NewClient("<API KEY>")
-//     domains := reserved_domains.NewClient(ngrokAPI)
+//     domains := reserved_domains.NewClient(ngrok.NewClientConfig("<API KEY>"))
 //     d, err := domains.Create(ctx, &ngrok.ReservedDomainsCreate{
 //             Region: "invalid",
 //             Name:   "gopher",
