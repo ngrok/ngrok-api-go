@@ -8,15 +8,16 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v2"
+	"github.com/ngrok/ngrok-api-go/v3"
+	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
 type Client struct {
-	apiClient *ngrok.Client
+	apiClient *api.Client
 }
 
-func NewClient(apiClient *ngrok.Client) *Client {
-	return &Client{apiClient: apiClient}
+func NewClient(cfg *ngrok.ClientConfig) *Client {
+	return &Client{apiClient: api.NewClient(cfg)}
 }
 
 // List all online tunnels currently running on the account.
@@ -54,7 +55,7 @@ func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.TunnelList
 // List all online tunnels currently running on the account.
 //
 // https://ngrok.com/docs/api#api-tunnels-list
-func (c *Client) List(ctx context.Context, paging *ngrok.Paging) *Iter {
+func (c *Client) List(paging *ngrok.Paging) *Iter {
 	if paging == nil {
 		paging = new(ngrok.Paging)
 	}
@@ -63,7 +64,6 @@ func (c *Client) List(ctx context.Context, paging *ngrok.Paging) *Iter {
 	}
 	return &Iter{
 		client:     c,
-		ctx:        ctx,
 		limit:      paging.Limit,
 		lastItemID: paging.BeforeID,
 		n:          -1,
@@ -74,7 +74,6 @@ func (c *Client) List(ctx context.Context, paging *ngrok.Paging) *Iter {
 // automatically fetching new pages worth of values from the API.
 type Iter struct {
 	client     *Client
-	ctx        context.Context
 	n          int
 	items      []ngrok.Tunnel
 	err        error
@@ -82,9 +81,9 @@ type Iter struct {
 	lastItemID *string
 }
 
-// Next() returns true if there is another value available in the iterator. If it
+// Next returns true if there is another value available in the iterator. If it
 // returs true it also advances the iterator to that next available item.
-func (it *Iter) Next() bool {
+func (it *Iter) Next(ctx context.Context) bool {
 	// no more if there is an error
 	if it.err != nil {
 		return false
@@ -100,7 +99,7 @@ func (it *Iter) Next() bool {
 	}
 
 	// fetch the next page
-	resp, err := it.client.list(it.ctx, &ngrok.Paging{
+	resp, err := it.client.list(ctx, &ngrok.Paging{
 		BeforeID: it.lastItemID,
 		Limit:    it.limit,
 	})
@@ -116,7 +115,7 @@ func (it *Iter) Next() bool {
 
 	it.n = -1
 	it.items = resp.Tunnels
-	return it.Next()
+	return it.Next(ctx)
 }
 
 // Item() returns the Tunnel currently

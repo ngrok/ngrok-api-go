@@ -8,15 +8,16 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v2"
+	"github.com/ngrok/ngrok-api-go/v3"
+	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
 type Client struct {
-	apiClient *ngrok.Client
+	apiClient *api.Client
 }
 
-func NewClient(apiClient *ngrok.Client) *Client {
-	return &Client{apiClient: apiClient}
+func NewClient(cfg *ngrok.ClientConfig) *Client {
+	return &Client{apiClient: api.NewClient(cfg)}
 }
 
 func (c *Client) Replace(ctx context.Context, arg *ngrok.EndpointCircuitBreakerReplace) (*ngrok.EndpointCircuitBreaker, error) {

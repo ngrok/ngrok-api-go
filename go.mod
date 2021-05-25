@@ -1,5 +1,5 @@
 
-module github.com/ngrok/ngrok-api-go/v2
+module github.com/ngrok/ngrok-api-go/v3
 
 go 1.16
 
