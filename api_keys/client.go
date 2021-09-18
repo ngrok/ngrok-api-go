@@ -12,6 +12,13 @@ import (
 	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
+// API Keys are used to authenticate to the
+// (https://ngrok.com/docs/api#authentication)ngrok
+//  API. You may use the API itself
+//  to provision and manage API Keys but you'll need to provision your first API
+//  key from the  (https://dashboard.ngrok.com/api/keys)API Keys page on your
+//  ngrok.com dashboard.
+
 type Client struct {
 	apiClient *api.Client
 }

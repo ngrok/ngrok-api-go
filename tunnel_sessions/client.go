@@ -12,6 +12,10 @@ import (
 	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
+// Tunnel Sessions represent instances of ngrok agents or SSH reverse tunnel
+//  sessions that are running and connected to the ngrok service. Each tunnel
+//  session can include one or more Tunnels.
+
 type Client struct {
 	apiClient *api.Client
 }

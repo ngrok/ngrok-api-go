@@ -12,6 +12,9 @@ import (
 	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
+// Abuse Reports allow you to submit take-down requests for URLs hosted by
+//  ngrok that violate ngrok's terms of service.
+
 type Client struct {
 	apiClient *api.Client
 }

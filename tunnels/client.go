@@ -12,6 +12,9 @@ import (
 	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
+// Tunnels provide endpoints to access services exposed by a running ngrok
+//  agent tunnel session or an SSH reverse tunnel session.
+
 type Client struct {
 	apiClient *api.Client
 }

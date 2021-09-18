@@ -12,6 +12,11 @@ import (
 	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
+// IP Policies are reusable groups of CIDR ranges with an allow or deny
+//  action. They can be attached to endpoints via the Endpoint Configuration IP
+//  Policy module. They can also be used with IP Restrictions to control source
+//  IP ranges that can start tunnel sessions and connect to the API and dashboard.
+
 type Client struct {
 	apiClient *api.Client
 }
