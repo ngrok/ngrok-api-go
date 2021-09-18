@@ -12,6 +12,9 @@ import (
 	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
+// The IP Whitelist is deprecated and will be removed. Use an IP Restriction
+//  with an endpoints type instead.
+
 type Client struct {
 	apiClient *api.Client
 }

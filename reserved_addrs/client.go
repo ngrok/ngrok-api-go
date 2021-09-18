@@ -12,6 +12,10 @@ import (
 	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
+// Reserved Addresses are TCP addresses that can be used to listen for traffic.
+//  TCP address hostnames and ports are assigned by ngrok, they cannot be
+//  chosen.
+
 type Client struct {
 	apiClient *api.Client
 }

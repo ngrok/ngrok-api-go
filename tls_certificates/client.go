@@ -12,6 +12,12 @@ import (
 	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
+// TLS Certificates are pairs of x509 certificates and their matching private
+//  key that can be used to terminate TLS traffic. TLS certificates are unused
+//  until they are attached to a Domain. TLS Certificates may also be
+//  provisioned by ngrok automatically for domains on which you have enabled
+//  automated certificate provisioning.
+
 type Client struct {
 	apiClient *api.Client
 }

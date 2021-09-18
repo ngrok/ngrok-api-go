@@ -588,951 +588,6 @@ func (x *CredentialList) GoString() string {
 	return b.String()
 }
 
-type EventStreamCreate struct {
-	// Arbitrary user-defined machine-readable data of this Event Stream. Optional, max
-	// 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// Human-readable description of the Event Stream. Optional, max 255 bytes.
-	Description string `json:"description,omitempty"`
-	// A list of protocol-specific fields you want to collect on each event.
-	Fields []string `json:"fields,omitempty"`
-	// The protocol that determines which events will be collected. Supported values
-	// are tcp_connection_closed and http_request_complete.
-	EventType string `json:"event_type,omitempty"`
-	// A list of Event Destination IDs which should be used for this Event Stream.
-	// Event Streams are required to have at least one Event Destination.
-	DestinationIDs []string `json:"destination_ids,omitempty"`
-	// The percentage of all events you would like to capture. Valid values range from
-	// 0.01, representing 1% of all events to 1.00, representing 100% of all events.
-	SamplingRate float64 `json:"sampling_rate,omitempty"`
-}
-
-func (x *EventStreamCreate) String() string {
-	return x.GoString()
-}
-
-func (x *EventStreamCreate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EventStreamCreate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tFields\t%v\n", x.Fields)
-	fmt.Fprintf(tw, "\tEventType\t%v\n", x.EventType)
-	fmt.Fprintf(tw, "\tDestinationIDs\t%v\n", x.DestinationIDs)
-	fmt.Fprintf(tw, "\tSamplingRate\t%v\n", x.SamplingRate)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EventStreamUpdate struct {
-	// Unique identifier for this Event Stream.
-	ID string `json:"id,omitempty"`
-	// Arbitrary user-defined machine-readable data of this Event Stream. Optional, max
-	// 4096 bytes.
-	Metadata *string `json:"metadata,omitempty"`
-	// Human-readable description of the Event Stream. Optional, max 255 bytes.
-	Description *string `json:"description,omitempty"`
-	// A list of protocol-specific fields you want to collect on each event.
-	Fields *[]string `json:"fields,omitempty"`
-	// A list of Event Destination IDs which should be used for this Event Stream.
-	// Event Streams are required to have at least one Event Destination.
-	DestinationIDs *[]string `json:"destination_ids,omitempty"`
-	// The percentage of all events you would like to capture. Valid values range from
-	// 0.01, representing 1% of all events to 1.00, representing 100% of all events.
-	SamplingRate *float64 `json:"sampling_rate,omitempty"`
-}
-
-func (x *EventStreamUpdate) String() string {
-	return fmt.Sprintf("EventStreamUpdate{ID: %v}", x.ID)
-
-}
-
-func (x *EventStreamUpdate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EventStreamUpdate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tFields\t%v\n", x.Fields)
-	fmt.Fprintf(tw, "\tDestinationIDs\t%v\n", x.DestinationIDs)
-	fmt.Fprintf(tw, "\tSamplingRate\t%v\n", x.SamplingRate)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EventStreamList struct {
-	// The list of all Event Streams on this account.
-	EventStreams []EventStream `json:"event_streams,omitempty"`
-	// URI of the Event Stream list API resource.
-	URI string `json:"uri,omitempty"`
-	// URI of the next page, or null if there is no next page.
-	NextPageURI *string `json:"next_page_uri,omitempty"`
-}
-
-func (x *EventStreamList) String() string {
-	return x.GoString()
-}
-
-func (x *EventStreamList) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EventStreamList {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tEventStreams\t%v\n", x.EventStreams)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EventStream struct {
-	// Unique identifier for this Event Stream.
-	ID string `json:"id,omitempty"`
-	// URI of the Event Stream API resource.
-	URI string `json:"uri,omitempty"`
-	// Timestamp when the Event Stream was created, RFC 3339 format.
-	CreatedAt string `json:"created_at,omitempty"`
-	// Arbitrary user-defined machine-readable data of this Event Stream. Optional, max
-	// 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// Human-readable description of the Event Stream. Optional, max 255 bytes.
-	Description string `json:"description,omitempty"`
-	// A list of protocol-specific fields you want to collect on each event.
-	Fields []string `json:"fields,omitempty"`
-	// The protocol that determines which events will be collected. Supported values
-	// are tcp_connection_closed and http_request_complete.
-	EventType string `json:"event_type,omitempty"`
-	// A list of Event Destination IDs which should be used for this Event Stream.
-	// Event Streams are required to have at least one Event Destination.
-	DestinationIDs []string `json:"destination_ids,omitempty"`
-	// The percentage of all events you would like to capture. Valid values range from
-	// 0.01, representing 1% of all events to 1.00, representing 100% of all events.
-	SamplingRate float64 `json:"sampling_rate,omitempty"`
-}
-
-func (x *EventStream) String() string {
-	return fmt.Sprintf("EventStream{ID: %v}", x.ID)
-
-}
-
-func (x *EventStream) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EventStream {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tFields\t%v\n", x.Fields)
-	fmt.Fprintf(tw, "\tEventType\t%v\n", x.EventType)
-	fmt.Fprintf(tw, "\tDestinationIDs\t%v\n", x.DestinationIDs)
-	fmt.Fprintf(tw, "\tSamplingRate\t%v\n", x.SamplingRate)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EventDestinationCreate struct {
-	// Arbitrary user-defined machine-readable data of this Event Destination.
-	// Optional, max 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// Human-readable description of the Event Destination. Optional, max 255 bytes.
-	Description string `json:"description,omitempty"`
-	// The output format you would like to serialize events into when sending to their
-	// target. Currently the only accepted value is JSON.
-	Format string `json:"format,omitempty"`
-	// An object that encapsulates where and how to send your events. An event
-	// destination must contain exactly one of the following objects, leaving the rest
-	// null: kinesis, firehose, cloudwatch_logs, or s3.
-	Target EventTarget `json:"target,omitempty"`
-}
-
-func (x *EventDestinationCreate) String() string {
-	return x.GoString()
-}
-
-func (x *EventDestinationCreate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EventDestinationCreate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tFormat\t%v\n", x.Format)
-	fmt.Fprintf(tw, "\tTarget\t%v\n", x.Target)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EventDestinationUpdate struct {
-	// Unique identifier for this Event Destination.
-	ID string `json:"id,omitempty"`
-	// Arbitrary user-defined machine-readable data of this Event Destination.
-	// Optional, max 4096 bytes.
-	Metadata *string `json:"metadata,omitempty"`
-	// Human-readable description of the Event Destination. Optional, max 255 bytes.
-	Description *string `json:"description,omitempty"`
-	// The output format you would like to serialize events into when sending to their
-	// target. Currently the only accepted value is JSON.
-	Format *string `json:"format,omitempty"`
-	// An object that encapsulates where and how to send your events. An event
-	// destination must contain exactly one of the following objects, leaving the rest
-	// null: kinesis, firehose, cloudwatch_logs, or s3.
-	Target *EventTarget `json:"target,omitempty"`
-}
-
-func (x *EventDestinationUpdate) String() string {
-	return fmt.Sprintf("EventDestinationUpdate{ID: %v}", x.ID)
-
-}
-
-func (x *EventDestinationUpdate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EventDestinationUpdate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tFormat\t%v\n", x.Format)
-	fmt.Fprintf(tw, "\tTarget\t%v\n", x.Target)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EventDestination struct {
-	// Unique identifier for this Event Destination.
-	ID string `json:"id,omitempty"`
-	// Arbitrary user-defined machine-readable data of this Event Destination.
-	// Optional, max 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// Timestamp when the Event Destination was created, RFC 3339 format.
-	CreatedAt string `json:"created_at,omitempty"`
-	// Human-readable description of the Event Destination. Optional, max 255 bytes.
-	Description string `json:"description,omitempty"`
-	// The output format you would like to serialize events into when sending to their
-	// target. Currently the only accepted value is JSON.
-	Format string `json:"format,omitempty"`
-	// An object that encapsulates where and how to send your events. An event
-	// destination must contain exactly one of the following objects, leaving the rest
-	// null: kinesis, firehose, cloudwatch_logs, or s3.
-	Target EventTarget `json:"target,omitempty"`
-	// URI of the Event Destination API resource.
-	URI string `json:"uri,omitempty"`
-}
-
-func (x *EventDestination) String() string {
-	return fmt.Sprintf("EventDestination{ID: %v}", x.ID)
-
-}
-
-func (x *EventDestination) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EventDestination {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tFormat\t%v\n", x.Format)
-	fmt.Fprintf(tw, "\tTarget\t%v\n", x.Target)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EventDestinationList struct {
-	// The list of all Event Destinations on this account.
-	EventDestinations []EventDestination `json:"event_destinations,omitempty"`
-	// URI of the Event Destinations list API resource.
-	URI string `json:"uri,omitempty"`
-	// URI of the next page, or null if there is no next page.
-	NextPageURI *string `json:"next_page_uri,omitempty"`
-}
-
-func (x *EventDestinationList) String() string {
-	return x.GoString()
-}
-
-func (x *EventDestinationList) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EventDestinationList {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tEventDestinations\t%v\n", x.EventDestinations)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EventTarget struct {
-	// Configuration used to send events to Amazon Kinesis Data Firehose.
-	Firehose *EventTargetFirehose `json:"firehose,omitempty"`
-	// Configuration used to send events to Amazon Kinesis.
-	Kinesis *EventTargetKinesis `json:"kinesis,omitempty"`
-	// Configuration used to send events to Amazon CloudWatch Logs.
-	CloudwatchLogs *EventTargetCloudwatchLogs `json:"cloudwatch_logs,omitempty"`
-}
-
-func (x *EventTarget) String() string {
-	return x.GoString()
-}
-
-func (x *EventTarget) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EventTarget {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tFirehose\t%v\n", x.Firehose)
-	fmt.Fprintf(tw, "\tKinesis\t%v\n", x.Kinesis)
-	fmt.Fprintf(tw, "\tCloudwatchLogs\t%v\n", x.CloudwatchLogs)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EventTargetFirehose struct {
-	// Configuration for how to authenticate into your AWS account. Exactly one of role
-	// or creds should be configured.
-	Auth AWSAuth `json:"auth,omitempty"`
-	// An Amazon Resource Name specifying the Firehose delivery stream to deposit
-	// events into.
-	DeliveryStreamARN string `json:"delivery_stream_arn,omitempty"`
-}
-
-func (x *EventTargetFirehose) String() string {
-	return x.GoString()
-}
-
-func (x *EventTargetFirehose) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EventTargetFirehose {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tAuth\t%v\n", x.Auth)
-	fmt.Fprintf(tw, "\tDeliveryStreamARN\t%v\n", x.DeliveryStreamARN)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EventTargetKinesis struct {
-	// Configuration for how to authenticate into your AWS account. Exactly one of role
-	// or creds should be configured.
-	Auth AWSAuth `json:"auth,omitempty"`
-	// An Amazon Resource Name specifying the Kinesis stream to deposit events into.
-	StreamARN string `json:"stream_arn,omitempty"`
-}
-
-func (x *EventTargetKinesis) String() string {
-	return x.GoString()
-}
-
-func (x *EventTargetKinesis) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EventTargetKinesis {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tAuth\t%v\n", x.Auth)
-	fmt.Fprintf(tw, "\tStreamARN\t%v\n", x.StreamARN)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EventTargetCloudwatchLogs struct {
-	// Configuration for how to authenticate into your AWS account. Exactly one of role
-	// or creds should be configured.
-	Auth AWSAuth `json:"auth,omitempty"`
-	// An Amazon Resource Name specifying the CloudWatch Logs group to deposit events
-	// into.
-	LogGroupARN string `json:"log_group_arn,omitempty"`
-}
-
-func (x *EventTargetCloudwatchLogs) String() string {
-	return x.GoString()
-}
-
-func (x *EventTargetCloudwatchLogs) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EventTargetCloudwatchLogs {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tAuth\t%v\n", x.Auth)
-	fmt.Fprintf(tw, "\tLogGroupARN\t%v\n", x.LogGroupARN)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type AWSAuth struct {
-	// A role for ngrok to assume on your behalf to deposit events into your AWS
-	// account.
-	Role *AWSRole `json:"role,omitempty"`
-	// Credentials to your AWS account if you prefer ngrok to sign in with long-term
-	// access keys.
-	Creds *AWSCredentials `json:"creds,omitempty"`
-}
-
-func (x *AWSAuth) String() string {
-	return x.GoString()
-}
-
-func (x *AWSAuth) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "AWSAuth {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tRole\t%v\n", x.Role)
-	fmt.Fprintf(tw, "\tCreds\t%v\n", x.Creds)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type AWSRole struct {
-	// An ARN that specifies the role that ngrok should use to deliver to the
-	// configured target.
-	RoleARN string `json:"role_arn,omitempty"`
-}
-
-func (x *AWSRole) String() string {
-	return x.GoString()
-}
-
-func (x *AWSRole) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "AWSRole {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tRoleARN\t%v\n", x.RoleARN)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type AWSCredentials struct {
-	// The ID portion of an AWS access key.
-	AWSAccessKeyID string `json:"aws_access_key_id,omitempty"`
-	// The secret portion of an AWS access key.
-	AWSSecretAccessKey *string `json:"aws_secret_access_key,omitempty"`
-}
-
-func (x *AWSCredentials) String() string {
-	return x.GoString()
-}
-
-func (x *AWSCredentials) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "AWSCredentials {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tAWSAccessKeyID\t%v\n", x.AWSAccessKeyID)
-	fmt.Fprintf(tw, "\tAWSSecretAccessKey\t%v\n", x.AWSSecretAccessKey)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPPolicyCreate struct {
-	// human-readable description of the source IPs of this IP policy. optional, max
-	// 255 bytes.
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this IP policy. optional, max
-	// 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// the IP policy action. Supported values are allow or deny
-	Action string `json:"action,omitempty"`
-}
-
-func (x *IPPolicyCreate) String() string {
-	return x.GoString()
-}
-
-func (x *IPPolicyCreate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPPolicyCreate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tAction\t%v\n", x.Action)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPPolicyUpdate struct {
-	ID string `json:"id,omitempty"`
-	// human-readable description of the source IPs of this IP policy. optional, max
-	// 255 bytes.
-	Description *string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this IP policy. optional, max
-	// 4096 bytes.
-	Metadata *string `json:"metadata,omitempty"`
-}
-
-func (x *IPPolicyUpdate) String() string {
-	return fmt.Sprintf("IPPolicyUpdate{ID: %v}", x.ID)
-
-}
-
-func (x *IPPolicyUpdate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPPolicyUpdate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPPolicy struct {
-	// unique identifier for this IP policy
-	ID string `json:"id,omitempty"`
-	// URI of the IP Policy API resource
-	URI string `json:"uri,omitempty"`
-	// timestamp when the IP policy was created, RFC 3339 format
-	CreatedAt string `json:"created_at,omitempty"`
-	// human-readable description of the source IPs of this IP policy. optional, max
-	// 255 bytes.
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this IP policy. optional, max
-	// 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// the IP policy action. Supported values are allow or deny
-	Action string `json:"action,omitempty"`
-}
-
-func (x *IPPolicy) String() string {
-	return fmt.Sprintf("IPPolicy{ID: %v}", x.ID)
-
-}
-
-func (x *IPPolicy) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPPolicy {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tAction\t%v\n", x.Action)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPPolicyList struct {
-	// the list of all IP policies on this account
-	IPPolicies []IPPolicy `json:"ip_policies,omitempty"`
-	// URI of the IP policy list API resource
-	URI string `json:"uri,omitempty"`
-	// URI of the next page, or null if there is no next page
-	NextPageURI *string `json:"next_page_uri,omitempty"`
-}
-
-func (x *IPPolicyList) String() string {
-	return x.GoString()
-}
-
-func (x *IPPolicyList) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPPolicyList {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tIPPolicies\t%v\n", x.IPPolicies)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPPolicyRuleCreate struct {
-	// human-readable description of the source IPs of this IP rule. optional, max 255
-	// bytes.
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this IP policy rule. optional,
-	// max 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported.
-	CIDR string `json:"cidr,omitempty"`
-	// ID of the IP policy this IP policy rule will be attached to
-	IPPolicyID string `json:"ip_policy_id,omitempty"`
-}
-
-func (x *IPPolicyRuleCreate) String() string {
-	return x.GoString()
-}
-
-func (x *IPPolicyRuleCreate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPPolicyRuleCreate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tCIDR\t%v\n", x.CIDR)
-	fmt.Fprintf(tw, "\tIPPolicyID\t%v\n", x.IPPolicyID)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPPolicyRuleUpdate struct {
-	ID string `json:"id,omitempty"`
-	// human-readable description of the source IPs of this IP rule. optional, max 255
-	// bytes.
-	Description *string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this IP policy rule. optional,
-	// max 4096 bytes.
-	Metadata *string `json:"metadata,omitempty"`
-	// an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported.
-	CIDR *string `json:"cidr,omitempty"`
-}
-
-func (x *IPPolicyRuleUpdate) String() string {
-	return fmt.Sprintf("IPPolicyRuleUpdate{ID: %v}", x.ID)
-
-}
-
-func (x *IPPolicyRuleUpdate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPPolicyRuleUpdate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tCIDR\t%v\n", x.CIDR)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPPolicyRule struct {
-	// unique identifier for this IP policy rule
-	ID string `json:"id,omitempty"`
-	// URI of the IP policy rule API resource
-	URI string `json:"uri,omitempty"`
-	// timestamp when the IP policy rule was created, RFC 3339 format
-	CreatedAt string `json:"created_at,omitempty"`
-	// human-readable description of the source IPs of this IP rule. optional, max 255
-	// bytes.
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this IP policy rule. optional,
-	// max 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported.
-	CIDR string `json:"cidr,omitempty"`
-	// object describing the IP policy this IP Policy Rule belongs to
-	IPPolicy Ref `json:"ip_policy,omitempty"`
-}
-
-func (x *IPPolicyRule) String() string {
-	return fmt.Sprintf("IPPolicyRule{ID: %v}", x.ID)
-
-}
-
-func (x *IPPolicyRule) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPPolicyRule {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tCIDR\t%v\n", x.CIDR)
-	fmt.Fprintf(tw, "\tIPPolicy\t%v\n", x.IPPolicy)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPPolicyRuleList struct {
-	// the list of all IP policy rules on this account
-	IPPolicyRules []IPPolicyRule `json:"ip_policy_rules,omitempty"`
-	// URI of the IP policy rule list API resource
-	URI string `json:"uri,omitempty"`
-	// URI of the next page, or null if there is no next page
-	NextPageURI *string `json:"next_page_uri,omitempty"`
-}
-
-func (x *IPPolicyRuleList) String() string {
-	return x.GoString()
-}
-
-func (x *IPPolicyRuleList) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPPolicyRuleList {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tIPPolicyRules\t%v\n", x.IPPolicyRules)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPRestrictionCreate struct {
-	// human-readable description of this IP restriction. optional, max 255 bytes.
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this IP restriction. optional,
-	// max 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// true if the IP restriction will be enforce. if false, only warnings will be
-	// issued
-	Enforced bool `json:"enforced,omitempty"`
-	// the type of IP restriction. this defines what traffic will be restricted with
-	// the attached policies. four values are currently supported: dashboard, api,
-	// agent, and endpoints
-	Type string `json:"type,omitempty"`
-	// the set of IP policy identifiers that are used to enforce the restriction
-	IPPolicyIDs []string `json:"ip_policy_ids,omitempty"`
-}
-
-func (x *IPRestrictionCreate) String() string {
-	return x.GoString()
-}
-
-func (x *IPRestrictionCreate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPRestrictionCreate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tEnforced\t%v\n", x.Enforced)
-	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
-	fmt.Fprintf(tw, "\tIPPolicyIDs\t%v\n", x.IPPolicyIDs)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPRestrictionUpdate struct {
-	ID string `json:"id,omitempty"`
-	// human-readable description of this IP restriction. optional, max 255 bytes.
-	Description *string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this IP restriction. optional,
-	// max 4096 bytes.
-	Metadata *string `json:"metadata,omitempty"`
-	// true if the IP restriction will be enforce. if false, only warnings will be
-	// issued
-	Enforced *bool `json:"enforced,omitempty"`
-	// the set of IP policy identifiers that are used to enforce the restriction
-	IPPolicyIDs []string `json:"ip_policy_ids,omitempty"`
-}
-
-func (x *IPRestrictionUpdate) String() string {
-	return fmt.Sprintf("IPRestrictionUpdate{ID: %v}", x.ID)
-
-}
-
-func (x *IPRestrictionUpdate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPRestrictionUpdate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tEnforced\t%v\n", x.Enforced)
-	fmt.Fprintf(tw, "\tIPPolicyIDs\t%v\n", x.IPPolicyIDs)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPRestriction struct {
-	// unique identifier for this IP restriction
-	ID string `json:"id,omitempty"`
-	// URI of the IP restriction API resource
-	URI string `json:"uri,omitempty"`
-	// timestamp when the IP restriction was created, RFC 3339 format
-	CreatedAt string `json:"created_at,omitempty"`
-	// human-readable description of this IP restriction. optional, max 255 bytes.
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this IP restriction. optional,
-	// max 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// true if the IP restriction will be enforce. if false, only warnings will be
-	// issued
-	Enforced bool `json:"enforced,omitempty"`
-	// the type of IP restriction. this defines what traffic will be restricted with
-	// the attached policies. four values are currently supported: dashboard, api,
-	// agent, and endpoints
-	Type string `json:"type,omitempty"`
-	// the set of IP policies that are used to enforce the restriction
-	IPPolicies []Ref `json:"ip_policies,omitempty"`
-}
-
-func (x *IPRestriction) String() string {
-	return fmt.Sprintf("IPRestriction{ID: %v}", x.ID)
-
-}
-
-func (x *IPRestriction) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPRestriction {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tEnforced\t%v\n", x.Enforced)
-	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
-	fmt.Fprintf(tw, "\tIPPolicies\t%v\n", x.IPPolicies)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPRestrictionList struct {
-	// the list of all IP restrictions on this account
-	IPRestrictions []IPRestriction `json:"ip_restrictions,omitempty"`
-	// URI of the IP resrtrictions list API resource
-	URI string `json:"uri,omitempty"`
-	// URI of the next page, or null if there is no next page
-	NextPageURI *string `json:"next_page_uri,omitempty"`
-}
-
-func (x *IPRestrictionList) String() string {
-	return x.GoString()
-}
-
-func (x *IPRestrictionList) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPRestrictionList {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tIPRestrictions\t%v\n", x.IPRestrictions)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPWhitelistEntryCreate struct {
-	// human-readable description of the source IPs for this IP whitelist entry.
-	// optional, max 255 bytes.
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this IP whitelist entry.
-	// optional, max 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// an IP address or IP network range in CIDR notation (e.g. 10.1.1.1 or
-	// 10.1.0.0/16) of addresses that will be whitelisted to communicate with your
-	// tunnel endpoints
-	IPNet string `json:"ip_net,omitempty"`
-}
-
-func (x *IPWhitelistEntryCreate) String() string {
-	return x.GoString()
-}
-
-func (x *IPWhitelistEntryCreate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPWhitelistEntryCreate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tIPNet\t%v\n", x.IPNet)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPWhitelistEntryUpdate struct {
-	ID string `json:"id,omitempty"`
-	// human-readable description of the source IPs for this IP whitelist entry.
-	// optional, max 255 bytes.
-	Description *string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this IP whitelist entry.
-	// optional, max 4096 bytes.
-	Metadata *string `json:"metadata,omitempty"`
-}
-
-func (x *IPWhitelistEntryUpdate) String() string {
-	return fmt.Sprintf("IPWhitelistEntryUpdate{ID: %v}", x.ID)
-
-}
-
-func (x *IPWhitelistEntryUpdate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPWhitelistEntryUpdate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPWhitelistEntry struct {
-	// unique identifier for this IP whitelist entry
-	ID string `json:"id,omitempty"`
-	// URI of the IP whitelist entry API resource
-	URI string `json:"uri,omitempty"`
-	// timestamp when the IP whitelist entry was created, RFC 3339 format
-	CreatedAt string `json:"created_at,omitempty"`
-	// human-readable description of the source IPs for this IP whitelist entry.
-	// optional, max 255 bytes.
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this IP whitelist entry.
-	// optional, max 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// an IP address or IP network range in CIDR notation (e.g. 10.1.1.1 or
-	// 10.1.0.0/16) of addresses that will be whitelisted to communicate with your
-	// tunnel endpoints
-	IPNet string `json:"ip_net,omitempty"`
-}
-
-func (x *IPWhitelistEntry) String() string {
-	return fmt.Sprintf("IPWhitelistEntry{ID: %v}", x.ID)
-
-}
-
-func (x *IPWhitelistEntry) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPWhitelistEntry {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tIPNet\t%v\n", x.IPNet)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPWhitelistEntryList struct {
-	// the list of all IP whitelist entries on this account
-	Whitelist []IPWhitelistEntry `json:"whitelist,omitempty"`
-	// URI of the IP whitelist API resource
-	URI string `json:"uri,omitempty"`
-	// URI of the next page, or null if there is no next page
-	NextPageURI *string `json:"next_page_uri,omitempty"`
-}
-
-func (x *IPWhitelistEntryList) String() string {
-	return x.GoString()
-}
-
-func (x *IPWhitelistEntryList) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPWhitelistEntryList {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tWhitelist\t%v\n", x.Whitelist)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
 type EndpointConfiguration struct {
 	// unique identifier of this endpoint configuration
 	ID string `json:"id,omitempty"`
@@ -1766,7 +821,7 @@ type EndpointWebhookValidation struct {
 	Enabled *bool `json:"enabled,omitempty"`
 	// a string indicating which webhook provider will be sending webhooks to this
 	// endpoint. Value must be one of the supported providers: SLACK, SNS, STRIPE,
-	// GITHUB, TWILIO, SHOPIFY, GITLAB, INTERCOM.
+	// GITHUB, TWILIO, SHOPIFY, GITLAB, INTERCOM, SENDGRID.
 	Provider string `json:"provider,omitempty"`
 	// a string secret used to validate requests from the given provider. All providers
 	// except AWS SNS require a secret
@@ -2378,6 +1433,11 @@ type EndpointSAML struct {
 	// A public URL where the SP's metadata is hosted. If an IdP supports dynamic
 	// configuration, this is the URL it can use to retrieve the SP metadata.
 	MetadataURL string `json:"metadata_url,omitempty"`
+	// Defines the name identifier format the SP expects the IdP to use in its
+	// assertions to identify subjects. If unspecified, a default value of
+	// urn:oasis:names:tc:SAML:2.0:nameid-format:persistent will be used. A subset of
+	// the allowed values enumerated by the SAML specification are supported.
+	NameIDFormat string `json:"nameid_format,omitempty"`
 }
 
 func (x *EndpointSAML) String() string {
@@ -2402,6 +1462,7 @@ func (x *EndpointSAML) GoString() string {
 	fmt.Fprintf(tw, "\tSingleLogoutURL\t%v\n", x.SingleLogoutURL)
 	fmt.Fprintf(tw, "\tRequestSigningCertificatePEM\t%v\n", x.RequestSigningCertificatePEM)
 	fmt.Fprintf(tw, "\tMetadataURL\t%v\n", x.MetadataURL)
+	fmt.Fprintf(tw, "\tNameIDFormat\t%v\n", x.NameIDFormat)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -2439,6 +1500,11 @@ type EndpointSAMLMutate struct {
 	// If present, only users who are a member of one of the listed groups may access
 	// the target endpoint.
 	AuthorizedGroups []string `json:"authorized_groups,omitempty"`
+	// Defines the name identifier format the SP expects the IdP to use in its
+	// assertions to identify subjects. If unspecified, a default value of
+	// urn:oasis:names:tc:SAML:2.0:nameid-format:persistent will be used. A subset of
+	// the allowed values enumerated by the SAML specification are supported.
+	NameIDFormat string `json:"nameid_format,omitempty"`
 }
 
 func (x *EndpointSAMLMutate) String() string {
@@ -2458,6 +1524,7 @@ func (x *EndpointSAMLMutate) GoString() string {
 	fmt.Fprintf(tw, "\tForceAuthn\t%v\n", x.ForceAuthn)
 	fmt.Fprintf(tw, "\tAllowIdPInitiated\t%v\n", x.AllowIdPInitiated)
 	fmt.Fprintf(tw, "\tAuthorizedGroups\t%v\n", x.AuthorizedGroups)
+	fmt.Fprintf(tw, "\tNameIDFormat\t%v\n", x.NameIDFormat)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -2507,6 +1574,1236 @@ func (x *EndpointOIDC) GoString() string {
 	fmt.Fprintf(tw, "\tClientID\t%v\n", x.ClientID)
 	fmt.Fprintf(tw, "\tClientSecret\t%v\n", x.ClientSecret)
 	fmt.Fprintf(tw, "\tScopes\t%v\n", x.Scopes)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventStreamCreate struct {
+	// Arbitrary user-defined machine-readable data of this Event Stream. Optional, max
+	// 4096 bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// Human-readable description of the Event Stream. Optional, max 255 bytes.
+	Description string `json:"description,omitempty"`
+	// A list of protocol-specific fields you want to collect on each event.
+	Fields []string `json:"fields,omitempty"`
+	// The protocol that determines which events will be collected. Supported values
+	// are tcp_connection_closed and http_request_complete.
+	EventType string `json:"event_type,omitempty"`
+	// A list of Event Destination IDs which should be used for this Event Stream.
+	// Event Streams are required to have at least one Event Destination.
+	DestinationIDs []string `json:"destination_ids,omitempty"`
+	// The percentage of all events you would like to capture. Valid values range from
+	// 0.01, representing 1% of all events to 1.00, representing 100% of all events.
+	SamplingRate float64 `json:"sampling_rate,omitempty"`
+}
+
+func (x *EventStreamCreate) String() string {
+	return x.GoString()
+}
+
+func (x *EventStreamCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventStreamCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tFields\t%v\n", x.Fields)
+	fmt.Fprintf(tw, "\tEventType\t%v\n", x.EventType)
+	fmt.Fprintf(tw, "\tDestinationIDs\t%v\n", x.DestinationIDs)
+	fmt.Fprintf(tw, "\tSamplingRate\t%v\n", x.SamplingRate)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventStreamUpdate struct {
+	// Unique identifier for this Event Stream.
+	ID string `json:"id,omitempty"`
+	// Arbitrary user-defined machine-readable data of this Event Stream. Optional, max
+	// 4096 bytes.
+	Metadata *string `json:"metadata,omitempty"`
+	// Human-readable description of the Event Stream. Optional, max 255 bytes.
+	Description *string `json:"description,omitempty"`
+	// A list of protocol-specific fields you want to collect on each event.
+	Fields *[]string `json:"fields,omitempty"`
+	// A list of Event Destination IDs which should be used for this Event Stream.
+	// Event Streams are required to have at least one Event Destination.
+	DestinationIDs *[]string `json:"destination_ids,omitempty"`
+	// The percentage of all events you would like to capture. Valid values range from
+	// 0.01, representing 1% of all events to 1.00, representing 100% of all events.
+	SamplingRate *float64 `json:"sampling_rate,omitempty"`
+}
+
+func (x *EventStreamUpdate) String() string {
+	return fmt.Sprintf("EventStreamUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *EventStreamUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventStreamUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tFields\t%v\n", x.Fields)
+	fmt.Fprintf(tw, "\tDestinationIDs\t%v\n", x.DestinationIDs)
+	fmt.Fprintf(tw, "\tSamplingRate\t%v\n", x.SamplingRate)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventStreamList struct {
+	// The list of all Event Streams on this account.
+	EventStreams []EventStream `json:"event_streams,omitempty"`
+	// URI of the Event Stream list API resource.
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page.
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *EventStreamList) String() string {
+	return x.GoString()
+}
+
+func (x *EventStreamList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventStreamList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEventStreams\t%v\n", x.EventStreams)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventStream struct {
+	// Unique identifier for this Event Stream.
+	ID string `json:"id,omitempty"`
+	// URI of the Event Stream API resource.
+	URI string `json:"uri,omitempty"`
+	// Timestamp when the Event Stream was created, RFC 3339 format.
+	CreatedAt string `json:"created_at,omitempty"`
+	// Arbitrary user-defined machine-readable data of this Event Stream. Optional, max
+	// 4096 bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// Human-readable description of the Event Stream. Optional, max 255 bytes.
+	Description string `json:"description,omitempty"`
+	// A list of protocol-specific fields you want to collect on each event.
+	Fields []string `json:"fields,omitempty"`
+	// The protocol that determines which events will be collected. Supported values
+	// are tcp_connection_closed and http_request_complete.
+	EventType string `json:"event_type,omitempty"`
+	// A list of Event Destination IDs which should be used for this Event Stream.
+	// Event Streams are required to have at least one Event Destination.
+	DestinationIDs []string `json:"destination_ids,omitempty"`
+	// The percentage of all events you would like to capture. Valid values range from
+	// 0.01, representing 1% of all events to 1.00, representing 100% of all events.
+	SamplingRate float64 `json:"sampling_rate,omitempty"`
+}
+
+func (x *EventStream) String() string {
+	return fmt.Sprintf("EventStream{ID: %v}", x.ID)
+
+}
+
+func (x *EventStream) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventStream {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tFields\t%v\n", x.Fields)
+	fmt.Fprintf(tw, "\tEventType\t%v\n", x.EventType)
+	fmt.Fprintf(tw, "\tDestinationIDs\t%v\n", x.DestinationIDs)
+	fmt.Fprintf(tw, "\tSamplingRate\t%v\n", x.SamplingRate)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventDestinationCreate struct {
+	// Arbitrary user-defined machine-readable data of this Event Destination.
+	// Optional, max 4096 bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// Human-readable description of the Event Destination. Optional, max 255 bytes.
+	Description string `json:"description,omitempty"`
+	// The output format you would like to serialize events into when sending to their
+	// target. Currently the only accepted value is JSON.
+	Format string `json:"format,omitempty"`
+	// An object that encapsulates where and how to send your events. An event
+	// destination must contain exactly one of the following objects, leaving the rest
+	// null: kinesis, firehose, cloudwatch_logs, or s3.
+	Target EventTarget `json:"target,omitempty"`
+}
+
+func (x *EventDestinationCreate) String() string {
+	return x.GoString()
+}
+
+func (x *EventDestinationCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventDestinationCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tFormat\t%v\n", x.Format)
+	fmt.Fprintf(tw, "\tTarget\t%v\n", x.Target)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventDestinationUpdate struct {
+	// Unique identifier for this Event Destination.
+	ID string `json:"id,omitempty"`
+	// Arbitrary user-defined machine-readable data of this Event Destination.
+	// Optional, max 4096 bytes.
+	Metadata *string `json:"metadata,omitempty"`
+	// Human-readable description of the Event Destination. Optional, max 255 bytes.
+	Description *string `json:"description,omitempty"`
+	// The output format you would like to serialize events into when sending to their
+	// target. Currently the only accepted value is JSON.
+	Format *string `json:"format,omitempty"`
+	// An object that encapsulates where and how to send your events. An event
+	// destination must contain exactly one of the following objects, leaving the rest
+	// null: kinesis, firehose, cloudwatch_logs, or s3.
+	Target *EventTarget `json:"target,omitempty"`
+}
+
+func (x *EventDestinationUpdate) String() string {
+	return fmt.Sprintf("EventDestinationUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *EventDestinationUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventDestinationUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tFormat\t%v\n", x.Format)
+	fmt.Fprintf(tw, "\tTarget\t%v\n", x.Target)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventDestination struct {
+	// Unique identifier for this Event Destination.
+	ID string `json:"id,omitempty"`
+	// Arbitrary user-defined machine-readable data of this Event Destination.
+	// Optional, max 4096 bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// Timestamp when the Event Destination was created, RFC 3339 format.
+	CreatedAt string `json:"created_at,omitempty"`
+	// Human-readable description of the Event Destination. Optional, max 255 bytes.
+	Description string `json:"description,omitempty"`
+	// The output format you would like to serialize events into when sending to their
+	// target. Currently the only accepted value is JSON.
+	Format string `json:"format,omitempty"`
+	// An object that encapsulates where and how to send your events. An event
+	// destination must contain exactly one of the following objects, leaving the rest
+	// null: kinesis, firehose, cloudwatch_logs, or s3.
+	Target EventTarget `json:"target,omitempty"`
+	// URI of the Event Destination API resource.
+	URI string `json:"uri,omitempty"`
+}
+
+func (x *EventDestination) String() string {
+	return fmt.Sprintf("EventDestination{ID: %v}", x.ID)
+
+}
+
+func (x *EventDestination) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventDestination {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tFormat\t%v\n", x.Format)
+	fmt.Fprintf(tw, "\tTarget\t%v\n", x.Target)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventDestinationList struct {
+	// The list of all Event Destinations on this account.
+	EventDestinations []EventDestination `json:"event_destinations,omitempty"`
+	// URI of the Event Destinations list API resource.
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page.
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *EventDestinationList) String() string {
+	return x.GoString()
+}
+
+func (x *EventDestinationList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventDestinationList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEventDestinations\t%v\n", x.EventDestinations)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventTarget struct {
+	// Configuration used to send events to Amazon Kinesis Data Firehose.
+	Firehose *EventTargetFirehose `json:"firehose,omitempty"`
+	// Configuration used to send events to Amazon Kinesis.
+	Kinesis *EventTargetKinesis `json:"kinesis,omitempty"`
+	// Configuration used to send events to Amazon CloudWatch Logs.
+	CloudwatchLogs *EventTargetCloudwatchLogs `json:"cloudwatch_logs,omitempty"`
+}
+
+func (x *EventTarget) String() string {
+	return x.GoString()
+}
+
+func (x *EventTarget) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventTarget {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tFirehose\t%v\n", x.Firehose)
+	fmt.Fprintf(tw, "\tKinesis\t%v\n", x.Kinesis)
+	fmt.Fprintf(tw, "\tCloudwatchLogs\t%v\n", x.CloudwatchLogs)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventTargetFirehose struct {
+	// Configuration for how to authenticate into your AWS account. Exactly one of role
+	// or creds should be configured.
+	Auth AWSAuth `json:"auth,omitempty"`
+	// An Amazon Resource Name specifying the Firehose delivery stream to deposit
+	// events into.
+	DeliveryStreamARN string `json:"delivery_stream_arn,omitempty"`
+}
+
+func (x *EventTargetFirehose) String() string {
+	return x.GoString()
+}
+
+func (x *EventTargetFirehose) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventTargetFirehose {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tAuth\t%v\n", x.Auth)
+	fmt.Fprintf(tw, "\tDeliveryStreamARN\t%v\n", x.DeliveryStreamARN)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventTargetKinesis struct {
+	// Configuration for how to authenticate into your AWS account. Exactly one of role
+	// or creds should be configured.
+	Auth AWSAuth `json:"auth,omitempty"`
+	// An Amazon Resource Name specifying the Kinesis stream to deposit events into.
+	StreamARN string `json:"stream_arn,omitempty"`
+}
+
+func (x *EventTargetKinesis) String() string {
+	return x.GoString()
+}
+
+func (x *EventTargetKinesis) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventTargetKinesis {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tAuth\t%v\n", x.Auth)
+	fmt.Fprintf(tw, "\tStreamARN\t%v\n", x.StreamARN)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventTargetCloudwatchLogs struct {
+	// Configuration for how to authenticate into your AWS account. Exactly one of role
+	// or creds should be configured.
+	Auth AWSAuth `json:"auth,omitempty"`
+	// An Amazon Resource Name specifying the CloudWatch Logs group to deposit events
+	// into.
+	LogGroupARN string `json:"log_group_arn,omitempty"`
+}
+
+func (x *EventTargetCloudwatchLogs) String() string {
+	return x.GoString()
+}
+
+func (x *EventTargetCloudwatchLogs) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventTargetCloudwatchLogs {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tAuth\t%v\n", x.Auth)
+	fmt.Fprintf(tw, "\tLogGroupARN\t%v\n", x.LogGroupARN)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type AWSAuth struct {
+	// A role for ngrok to assume on your behalf to deposit events into your AWS
+	// account.
+	Role *AWSRole `json:"role,omitempty"`
+	// Credentials to your AWS account if you prefer ngrok to sign in with long-term
+	// access keys.
+	Creds *AWSCredentials `json:"creds,omitempty"`
+}
+
+func (x *AWSAuth) String() string {
+	return x.GoString()
+}
+
+func (x *AWSAuth) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AWSAuth {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tRole\t%v\n", x.Role)
+	fmt.Fprintf(tw, "\tCreds\t%v\n", x.Creds)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type AWSRole struct {
+	// An ARN that specifies the role that ngrok should use to deliver to the
+	// configured target.
+	RoleARN string `json:"role_arn,omitempty"`
+}
+
+func (x *AWSRole) String() string {
+	return x.GoString()
+}
+
+func (x *AWSRole) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AWSRole {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tRoleARN\t%v\n", x.RoleARN)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type AWSCredentials struct {
+	// The ID portion of an AWS access key.
+	AWSAccessKeyID string `json:"aws_access_key_id,omitempty"`
+	// The secret portion of an AWS access key.
+	AWSSecretAccessKey *string `json:"aws_secret_access_key,omitempty"`
+}
+
+func (x *AWSCredentials) String() string {
+	return x.GoString()
+}
+
+func (x *AWSCredentials) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AWSCredentials {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tAWSAccessKeyID\t%v\n", x.AWSAccessKeyID)
+	fmt.Fprintf(tw, "\tAWSSecretAccessKey\t%v\n", x.AWSSecretAccessKey)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventSubscriptionCreate struct {
+	// Arbitrary customer supplied information intended to be machine readable.
+	// Optional, max 4096 chars.
+	Metadata string `json:"metadata,omitempty"`
+	// Arbitrary customer supplied information intended to be human readable. Optional,
+	// max 255 chars.
+	Description string `json:"description,omitempty"`
+	// Sources containing the types for which this event subscription will trigger
+	Sources []EventSourceReplace `json:"sources,omitempty"`
+	// A list of Event Destination IDs which should be used for this Event Stream.
+	// Event Streams are required to have at least one Event Destination.
+	DestinationIDs []string `json:"destination_ids,omitempty"`
+}
+
+func (x *EventSubscriptionCreate) String() string {
+	return x.GoString()
+}
+
+func (x *EventSubscriptionCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventSubscriptionCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tSources\t%v\n", x.Sources)
+	fmt.Fprintf(tw, "\tDestinationIDs\t%v\n", x.DestinationIDs)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventSubscriptionUpdate struct {
+	// Unique identifier for this Event Subscription.
+	ID string `json:"id,omitempty"`
+	// Arbitrary customer supplied information intended to be machine readable.
+	// Optional, max 4096 chars.
+	Metadata *string `json:"metadata,omitempty"`
+	// Arbitrary customer supplied information intended to be human readable. Optional,
+	// max 255 chars.
+	Description *string `json:"description,omitempty"`
+	// Sources containing the types for which this event subscription will trigger
+	Sources *[]EventSourceReplace `json:"sources,omitempty"`
+	// A list of Event Destination IDs which should be used for this Event Stream.
+	// Event Streams are required to have at least one Event Destination.
+	DestinationIDs *[]string `json:"destination_ids,omitempty"`
+}
+
+func (x *EventSubscriptionUpdate) String() string {
+	return fmt.Sprintf("EventSubscriptionUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *EventSubscriptionUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventSubscriptionUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tSources\t%v\n", x.Sources)
+	fmt.Fprintf(tw, "\tDestinationIDs\t%v\n", x.DestinationIDs)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventSubscriptionList struct {
+	// The list of all Event Subscriptions on this account.
+	EventSubscriptions []EventSubscription `json:"event_subscriptions,omitempty"`
+	// URI of the Event Subscriptions list API resource.
+	URI string `json:"uri,omitempty"`
+	// URI of next page, or null if there is no next page.
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *EventSubscriptionList) String() string {
+	return x.GoString()
+}
+
+func (x *EventSubscriptionList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventSubscriptionList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEventSubscriptions\t%v\n", x.EventSubscriptions)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventSubscription struct {
+	// Unique identifier for this Event Subscription.
+	ID string `json:"id,omitempty"`
+	// URI of the Event Subscription API resource.
+	URI string `json:"uri,omitempty"`
+	// When the Event Subscription was created (RFC 3339 format).
+	CreatedAt string `json:"created_at,omitempty"`
+	// Arbitrary customer supplied information intended to be machine readable.
+	// Optional, max 4096 chars.
+	Metadata string `json:"metadata,omitempty"`
+	// Arbitrary customer supplied information intended to be human readable. Optional,
+	// max 255 chars.
+	Description string `json:"description,omitempty"`
+	// Sources containing the types for which this event subscription will trigger
+	Sources []EventSource `json:"sources,omitempty"`
+	// Destinations to which these events will be sent
+	Destinations []Ref `json:"destinations,omitempty"`
+}
+
+func (x *EventSubscription) String() string {
+	return fmt.Sprintf("EventSubscription{ID: %v}", x.ID)
+
+}
+
+func (x *EventSubscription) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventSubscription {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tSources\t%v\n", x.Sources)
+	fmt.Fprintf(tw, "\tDestinations\t%v\n", x.Destinations)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventSourceReplace struct {
+	// Type of event for which an event subscription will trigger
+	Type string `json:"type,omitempty"`
+}
+
+func (x *EventSourceReplace) String() string {
+	return x.GoString()
+}
+
+func (x *EventSourceReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventSourceReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventSource struct {
+	// Type of event for which an event subscription will trigger
+	Type string `json:"type,omitempty"`
+	// URI of the Event Source API resource.
+	URI string `json:"uri,omitempty"`
+}
+
+func (x *EventSource) String() string {
+	return x.GoString()
+}
+
+func (x *EventSource) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventSource {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventSourceList struct {
+	// The list of all Event Sources for an Event Subscription
+	Sources []EventSource `json:"sources,omitempty"`
+	// URI of the next page, or null if there is no next page.
+	URI string `json:"uri,omitempty"`
+}
+
+func (x *EventSourceList) String() string {
+	return x.GoString()
+}
+
+func (x *EventSourceList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventSourceList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tSources\t%v\n", x.Sources)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventSourceCreate struct {
+	// The unique identifier for the Event Subscription that this Event Source is
+	// attached to.
+	SubscriptionID string `json:"subscription_id,omitempty"`
+	// Type of event for which an event subscription will trigger
+	Type string `json:"type,omitempty"`
+}
+
+func (x *EventSourceCreate) String() string {
+	return x.GoString()
+}
+
+func (x *EventSourceCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventSourceCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tSubscriptionID\t%v\n", x.SubscriptionID)
+	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventSourceUpdate struct {
+	// The unique identifier for the Event Subscription that this Event Source is
+	// attached to.
+	SubscriptionID string `json:"subscription_id,omitempty"`
+	// Type of event for which an event subscription will trigger
+	Type string `json:"type,omitempty"`
+}
+
+func (x *EventSourceUpdate) String() string {
+	return x.GoString()
+}
+
+func (x *EventSourceUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventSourceUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tSubscriptionID\t%v\n", x.SubscriptionID)
+	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+// This is needed instead of Item because the parameters are different.
+type EventSourceItem struct {
+	// The unique identifier for the Event Subscription that this Event Source is
+	// attached to.
+	SubscriptionID string `json:"subscription_id,omitempty"`
+	// Type of event for which an event subscription will trigger
+	Type string `json:"type,omitempty"`
+}
+
+func (x *EventSourceItem) String() string {
+	return x.GoString()
+}
+
+func (x *EventSourceItem) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventSourceItem {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tSubscriptionID\t%v\n", x.SubscriptionID)
+	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+// This is needed instead of Paging because the parameters are different. We also don't need the typical pagination params because pagination of this isn't necessary or supported.
+type EventSourcePaging struct {
+	// The unique identifier for the Event Subscription that this Event Source is
+	// attached to.
+	SubscriptionID string `json:"subscription_id,omitempty"`
+}
+
+func (x *EventSourcePaging) String() string {
+	return x.GoString()
+}
+
+func (x *EventSourcePaging) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventSourcePaging {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tSubscriptionID\t%v\n", x.SubscriptionID)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IPPolicyCreate struct {
+	// human-readable description of the source IPs of this IP policy. optional, max
+	// 255 bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this IP policy. optional, max
+	// 4096 bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// the IP policy action. Supported values are allow or deny
+	Action string `json:"action,omitempty"`
+}
+
+func (x *IPPolicyCreate) String() string {
+	return x.GoString()
+}
+
+func (x *IPPolicyCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPPolicyCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tAction\t%v\n", x.Action)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IPPolicyUpdate struct {
+	ID string `json:"id,omitempty"`
+	// human-readable description of the source IPs of this IP policy. optional, max
+	// 255 bytes.
+	Description *string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this IP policy. optional, max
+	// 4096 bytes.
+	Metadata *string `json:"metadata,omitempty"`
+}
+
+func (x *IPPolicyUpdate) String() string {
+	return fmt.Sprintf("IPPolicyUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *IPPolicyUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPPolicyUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IPPolicy struct {
+	// unique identifier for this IP policy
+	ID string `json:"id,omitempty"`
+	// URI of the IP Policy API resource
+	URI string `json:"uri,omitempty"`
+	// timestamp when the IP policy was created, RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// human-readable description of the source IPs of this IP policy. optional, max
+	// 255 bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this IP policy. optional, max
+	// 4096 bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// the IP policy action. Supported values are allow or deny
+	Action string `json:"action,omitempty"`
+}
+
+func (x *IPPolicy) String() string {
+	return fmt.Sprintf("IPPolicy{ID: %v}", x.ID)
+
+}
+
+func (x *IPPolicy) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPPolicy {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tAction\t%v\n", x.Action)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IPPolicyList struct {
+	// the list of all IP policies on this account
+	IPPolicies []IPPolicy `json:"ip_policies,omitempty"`
+	// URI of the IP policy list API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *IPPolicyList) String() string {
+	return x.GoString()
+}
+
+func (x *IPPolicyList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPPolicyList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tIPPolicies\t%v\n", x.IPPolicies)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IPPolicyRuleCreate struct {
+	// human-readable description of the source IPs of this IP rule. optional, max 255
+	// bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this IP policy rule. optional,
+	// max 4096 bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported.
+	CIDR string `json:"cidr,omitempty"`
+	// ID of the IP policy this IP policy rule will be attached to
+	IPPolicyID string `json:"ip_policy_id,omitempty"`
+}
+
+func (x *IPPolicyRuleCreate) String() string {
+	return x.GoString()
+}
+
+func (x *IPPolicyRuleCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPPolicyRuleCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCIDR\t%v\n", x.CIDR)
+	fmt.Fprintf(tw, "\tIPPolicyID\t%v\n", x.IPPolicyID)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IPPolicyRuleUpdate struct {
+	ID string `json:"id,omitempty"`
+	// human-readable description of the source IPs of this IP rule. optional, max 255
+	// bytes.
+	Description *string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this IP policy rule. optional,
+	// max 4096 bytes.
+	Metadata *string `json:"metadata,omitempty"`
+	// an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported.
+	CIDR *string `json:"cidr,omitempty"`
+}
+
+func (x *IPPolicyRuleUpdate) String() string {
+	return fmt.Sprintf("IPPolicyRuleUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *IPPolicyRuleUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPPolicyRuleUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCIDR\t%v\n", x.CIDR)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IPPolicyRule struct {
+	// unique identifier for this IP policy rule
+	ID string `json:"id,omitempty"`
+	// URI of the IP policy rule API resource
+	URI string `json:"uri,omitempty"`
+	// timestamp when the IP policy rule was created, RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// human-readable description of the source IPs of this IP rule. optional, max 255
+	// bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this IP policy rule. optional,
+	// max 4096 bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// an IP or IP range specified in CIDR notation. IPv4 and IPv6 are both supported.
+	CIDR string `json:"cidr,omitempty"`
+	// object describing the IP policy this IP Policy Rule belongs to
+	IPPolicy Ref `json:"ip_policy,omitempty"`
+}
+
+func (x *IPPolicyRule) String() string {
+	return fmt.Sprintf("IPPolicyRule{ID: %v}", x.ID)
+
+}
+
+func (x *IPPolicyRule) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPPolicyRule {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCIDR\t%v\n", x.CIDR)
+	fmt.Fprintf(tw, "\tIPPolicy\t%v\n", x.IPPolicy)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IPPolicyRuleList struct {
+	// the list of all IP policy rules on this account
+	IPPolicyRules []IPPolicyRule `json:"ip_policy_rules,omitempty"`
+	// URI of the IP policy rule list API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *IPPolicyRuleList) String() string {
+	return x.GoString()
+}
+
+func (x *IPPolicyRuleList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPPolicyRuleList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tIPPolicyRules\t%v\n", x.IPPolicyRules)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IPRestrictionCreate struct {
+	// human-readable description of this IP restriction. optional, max 255 bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this IP restriction. optional,
+	// max 4096 bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// true if the IP restriction will be enforced. if false, only warnings will be
+	// issued
+	Enforced bool `json:"enforced,omitempty"`
+	// the type of IP restriction. this defines what traffic will be restricted with
+	// the attached policies. four values are currently supported: dashboard, api,
+	// agent, and endpoints
+	Type string `json:"type,omitempty"`
+	// the set of IP policy identifiers that are used to enforce the restriction
+	IPPolicyIDs []string `json:"ip_policy_ids,omitempty"`
+}
+
+func (x *IPRestrictionCreate) String() string {
+	return x.GoString()
+}
+
+func (x *IPRestrictionCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPRestrictionCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tEnforced\t%v\n", x.Enforced)
+	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
+	fmt.Fprintf(tw, "\tIPPolicyIDs\t%v\n", x.IPPolicyIDs)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IPRestrictionUpdate struct {
+	ID string `json:"id,omitempty"`
+	// human-readable description of this IP restriction. optional, max 255 bytes.
+	Description *string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this IP restriction. optional,
+	// max 4096 bytes.
+	Metadata *string `json:"metadata,omitempty"`
+	// true if the IP restriction will be enforced. if false, only warnings will be
+	// issued
+	Enforced *bool `json:"enforced,omitempty"`
+	// the set of IP policy identifiers that are used to enforce the restriction
+	IPPolicyIDs []string `json:"ip_policy_ids,omitempty"`
+}
+
+func (x *IPRestrictionUpdate) String() string {
+	return fmt.Sprintf("IPRestrictionUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *IPRestrictionUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPRestrictionUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tEnforced\t%v\n", x.Enforced)
+	fmt.Fprintf(tw, "\tIPPolicyIDs\t%v\n", x.IPPolicyIDs)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IPRestriction struct {
+	// unique identifier for this IP restriction
+	ID string `json:"id,omitempty"`
+	// URI of the IP restriction API resource
+	URI string `json:"uri,omitempty"`
+	// timestamp when the IP restriction was created, RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// human-readable description of this IP restriction. optional, max 255 bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this IP restriction. optional,
+	// max 4096 bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// true if the IP restriction will be enforced. if false, only warnings will be
+	// issued
+	Enforced bool `json:"enforced,omitempty"`
+	// the type of IP restriction. this defines what traffic will be restricted with
+	// the attached policies. four values are currently supported: dashboard, api,
+	// agent, and endpoints
+	Type string `json:"type,omitempty"`
+	// the set of IP policies that are used to enforce the restriction
+	IPPolicies []Ref `json:"ip_policies,omitempty"`
+}
+
+func (x *IPRestriction) String() string {
+	return fmt.Sprintf("IPRestriction{ID: %v}", x.ID)
+
+}
+
+func (x *IPRestriction) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPRestriction {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tEnforced\t%v\n", x.Enforced)
+	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
+	fmt.Fprintf(tw, "\tIPPolicies\t%v\n", x.IPPolicies)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IPRestrictionList struct {
+	// the list of all IP restrictions on this account
+	IPRestrictions []IPRestriction `json:"ip_restrictions,omitempty"`
+	// URI of the IP resrtrictions list API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *IPRestrictionList) String() string {
+	return x.GoString()
+}
+
+func (x *IPRestrictionList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPRestrictionList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tIPRestrictions\t%v\n", x.IPRestrictions)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IPWhitelistEntryCreate struct {
+	// human-readable description of the source IPs for this IP whitelist entry.
+	// optional, max 255 bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this IP whitelist entry.
+	// optional, max 4096 bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// an IP address or IP network range in CIDR notation (e.g. 10.1.1.1 or
+	// 10.1.0.0/16) of addresses that will be whitelisted to communicate with your
+	// tunnel endpoints
+	IPNet string `json:"ip_net,omitempty"`
+}
+
+func (x *IPWhitelistEntryCreate) String() string {
+	return x.GoString()
+}
+
+func (x *IPWhitelistEntryCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPWhitelistEntryCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tIPNet\t%v\n", x.IPNet)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IPWhitelistEntryUpdate struct {
+	ID string `json:"id,omitempty"`
+	// human-readable description of the source IPs for this IP whitelist entry.
+	// optional, max 255 bytes.
+	Description *string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this IP whitelist entry.
+	// optional, max 4096 bytes.
+	Metadata *string `json:"metadata,omitempty"`
+}
+
+func (x *IPWhitelistEntryUpdate) String() string {
+	return fmt.Sprintf("IPWhitelistEntryUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *IPWhitelistEntryUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPWhitelistEntryUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IPWhitelistEntry struct {
+	// unique identifier for this IP whitelist entry
+	ID string `json:"id,omitempty"`
+	// URI of the IP whitelist entry API resource
+	URI string `json:"uri,omitempty"`
+	// timestamp when the IP whitelist entry was created, RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// human-readable description of the source IPs for this IP whitelist entry.
+	// optional, max 255 bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this IP whitelist entry.
+	// optional, max 4096 bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// an IP address or IP network range in CIDR notation (e.g. 10.1.1.1 or
+	// 10.1.0.0/16) of addresses that will be whitelisted to communicate with your
+	// tunnel endpoints
+	IPNet string `json:"ip_net,omitempty"`
+}
+
+func (x *IPWhitelistEntry) String() string {
+	return fmt.Sprintf("IPWhitelistEntry{ID: %v}", x.ID)
+
+}
+
+func (x *IPWhitelistEntry) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPWhitelistEntry {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tIPNet\t%v\n", x.IPNet)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IPWhitelistEntryList struct {
+	// the list of all IP whitelist entries on this account
+	Whitelist []IPWhitelistEntry `json:"whitelist,omitempty"`
+	// URI of the IP whitelist API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *IPWhitelistEntryList) String() string {
+	return x.GoString()
+}
+
+func (x *IPWhitelistEntryList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IPWhitelistEntryList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tWhitelist\t%v\n", x.Whitelist)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -2908,10 +3205,10 @@ type ReservedDomainCreate struct {
 	Metadata string `json:"metadata,omitempty"`
 	// ID of an endpoint configuration of type http that will be used to handle inbound
 	// http traffic to this domain
-	HTTPEndpointConfigurationID string `json:"http_endpoint_configuration_id,omitempty"`
+	HTTPEndpointConfigurationID *string `json:"http_endpoint_configuration_id,omitempty"`
 	// ID of an endpoint configuration of type https that will be used to handle
 	// inbound https traffic to this domain
-	HTTPSEndpointConfigurationID string `json:"https_endpoint_configuration_id,omitempty"`
+	HTTPSEndpointConfigurationID *string `json:"https_endpoint_configuration_id,omitempty"`
 	// ID of a user-uploaded TLS certificate to use for connections to targeting this
 	// domain. Optional, mutually exclusive with certificate_management_policy.
 	CertificateID *string `json:"certificate_id,omitempty"`

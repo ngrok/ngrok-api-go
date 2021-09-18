@@ -12,10 +12,9 @@ import (
 	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
-// Endpoint Configuration managementAn
-// (https://ngrok.com/docs/ngrok-link#api-endpoint-configurations)Endpoint
-// Configuration describes
-// a ngrok network endpoint instance.Endpoints are your gateway to ngrok features!
+// Endpoint Configurations are a reusable group of modules that encapsulate how
+//  traffic to a domain or address is handled. Endpoint configurations are only
+//  applied to Domains and TCP Addresses they have been attached to.
 
 type Client struct {
 	apiClient *api.Client

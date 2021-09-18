@@ -40,15 +40,14 @@
 //
 // Package Layout and API Clients
 //
-// The root API client and all of the datatypes exchanged by the API are
+// API client configuration and all of the datatypes exchanged by the API are
 // defined in this base package. There are subpackages for every API service
-// and a separate Client type defined in those packages with methods to
-// interact with that API service. It's usually easiest to find the subpackage
-// of the service you want to work with and begin consulting the documentation
-// there.
+// and a Client type defined in those packages with methods to interact with
+// that API service. It's usually easiest to find the subpackage of the service
+// you want to work with and begin consulting the documentation there.
 //
-// It is recommended to construct the base Client and the service-specific clients
-// once at initialization time.
+// It is recommended to construct the service-specific clients once at
+// initialization time.
 //
 //     import (
 //         "github.com/ngrok/ngrok-api-go/v3"
@@ -92,7 +91,7 @@
 //     })
 //
 //
-// Transparent Paging
+// Automatic Paging
 //
 // All List methods in the ngrok API are paged. This package abstracts that
 // problem away from you by returning an iterator from any List API call. As

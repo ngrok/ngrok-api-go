@@ -12,6 +12,9 @@ import (
 	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
+// IP Policy Rules are the IPv4 or IPv6 CIDRs entries that
+//  make up an IP Policy.
+
 type Client struct {
 	apiClient *api.Client
 }

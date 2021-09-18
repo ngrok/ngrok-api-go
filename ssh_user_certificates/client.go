@@ -12,6 +12,10 @@ import (
 	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
+// SSH User Certificates are presented by SSH clients when connecting to an SSH
+//  server to authenticate their connection. The SSH server must trust the SSH
+//  Certificate Authority used to sign the certificate.
+
 type Client struct {
 	apiClient *api.Client
 }

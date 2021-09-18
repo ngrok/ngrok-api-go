@@ -12,6 +12,9 @@ import (
 	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
+// An SSH Certificate Authority is a pair of an SSH Certificate and its private
+//  key that can be used to sign other SSH host and user certificates.
+
 type Client struct {
 	apiClient *api.Client
 }

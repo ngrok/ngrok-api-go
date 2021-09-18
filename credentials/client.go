@@ -12,6 +12,11 @@ import (
 	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
+// Tunnel Credentials are ngrok agent authtokens. They authorize the ngrok
+//  agent to connect the ngrok service as your account. They are installed with
+//  the ngrok authtoken command or by specifying it in the ngrok.yml
+//  configuration file with the authtoken property.
+
 type Client struct {
 	apiClient *api.Client
 }

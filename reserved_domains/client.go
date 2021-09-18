@@ -12,6 +12,11 @@ import (
 	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
+// Reserved Domains are hostnames that you can listen for traffic on. Domains
+//  can be used to listen for http, https or tls traffic. You may use a domain
+//  that you own by creating a CNAME record specified in the returned resource.
+//  This CNAME record points traffic for that domain to ngrok's edge servers.
+
 type Client struct {
 	apiClient *api.Client
 }

@@ -12,6 +12,12 @@ import (
 	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
+// Certificate Authorities are x509 certificates that are used to sign other
+//  x509 certificates. Attach a Certificate Authority to the Mutual TLS module
+//  to verify that the TLS certificate presented by a client has been signed by
+//  this CA. Certificate Authorities  are used only for mTLS validation only and
+//  thus a private key is not included in the resource.
+
 type Client struct {
 	apiClient *api.Client
 }

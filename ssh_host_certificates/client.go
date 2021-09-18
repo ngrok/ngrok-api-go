@@ -12,6 +12,10 @@ import (
 	"github.com/ngrok/ngrok-api-go/v3/internal/api"
 )
 
+// SSH Host Certificates along with the corresponding private key allows an SSH
+//  server to assert its authenticity to connecting SSH clients who trust the
+//  SSH Certificate Authority that was used to sign the certificate.
+
 type Client struct {
 	apiClient *api.Client
 }
