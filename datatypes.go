@@ -196,6 +196,132 @@ func (x *AbuseReportCreate) GoString() string {
 	return b.String()
 }
 
+type AgentIngressCreate struct {
+	// human-readable description of the use of this Agent Ingress. optional, max 255
+	// bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this Agent Ingress. optional,
+	// max 4096 bytes
+	Metadata string `json:"metadata,omitempty"`
+	// the domain that you own to be used as the base domain name to generate regional
+	// agent ingress domains.
+	Domain string `json:"domain,omitempty"`
+}
+
+func (x *AgentIngressCreate) String() string {
+	return x.GoString()
+}
+
+func (x *AgentIngressCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AgentIngressCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDomain\t%v\n", x.Domain)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type AgentIngressUpdate struct {
+	ID string `json:"id,omitempty"`
+	// human-readable description of the use of this Agent Ingress. optional, max 255
+	// bytes.
+	Description *string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this Agent Ingress. optional,
+	// max 4096 bytes
+	Metadata *string `json:"metadata,omitempty"`
+}
+
+func (x *AgentIngressUpdate) String() string {
+	return fmt.Sprintf("AgentIngressUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *AgentIngressUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AgentIngressUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type AgentIngress struct {
+	// unique Agent Ingress resource identifier
+	ID string `json:"id,omitempty"`
+	// URI to the API resource of this Agent ingress
+	URI string `json:"uri,omitempty"`
+	// human-readable description of the use of this Agent Ingress. optional, max 255
+	// bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this Agent Ingress. optional,
+	// max 4096 bytes
+	Metadata string `json:"metadata,omitempty"`
+	// the domain that you own to be used as the base domain name to generate regional
+	// agent ingress domains.
+	Domain string `json:"domain,omitempty"`
+	// a list of target values to use as the values of NS records for the domain
+	// property these values will delegate control over the domain to ngrok
+	NSTargets []string `json:"ns_targets,omitempty"`
+	// a list of regional agent ingress domains that are subdomains of the value of
+	// domain this value may increase over time as ngrok adds more regions
+	RegionDomains []string `json:"region_domains,omitempty"`
+	// timestamp when the Agent Ingress was created, RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+}
+
+func (x *AgentIngress) String() string {
+	return fmt.Sprintf("AgentIngress{ID: %v}", x.ID)
+
+}
+
+func (x *AgentIngress) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AgentIngress {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDomain\t%v\n", x.Domain)
+	fmt.Fprintf(tw, "\tNSTargets\t%v\n", x.NSTargets)
+	fmt.Fprintf(tw, "\tRegionDomains\t%v\n", x.RegionDomains)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type AgentIngressList struct {
+	// the list of Agent Ingresses owned by this account
+	Ingresses []AgentIngress `json:"ingresses,omitempty"`
+	// URI of the Agent Ingress list API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *AgentIngressList) String() string {
+	return x.GoString()
+}
+
+func (x *AgentIngressList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AgentIngressList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tIngresses\t%v\n", x.Ingresses)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type APIKeyCreate struct {
 	// human-readable description of what uses the API key to authenticate. optional,
 	// max 255 bytes.
@@ -821,7 +947,7 @@ type EndpointWebhookValidation struct {
 	Enabled *bool `json:"enabled,omitempty"`
 	// a string indicating which webhook provider will be sending webhooks to this
 	// endpoint. Value must be one of the supported providers: SLACK, SNS, STRIPE,
-	// GITHUB, TWILIO, SHOPIFY, GITLAB, INTERCOM, SENDGRID.
+	// GITHUB, TWILIO, SHOPIFY, GITLAB, INTERCOM, SENDGRID, XERO.
 	Provider string `json:"provider,omitempty"`
 	// a string secret used to validate requests from the given provider. All providers
 	// except AWS SNS require a secret
@@ -2689,126 +2815,6 @@ func (x *IPRestrictionList) GoString() string {
 	return b.String()
 }
 
-type IPWhitelistEntryCreate struct {
-	// human-readable description of the source IPs for this IP whitelist entry.
-	// optional, max 255 bytes.
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this IP whitelist entry.
-	// optional, max 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// an IP address or IP network range in CIDR notation (e.g. 10.1.1.1 or
-	// 10.1.0.0/16) of addresses that will be whitelisted to communicate with your
-	// tunnel endpoints
-	IPNet string `json:"ip_net,omitempty"`
-}
-
-func (x *IPWhitelistEntryCreate) String() string {
-	return x.GoString()
-}
-
-func (x *IPWhitelistEntryCreate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPWhitelistEntryCreate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tIPNet\t%v\n", x.IPNet)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPWhitelistEntryUpdate struct {
-	ID string `json:"id,omitempty"`
-	// human-readable description of the source IPs for this IP whitelist entry.
-	// optional, max 255 bytes.
-	Description *string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this IP whitelist entry.
-	// optional, max 4096 bytes.
-	Metadata *string `json:"metadata,omitempty"`
-}
-
-func (x *IPWhitelistEntryUpdate) String() string {
-	return fmt.Sprintf("IPWhitelistEntryUpdate{ID: %v}", x.ID)
-
-}
-
-func (x *IPWhitelistEntryUpdate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPWhitelistEntryUpdate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPWhitelistEntry struct {
-	// unique identifier for this IP whitelist entry
-	ID string `json:"id,omitempty"`
-	// URI of the IP whitelist entry API resource
-	URI string `json:"uri,omitempty"`
-	// timestamp when the IP whitelist entry was created, RFC 3339 format
-	CreatedAt string `json:"created_at,omitempty"`
-	// human-readable description of the source IPs for this IP whitelist entry.
-	// optional, max 255 bytes.
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this IP whitelist entry.
-	// optional, max 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// an IP address or IP network range in CIDR notation (e.g. 10.1.1.1 or
-	// 10.1.0.0/16) of addresses that will be whitelisted to communicate with your
-	// tunnel endpoints
-	IPNet string `json:"ip_net,omitempty"`
-}
-
-func (x *IPWhitelistEntry) String() string {
-	return fmt.Sprintf("IPWhitelistEntry{ID: %v}", x.ID)
-
-}
-
-func (x *IPWhitelistEntry) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPWhitelistEntry {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tIPNet\t%v\n", x.IPNet)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type IPWhitelistEntryList struct {
-	// the list of all IP whitelist entries on this account
-	Whitelist []IPWhitelistEntry `json:"whitelist,omitempty"`
-	// URI of the IP whitelist API resource
-	URI string `json:"uri,omitempty"`
-	// URI of the next page, or null if there is no next page
-	NextPageURI *string `json:"next_page_uri,omitempty"`
-}
-
-func (x *IPWhitelistEntryList) String() string {
-	return x.GoString()
-}
-
-func (x *IPWhitelistEntryList) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "IPWhitelistEntryList {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tWhitelist\t%v\n", x.Whitelist)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
 type EndpointLoggingReplace struct {
 	ID     string                `json:"id,omitempty"`
 	Module EndpointLoggingMutate `json:"module,omitempty"`
@@ -3072,7 +3078,7 @@ type ReservedAddrCreate struct {
 	Region string `json:"region,omitempty"`
 	// ID of an endpoint configuration of type tcp that will be used to handle inbound
 	// traffic to this address
-	EndpointConfigurationID string `json:"endpoint_configuration_id,omitempty"`
+	EndpointConfigurationID *string `json:"endpoint_configuration_id,omitempty"`
 }
 
 func (x *ReservedAddrCreate) String() string {
@@ -3318,6 +3324,11 @@ type ReservedDomain struct {
 	// status of the automatic certificate management for this domain, or null if
 	// automatic management is disabled
 	CertificateManagementStatus *ReservedDomainCertStatus `json:"certificate_management_status,omitempty"`
+	// DNS CNAME target for the host _acme-challenge.example.com, where example.com is
+	// your reserved domain name. This is required to issue certificates for wildcard,
+	// non-ngrok reserved domains. Must be null for non-wildcard domains and ngrok
+	// subdomains.
+	ACMEChallengeCNAMETarget *string `json:"acme_challenge_cname_target,omitempty"`
 }
 
 func (x *ReservedDomain) String() string {
@@ -3342,6 +3353,7 @@ func (x *ReservedDomain) GoString() string {
 	fmt.Fprintf(tw, "\tCertificate\t%v\n", x.Certificate)
 	fmt.Fprintf(tw, "\tCertificateManagementPolicy\t%v\n", x.CertificateManagementPolicy)
 	fmt.Fprintf(tw, "\tCertificateManagementStatus\t%v\n", x.CertificateManagementStatus)
+	fmt.Fprintf(tw, "\tACMEChallengeCNAMETarget\t%v\n", x.ACMEChallengeCNAMETarget)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -3419,28 +3431,6 @@ func (x *ReservedDomainCertStatus) GoString() string {
 	return b.String()
 }
 
-type ReservedDomainCertNSTarget struct {
-	// the zone that the nameservers need to be applied to
-	Zone string `json:"zone,omitempty"`
-	// the nameservers the user must add
-	Nameservers []string `json:"nameservers,omitempty"`
-}
-
-func (x *ReservedDomainCertNSTarget) String() string {
-	return x.GoString()
-}
-
-func (x *ReservedDomainCertNSTarget) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "ReservedDomainCertNSTarget {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tZone\t%v\n", x.Zone)
-	fmt.Fprintf(tw, "\tNameservers\t%v\n", x.Nameservers)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
 type ReservedDomainCertJob struct {
 	// if present, an error code indicating why provisioning is failing. It may be
 	// either a temporary condition (INTERNAL_ERROR), or a permanent one the user must
@@ -3452,9 +3442,6 @@ type ReservedDomainCertJob struct {
 	StartedAt string `json:"started_at,omitempty"`
 	// timestamp when the provisioning job will be retried
 	RetriesAt *string `json:"retries_at,omitempty"`
-	// if present, indicates the dns nameservers that the user must configure to
-	// complete the provisioning process of a wildcard certificate
-	NSTargets []ReservedDomainCertNSTarget `json:"ns_targets,omitempty"`
 }
 
 func (x *ReservedDomainCertJob) String() string {
@@ -3469,7 +3456,6 @@ func (x *ReservedDomainCertJob) GoString() string {
 	fmt.Fprintf(tw, "\tMsg\t%v\n", x.Msg)
 	fmt.Fprintf(tw, "\tStartedAt\t%v\n", x.StartedAt)
 	fmt.Fprintf(tw, "\tRetriesAt\t%v\n", x.RetriesAt)
-	fmt.Fprintf(tw, "\tNSTargets\t%v\n", x.NSTargets)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
