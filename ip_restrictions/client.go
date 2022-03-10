@@ -13,7 +13,7 @@ import (
 )
 
 // An IP restriction is a restriction placed on the CIDRs that are allowed to
-//  initate traffic to a specific aspect of your ngrok account. An IP
+//  initiate traffic to a specific aspect of your ngrok account. An IP
 //  restriction has a type which defines the ingress it applies to. IP
 //  restrictions can be used to enforce the source IPs that can make API
 //  requests, log in to the dashboard, start ngrok agents, and connect to your

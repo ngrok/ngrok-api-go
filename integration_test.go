@@ -36,21 +36,20 @@ func TestIPPolicy(t *testing.T) {
 	policies := ip_policies.NewClient(clientConfig)
 
 	// test policy creation
-	mock.SetResponse(201, `{"id":"ipp_1sbMfZquosZtu5mZPgA91UDFaDC","uri":"https://api.ngrok.com/ip_policies/ipp_1sbMfZquosZtu5mZPgA91UDFaDC","created_at":"2021-05-16T03:48:59Z","description":"ngrok-api-go tests","metadata":"","action":"allow"}`)
+	mock.SetResponse(201, `{"id":"ipp_1sbMfZquosZtu5mZPgA91UDFaDC","uri":"https://api.ngrok.com/ip_policies/ipp_1sbMfZquosZtu5mZPgA91UDFaDC","created_at":"2021-05-16T03:48:59Z","description":"ngrok-api-go tests","metadata":""}`)
 	createInstance, err := policies.Create(ctx, &ngrok.IPPolicyCreate{
-		Action:      "allow",
 		Description: "ngrok-api-go tests",
 	})
 	require.NoError(t, err)
 
 	// test get
-	mock.SetResponse(200, `{"id":"ipp_1sbMfZquosZtu5mZPgA91UDFaDC","uri":"https://api.ngrok.com/ip_policies/ipp_1sbMfZquosZtu5mZPgA91UDFaDC","created_at":"2021-05-16T03:48:59Z","description":"ngrok-api-go tests","metadata":"","action":"allow"}`)
+	mock.SetResponse(200, `{"id":"ipp_1sbMfZquosZtu5mZPgA91UDFaDC","uri":"https://api.ngrok.com/ip_policies/ipp_1sbMfZquosZtu5mZPgA91UDFaDC","created_at":"2021-05-16T03:48:59Z","description":"ngrok-api-go tests","metadata":""}`)
 	getInstance, err := policies.Get(ctx, createInstance.ID)
 	require.NoError(t, err)
 	require.Equal(t, createInstance, getInstance)
 
 	// test update
-	mock.SetResponse(200, `{"id":"ipp_1sbMfZquosZtu5mZPgA91UDFaDC","uri":"https://api.ngrok.com/ip_policies/ipp_1sbMfZquosZtu5mZPgA91UDFaDC","created_at":"2021-05-16T03:48:59Z","description":"ngrok-api-go tests","metadata":"{\"device-id\": \"malamute-12\"}","action":"allow"}`)
+	mock.SetResponse(200, `{"id":"ipp_1sbMfZquosZtu5mZPgA91UDFaDC","uri":"https://api.ngrok.com/ip_policies/ipp_1sbMfZquosZtu5mZPgA91UDFaDC","created_at":"2021-05-16T03:48:59Z","description":"ngrok-api-go tests","metadata":"{\"device-id\": \"malamute-12\"}"}`)
 	metadata := `{"device-id": "malamute-12"}`
 	updatedInstance, err := policies.Update(ctx, &ngrok.IPPolicyUpdate{
 		ID:       createInstance.ID,
@@ -60,12 +59,12 @@ func TestIPPolicy(t *testing.T) {
 	require.Equal(t, updatedInstance.Metadata, metadata)
 
 	// test get after update
-	mock.SetResponse(200, `{"id":"ipp_1sbMfZquosZtu5mZPgA91UDFaDC","uri":"https://api.ngrok.com/ip_policies/ipp_1sbMfZquosZtu5mZPgA91UDFaDC","created_at":"2021-05-16T03:48:59Z","description":"ngrok-api-go tests","metadata":"{\"device-id\": \"malamute-12\"}","action":"allow"}`)
+	mock.SetResponse(200, `{"id":"ipp_1sbMfZquosZtu5mZPgA91UDFaDC","uri":"https://api.ngrok.com/ip_policies/ipp_1sbMfZquosZtu5mZPgA91UDFaDC","created_at":"2021-05-16T03:48:59Z","description":"ngrok-api-go tests","metadata":"{\"device-id\": \"malamute-12\"}"}`)
 	getAfterUpdateInstance, err := policies.Get(ctx, createInstance.ID)
 	require.NoError(t, err)
 	require.Equal(t, updatedInstance, getAfterUpdateInstance)
 
-	mock.SetResponse(200, `{"ip_policies":[{"id":"ipp_1sbMfZquosZtu5mZPgA91UDFaDC","uri":"https://api.ngrok.com/ip_policies/ipp_1sbMfZquosZtu5mZPgA91UDFaDC","created_at":"2021-05-16T03:48:59Z","description":"ngrok-api-go tests","metadata":"{\"device-id\": \"malamute-12\"}","action":"allow"},{"id":"ipp_1qXI4T0q6cgkoOVvqSEjU7LiWIr","uri":"https://api.ngrok.com/ip_policies/ipp_1qXI4T0q6cgkoOVvqSEjU7LiWIr","created_at":"2021-03-31T19:35:16Z","description":"martin demo","metadata":"","action":"allow"}],"uri":"https://api.ngrok.com/ip_policies","next_page_uri":null}`)
+	mock.SetResponse(200, `{"ip_policies":[{"id":"ipp_1sbMfZquosZtu5mZPgA91UDFaDC","uri":"https://api.ngrok.com/ip_policies/ipp_1sbMfZquosZtu5mZPgA91UDFaDC","created_at":"2021-05-16T03:48:59Z","description":"ngrok-api-go tests","metadata":"{\"device-id\": \"malamute-12\"}"},{"id":"ipp_1qXI4T0q6cgkoOVvqSEjU7LiWIr","uri":"https://api.ngrok.com/ip_policies/ipp_1qXI4T0q6cgkoOVvqSEjU7LiWIr","created_at":"2021-03-31T19:35:16Z","description":"martin demo","metadata":""}],"uri":"https://api.ngrok.com/ip_policies","next_page_uri":null}`)
 	mock.SetResponse(200, `{"ip_policies":[],"uri":"https://api.ngrok.com/ip_policies","next_page_uri":null}`)
 	iter := policies.List(nil)
 	var iterPolicies []*ngrok.IPPolicy

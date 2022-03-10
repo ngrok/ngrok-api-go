@@ -30,6 +30,9 @@ func NewClient(cfg *ngrok.ClientConfig) *Client {
 //
 // https://ngrok.com/docs/api#api-ip-policies-create
 func (c *Client) Create(ctx context.Context, arg *ngrok.IPPolicyCreate) (*ngrok.IPPolicy, error) {
+	if arg == nil {
+		arg = new(ngrok.IPPolicyCreate)
+	}
 	var res ngrok.IPPolicy
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/ip_policies")).Execute(&path, arg); err != nil {
