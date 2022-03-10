@@ -232,26 +232,3 @@ func (c *Client) Update(ctx context.Context, arg *ngrok.ReservedAddrUpdate) (*ng
 	}
 	return &res, nil
 }
-
-// Detach the endpoint configuration attached to a reserved address.
-//
-// https://ngrok.com/docs/api#api-reserved-addrs-delete-endpoint-config
-func (c *Client) DeleteEndpointConfig(ctx context.Context, id string) error {
-	arg := &ngrok.Item{ID: id}
-
-	var path bytes.Buffer
-	if err := template.Must(template.New("delete_endpoint_config_path").Parse("/reserved_addrs/{{ .ID }}/endpoint_configuration")).Execute(&path, arg); err != nil {
-		panic(err)
-	}
-	arg.ID = ""
-	var (
-		apiURL  = &url.URL{Path: path.String()}
-		bodyArg interface{}
-	)
-	apiURL.Path = path.String()
-
-	if err := c.apiClient.Do(ctx, "DELETE", apiURL, bodyArg, nil); err != nil {
-		return err
-	}
-	return nil
-}
