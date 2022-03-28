@@ -8,8 +8,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v3"
-	"github.com/ngrok/ngrok-api-go/v3/internal/api"
+	"github.com/ngrok/ngrok-api-go/v4"
+	"github.com/ngrok/ngrok-api-go/v4/internal/api"
 )
 
 // IP Policy Rules are the IPv4 or IPv6 CIDRs entries that

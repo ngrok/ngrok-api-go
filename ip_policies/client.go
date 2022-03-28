@@ -8,8 +8,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v3"
-	"github.com/ngrok/ngrok-api-go/v3/internal/api"
+	"github.com/ngrok/ngrok-api-go/v4"
+	"github.com/ngrok/ngrok-api-go/v4/internal/api"
 )
 
 // IP Policies are reusable groups of CIDR ranges with an allow or deny
@@ -30,6 +30,9 @@ func NewClient(cfg *ngrok.ClientConfig) *Client {
 //
 // https://ngrok.com/docs/api#api-ip-policies-create
 func (c *Client) Create(ctx context.Context, arg *ngrok.IPPolicyCreate) (*ngrok.IPPolicy, error) {
+	if arg == nil {
+		arg = new(ngrok.IPPolicyCreate)
+	}
 	var res ngrok.IPPolicy
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/ip_policies")).Execute(&path, arg); err != nil {

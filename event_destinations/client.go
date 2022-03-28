@@ -8,8 +8,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v3"
-	"github.com/ngrok/ngrok-api-go/v3/internal/api"
+	"github.com/ngrok/ngrok-api-go/v4"
+	"github.com/ngrok/ngrok-api-go/v4/internal/api"
 )
 
 type Client struct {
@@ -48,8 +48,7 @@ func (c *Client) Create(ctx context.Context, arg *ngrok.EventDestinationCreate) 
 }
 
 // Delete an Event Destination. If the Event Destination is still referenced by an
-// Event Stream, this will throw an error until that Event Stream has removed that
-// reference.
+// Event Subscription.
 //
 // https://ngrok.com/docs/api#api-event-destinations-delete
 func (c *Client) Delete(ctx context.Context, id string) error {
