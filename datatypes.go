@@ -434,6 +434,475 @@ func (x *APIKeyList) GoString() string {
 	return b.String()
 }
 
+type FailoverBackend struct {
+	// unique identifier for this Failover backend
+	ID string `json:"id,omitempty"`
+	// URI of the FailoverBackend API resource
+	URI string `json:"uri,omitempty"`
+	// timestamp when the backend was created, RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// human-readable description of this backend. Optional
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this backend. Optional
+	Metadata string `json:"metadata,omitempty"`
+	// the ids of the child backends in order
+	Backends []string `json:"backends,omitempty"`
+}
+
+func (x *FailoverBackend) String() string {
+	return fmt.Sprintf("FailoverBackend{ID: %v}", x.ID)
+
+}
+
+func (x *FailoverBackend) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "FailoverBackend {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tBackends\t%v\n", x.Backends)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type FailoverBackendCreate struct {
+	// human-readable description of this backend. Optional
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this backend. Optional
+	Metadata string `json:"metadata,omitempty"`
+	// the ids of the child backends in order
+	Backends []string `json:"backends,omitempty"`
+}
+
+func (x *FailoverBackendCreate) String() string {
+	return x.GoString()
+}
+
+func (x *FailoverBackendCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "FailoverBackendCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tBackends\t%v\n", x.Backends)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type FailoverBackendUpdate struct {
+	ID string `json:"id,omitempty"`
+	// human-readable description of this backend. Optional
+	Description *string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this backend. Optional
+	Metadata *string `json:"metadata,omitempty"`
+	// the ids of the child backends in order
+	Backends []string `json:"backends,omitempty"`
+}
+
+func (x *FailoverBackendUpdate) String() string {
+	return fmt.Sprintf("FailoverBackendUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *FailoverBackendUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "FailoverBackendUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tBackends\t%v\n", x.Backends)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type FailoverBackendList struct {
+	// the list of all Failover backends on this account
+	Backends []FailoverBackend `json:"backends,omitempty"`
+	// URI of the Failover backends list API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *FailoverBackendList) String() string {
+	return x.GoString()
+}
+
+func (x *FailoverBackendList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "FailoverBackendList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tBackends\t%v\n", x.Backends)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type HTTPResponseBackend struct {
+	ID string `json:"id,omitempty"`
+	// URI of the HTTPResponseBackend API resource
+	URI string `json:"uri,omitempty"`
+	// timestamp when the backend was created, RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// human-readable description of this backend. Optional
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this backend. Optional
+	Metadata string `json:"metadata,omitempty"`
+	// body to return as fixed content
+	Body string `json:"body,omitempty"`
+	// headers to return
+	Headers map[string]string `json:"headers,omitempty"`
+	// status code to return
+	StatusCode int32 `json:"status_code,omitempty"`
+}
+
+func (x *HTTPResponseBackend) String() string {
+	return fmt.Sprintf("HTTPResponseBackend{ID: %v}", x.ID)
+
+}
+
+func (x *HTTPResponseBackend) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "HTTPResponseBackend {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tBody\t%v\n", x.Body)
+	fmt.Fprintf(tw, "\tHeaders\t%v\n", x.Headers)
+	fmt.Fprintf(tw, "\tStatusCode\t%v\n", x.StatusCode)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type HTTPResponseBackendCreate struct {
+	// human-readable description of this backend. Optional
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this backend. Optional
+	Metadata string `json:"metadata,omitempty"`
+	// body to return as fixed content
+	Body string `json:"body,omitempty"`
+	// headers to return
+	Headers map[string]string `json:"headers,omitempty"`
+	// status code to return
+	StatusCode *int32 `json:"status_code,omitempty"`
+}
+
+func (x *HTTPResponseBackendCreate) String() string {
+	return x.GoString()
+}
+
+func (x *HTTPResponseBackendCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "HTTPResponseBackendCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tBody\t%v\n", x.Body)
+	fmt.Fprintf(tw, "\tHeaders\t%v\n", x.Headers)
+	fmt.Fprintf(tw, "\tStatusCode\t%v\n", x.StatusCode)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type HTTPResponseBackendUpdate struct {
+	ID string `json:"id,omitempty"`
+	// human-readable description of this backend. Optional
+	Description *string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this backend. Optional
+	Metadata *string `json:"metadata,omitempty"`
+	// body to return as fixed content
+	Body *string `json:"body,omitempty"`
+	// headers to return
+	Headers *map[string]string `json:"headers,omitempty"`
+	// status code to return
+	StatusCode *int32 `json:"status_code,omitempty"`
+}
+
+func (x *HTTPResponseBackendUpdate) String() string {
+	return fmt.Sprintf("HTTPResponseBackendUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *HTTPResponseBackendUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "HTTPResponseBackendUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tBody\t%v\n", x.Body)
+	fmt.Fprintf(tw, "\tHeaders\t%v\n", x.Headers)
+	fmt.Fprintf(tw, "\tStatusCode\t%v\n", x.StatusCode)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type HTTPResponseBackendList struct {
+	Backends    []HTTPResponseBackend `json:"backends,omitempty"`
+	URI         string                `json:"uri,omitempty"`
+	NextPageURI *string               `json:"next_page_uri,omitempty"`
+}
+
+func (x *HTTPResponseBackendList) String() string {
+	return x.GoString()
+}
+
+func (x *HTTPResponseBackendList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "HTTPResponseBackendList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tBackends\t%v\n", x.Backends)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type TunnelGroupBackend struct {
+	// unique identifier for this TunnelGroup backend
+	ID string `json:"id,omitempty"`
+	// URI of the TunnelGroupBackend API resource
+	URI string `json:"uri,omitempty"`
+	// timestamp when the backend was created, RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// human-readable description of this backend. Optional
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this backend. Optional
+	Metadata string `json:"metadata,omitempty"`
+	// labels to watch for tunnels on, e.g. app->foo, dc->bar
+	Labels map[string]string `json:"labels,omitempty"`
+	// tunnels matching this backend
+	Tunnels []Ref `json:"tunnels,omitempty"`
+}
+
+func (x *TunnelGroupBackend) String() string {
+	return fmt.Sprintf("TunnelGroupBackend{ID: %v}", x.ID)
+
+}
+
+func (x *TunnelGroupBackend) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TunnelGroupBackend {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tLabels\t%v\n", x.Labels)
+	fmt.Fprintf(tw, "\tTunnels\t%v\n", x.Tunnels)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type TunnelGroupBackendCreate struct {
+	// human-readable description of this backend. Optional
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this backend. Optional
+	Metadata string `json:"metadata,omitempty"`
+	// labels to watch for tunnels on, e.g. app->foo, dc->bar
+	Labels map[string]string `json:"labels,omitempty"`
+}
+
+func (x *TunnelGroupBackendCreate) String() string {
+	return x.GoString()
+}
+
+func (x *TunnelGroupBackendCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TunnelGroupBackendCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tLabels\t%v\n", x.Labels)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type TunnelGroupBackendUpdate struct {
+	ID string `json:"id,omitempty"`
+	// human-readable description of this backend. Optional
+	Description *string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this backend. Optional
+	Metadata *string `json:"metadata,omitempty"`
+	// labels to watch for tunnels on, e.g. app->foo, dc->bar
+	Labels map[string]string `json:"labels,omitempty"`
+}
+
+func (x *TunnelGroupBackendUpdate) String() string {
+	return fmt.Sprintf("TunnelGroupBackendUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *TunnelGroupBackendUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TunnelGroupBackendUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tLabels\t%v\n", x.Labels)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type TunnelGroupBackendList struct {
+	// the list of all TunnelGroup backends on this account
+	Backends []TunnelGroupBackend `json:"backends,omitempty"`
+	// URI of the TunnelGroup backends list API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *TunnelGroupBackendList) String() string {
+	return x.GoString()
+}
+
+func (x *TunnelGroupBackendList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TunnelGroupBackendList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tBackends\t%v\n", x.Backends)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type WeightedBackend struct {
+	// unique identifier for this Weighted backend
+	ID string `json:"id,omitempty"`
+	// URI of the WeightedBackend API resource
+	URI string `json:"uri,omitempty"`
+	// timestamp when the backend was created, RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// human-readable description of this backend. Optional
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this backend. Optional
+	Metadata string `json:"metadata,omitempty"`
+	// the ids of the child backends to their weights [0-10000]
+	Backends map[string]int64 `json:"backends,omitempty"`
+}
+
+func (x *WeightedBackend) String() string {
+	return fmt.Sprintf("WeightedBackend{ID: %v}", x.ID)
+
+}
+
+func (x *WeightedBackend) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "WeightedBackend {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tBackends\t%v\n", x.Backends)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type WeightedBackendCreate struct {
+	// human-readable description of this backend. Optional
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this backend. Optional
+	Metadata string `json:"metadata,omitempty"`
+	// the ids of the child backends to their weights [0-10000]
+	Backends map[string]int64 `json:"backends,omitempty"`
+}
+
+func (x *WeightedBackendCreate) String() string {
+	return x.GoString()
+}
+
+func (x *WeightedBackendCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "WeightedBackendCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tBackends\t%v\n", x.Backends)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type WeightedBackendUpdate struct {
+	ID string `json:"id,omitempty"`
+	// human-readable description of this backend. Optional
+	Description *string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this backend. Optional
+	Metadata *string `json:"metadata,omitempty"`
+	// the ids of the child backends to their weights [0-10000]
+	Backends map[string]int64 `json:"backends,omitempty"`
+}
+
+func (x *WeightedBackendUpdate) String() string {
+	return fmt.Sprintf("WeightedBackendUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *WeightedBackendUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "WeightedBackendUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tBackends\t%v\n", x.Backends)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type WeightedBackendList struct {
+	// the list of all Weighted backends on this account
+	Backends []WeightedBackend `json:"backends,omitempty"`
+	// URI of the Weighted backends list API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *WeightedBackendList) String() string {
+	return x.GoString()
+}
+
+func (x *WeightedBackendList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "WeightedBackendList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tBackends\t%v\n", x.Backends)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type CertificateAuthorityCreate struct {
 	// human-readable description of this Certificate Authority. optional, max 255
 	// bytes.
@@ -652,9 +1121,9 @@ type Credential struct {
 	// arbitrary user-defined machine-readable data of this credential. Optional, max
 	// 4096 bytes.
 	Metadata string `json:"metadata,omitempty"`
-	// the credential's authtoken that can be used to authenticate an ngrok client.
-	// This value is only available one time, on the API response from credential
-	// creation, otherwise it is null.
+	// the credential's authtoken that can be used to authenticate an ngrok agent. This
+	// value is only available one time, on the API response from credential creation,
+	// otherwise it is null.
 	Token *string `json:"token,omitempty"`
 	// optional list of ACL rules. If unspecified, the credential will have no
 	// restrictions. The only allowed ACL rule at this time is the bind rule. The bind
@@ -714,240 +1183,13 @@ func (x *CredentialList) GoString() string {
 	return b.String()
 }
 
-type EndpointConfiguration struct {
-	// unique identifier of this endpoint configuration
-	ID string `json:"id,omitempty"`
-	// they type of traffic this endpoint configuration can be applied to. one of:
-	// http, https, tcp
-	Type string `json:"type,omitempty"`
-	// human-readable description of what this endpoint configuration will be do when
-	// applied or what traffic it will be applied to. Optional, max 255 bytes
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this endpoint configuration.
-	// Optional, max 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// timestamp when the endpoint configuration was created, RFC 3339 format
-	CreatedAt string `json:"created_at,omitempty"`
-	// URI of the endpoint configuration API resource
-	URI string `json:"uri,omitempty"`
-	// circuit breaker module configuration or null
-	CircuitBreaker *EndpointCircuitBreaker `json:"circuit_breaker,omitempty"`
-	// compression module configuration or null
-	Compression *EndpointCompression `json:"compression,omitempty"`
-	// request headers module configuration or null
-	RequestHeaders *EndpointRequestHeaders `json:"request_headers,omitempty"`
-	// response headers module configuration or null
-	ResponseHeaders *EndpointResponseHeaders `json:"response_headers,omitempty"`
-	// ip policy module configuration or null
-	IPPolicy *EndpointIPPolicy `json:"ip_policy,omitempty"`
-	// mutual TLS module configuration or null
-	MutualTLS *EndpointMutualTLS `json:"mutual_tls,omitempty"`
-	// TLS termination module configuration or null
-	TLSTermination *EndpointTLSTermination `json:"tls_termination,omitempty"`
-	// webhook validation module configuration or null
-	WebhookValidation *EndpointWebhookValidation `json:"webhook_validation,omitempty"`
-	// oauth module configuration or null
-	OAuth *EndpointOAuth `json:"oauth,omitempty"`
-	// logging module configuration or null
-	Logging *EndpointLogging `json:"logging,omitempty"`
-	// saml module configuration or null
-	SAML *EndpointSAML `json:"saml,omitempty"`
-	// oidc module configuration or null
-	OIDC *EndpointOIDC `json:"oidc,omitempty"`
-}
-
-func (x *EndpointConfiguration) String() string {
-	return fmt.Sprintf("EndpointConfiguration{ID: %v}", x.ID)
-
-}
-
-func (x *EndpointConfiguration) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointConfiguration {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	fmt.Fprintf(tw, "\tCircuitBreaker\t%v\n", x.CircuitBreaker)
-	fmt.Fprintf(tw, "\tCompression\t%v\n", x.Compression)
-	fmt.Fprintf(tw, "\tRequestHeaders\t%v\n", x.RequestHeaders)
-	fmt.Fprintf(tw, "\tResponseHeaders\t%v\n", x.ResponseHeaders)
-	fmt.Fprintf(tw, "\tIPPolicy\t%v\n", x.IPPolicy)
-	fmt.Fprintf(tw, "\tMutualTLS\t%v\n", x.MutualTLS)
-	fmt.Fprintf(tw, "\tTLSTermination\t%v\n", x.TLSTermination)
-	fmt.Fprintf(tw, "\tWebhookValidation\t%v\n", x.WebhookValidation)
-	fmt.Fprintf(tw, "\tOAuth\t%v\n", x.OAuth)
-	fmt.Fprintf(tw, "\tLogging\t%v\n", x.Logging)
-	fmt.Fprintf(tw, "\tSAML\t%v\n", x.SAML)
-	fmt.Fprintf(tw, "\tOIDC\t%v\n", x.OIDC)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointConfigurationList struct {
-	// the list of all endpoint configurations on this account
-	EndpointConfigurations []EndpointConfiguration `json:"endpoint_configurations,omitempty"`
-	// URI of the endpoint configurations list API resource
-	URI string `json:"uri,omitempty"`
-	// URI of the next page, or null if there is no next page
-	NextPageURI *string `json:"next_page_uri,omitempty"`
-}
-
-func (x *EndpointConfigurationList) String() string {
-	return x.GoString()
-}
-
-func (x *EndpointConfigurationList) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointConfigurationList {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tEndpointConfigurations\t%v\n", x.EndpointConfigurations)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointConfigurationUpdate struct {
-	// unique identifier of this endpoint configuration
-	ID string `json:"id,omitempty"`
-	// human-readable description of what this endpoint configuration will be do when
-	// applied or what traffic it will be applied to. Optional, max 255 bytes
-	Description *string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this endpoint configuration.
-	// Optional, max 4096 bytes.
-	Metadata *string `json:"metadata,omitempty"`
-	// circuit breaker module configuration or null
-	CircuitBreaker *EndpointCircuitBreaker `json:"circuit_breaker,omitempty"`
-	// compression module configuration or null
-	Compression *EndpointCompression `json:"compression,omitempty"`
-	// request headers module configuration or null
-	RequestHeaders *EndpointRequestHeaders `json:"request_headers,omitempty"`
-	// response headers module configuration or null
-	ResponseHeaders *EndpointResponseHeaders `json:"response_headers,omitempty"`
-	// ip policy module configuration or null
-	IPPolicy *EndpointIPPolicyMutate `json:"ip_policy,omitempty"`
-	// mutual TLS module configuration or null
-	MutualTLS *EndpointMutualTLSMutate `json:"mutual_tls,omitempty"`
-	// TLS termination module configuration or null
-	TLSTermination *EndpointTLSTermination `json:"tls_termination,omitempty"`
-	// webhook validation module configuration or null
-	WebhookValidation *EndpointWebhookValidation `json:"webhook_validation,omitempty"`
-	// oauth module configuration or null
-	OAuth *EndpointOAuth `json:"oauth,omitempty"`
-	// logging module configuration or null
-	Logging *EndpointLoggingMutate `json:"logging,omitempty"`
-	// saml module configuration or null
-	SAML *EndpointSAMLMutate `json:"saml,omitempty"`
-	// oidc module configuration or null
-	OIDC *EndpointOIDC `json:"oidc,omitempty"`
-}
-
-func (x *EndpointConfigurationUpdate) String() string {
-	return fmt.Sprintf("EndpointConfigurationUpdate{ID: %v}", x.ID)
-
-}
-
-func (x *EndpointConfigurationUpdate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointConfigurationUpdate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tCircuitBreaker\t%v\n", x.CircuitBreaker)
-	fmt.Fprintf(tw, "\tCompression\t%v\n", x.Compression)
-	fmt.Fprintf(tw, "\tRequestHeaders\t%v\n", x.RequestHeaders)
-	fmt.Fprintf(tw, "\tResponseHeaders\t%v\n", x.ResponseHeaders)
-	fmt.Fprintf(tw, "\tIPPolicy\t%v\n", x.IPPolicy)
-	fmt.Fprintf(tw, "\tMutualTLS\t%v\n", x.MutualTLS)
-	fmt.Fprintf(tw, "\tTLSTermination\t%v\n", x.TLSTermination)
-	fmt.Fprintf(tw, "\tWebhookValidation\t%v\n", x.WebhookValidation)
-	fmt.Fprintf(tw, "\tOAuth\t%v\n", x.OAuth)
-	fmt.Fprintf(tw, "\tLogging\t%v\n", x.Logging)
-	fmt.Fprintf(tw, "\tSAML\t%v\n", x.SAML)
-	fmt.Fprintf(tw, "\tOIDC\t%v\n", x.OIDC)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointConfigurationCreate struct {
-	// they type of traffic this endpoint configuration can be applied to. one of:
-	// http, https, tcp
-	Type string `json:"type,omitempty"`
-	// human-readable description of what this endpoint configuration will be do when
-	// applied or what traffic it will be applied to. Optional, max 255 bytes
-	Description string `json:"description,omitempty"`
-	// arbitrary user-defined machine-readable data of this endpoint configuration.
-	// Optional, max 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// circuit breaker module configuration or null
-	CircuitBreaker *EndpointCircuitBreaker `json:"circuit_breaker,omitempty"`
-	// compression module configuration or null
-	Compression *EndpointCompression `json:"compression,omitempty"`
-	// request headers module configuration or null
-	RequestHeaders *EndpointRequestHeaders `json:"request_headers,omitempty"`
-	// response headers module configuration or null
-	ResponseHeaders *EndpointResponseHeaders `json:"response_headers,omitempty"`
-	// ip policy module configuration or null
-	IPPolicy *EndpointIPPolicyMutate `json:"ip_policy,omitempty"`
-	// mutual TLS module configuration or null
-	MutualTLS *EndpointMutualTLSMutate `json:"mutual_tls,omitempty"`
-	// TLS termination module configuration or null
-	TLSTermination *EndpointTLSTermination `json:"tls_termination,omitempty"`
-	// webhook validation module configuration or null
-	WebhookValidation *EndpointWebhookValidation `json:"webhook_validation,omitempty"`
-	// oauth module configuration or null
-	OAuth *EndpointOAuth `json:"oauth,omitempty"`
-	// logging module configuration or null
-	Logging *EndpointLoggingMutate `json:"logging,omitempty"`
-	// saml module configuration or null
-	SAML *EndpointSAMLMutate `json:"saml,omitempty"`
-	// oidc module configuration or null
-	OIDC *EndpointOIDC `json:"oidc,omitempty"`
-}
-
-func (x *EndpointConfigurationCreate) String() string {
-	return x.GoString()
-}
-
-func (x *EndpointConfigurationCreate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointConfigurationCreate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tCircuitBreaker\t%v\n", x.CircuitBreaker)
-	fmt.Fprintf(tw, "\tCompression\t%v\n", x.Compression)
-	fmt.Fprintf(tw, "\tRequestHeaders\t%v\n", x.RequestHeaders)
-	fmt.Fprintf(tw, "\tResponseHeaders\t%v\n", x.ResponseHeaders)
-	fmt.Fprintf(tw, "\tIPPolicy\t%v\n", x.IPPolicy)
-	fmt.Fprintf(tw, "\tMutualTLS\t%v\n", x.MutualTLS)
-	fmt.Fprintf(tw, "\tTLSTermination\t%v\n", x.TLSTermination)
-	fmt.Fprintf(tw, "\tWebhookValidation\t%v\n", x.WebhookValidation)
-	fmt.Fprintf(tw, "\tOAuth\t%v\n", x.OAuth)
-	fmt.Fprintf(tw, "\tLogging\t%v\n", x.Logging)
-	fmt.Fprintf(tw, "\tSAML\t%v\n", x.SAML)
-	fmt.Fprintf(tw, "\tOIDC\t%v\n", x.OIDC)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
 type EndpointWebhookValidation struct {
 	// true if the module will be applied to traffic, false to disable. default true if
 	// unspecified
 	Enabled *bool `json:"enabled,omitempty"`
 	// a string indicating which webhook provider will be sending webhooks to this
 	// endpoint. Value must be one of the supported providers: SLACK, SNS, STRIPE,
-	// GITHUB, TWILIO, SHOPIFY, GITLAB, INTERCOM, SENDGRID, XERO.
+	// GITHUB, TWILIO, SHOPIFY, GITLAB, INTERCOM, SENDGRID, XERO, PAGERDUTY.
 	Provider string `json:"provider,omitempty"`
 	// a string secret used to validate requests from the given provider. All providers
 	// except AWS SNS require a secret
@@ -1019,7 +1261,7 @@ type EndpointMutualTLSMutate struct {
 	// unspecified
 	Enabled *bool `json:"enabled,omitempty"`
 	// list of certificate authorities that will be used to validate the TLS client
-	// certificate presnted by the initiatiator of the TLS connection
+	// certificate presented by the initiator of the TLS connection
 	CertificateAuthorityIDs []string `json:"certificate_authority_ids,omitempty"`
 }
 
@@ -1069,49 +1311,26 @@ func (x *EndpointTLSTermination) GoString() string {
 	return b.String()
 }
 
-type EndpointLogging struct {
+type EndpointTLSTerminationAtEdge struct {
 	// true if the module will be applied to traffic, false to disable. default true if
 	// unspecified
 	Enabled *bool `json:"enabled,omitempty"`
-	// list of all EventStreams that will be used to configure and export this
-	// endpoint's logs
-	EventStreams []Ref `json:"event_streams,omitempty"`
+	// The minimum TLS version used for termination and advertised to the client during
+	// the TLS handshake. if unspecified, ngrok will choose an industry-safe default.
+	// This value must be null if terminate_at is set to upstream.
+	MinVersion *string `json:"min_version,omitempty"`
 }
 
-func (x *EndpointLogging) String() string {
+func (x *EndpointTLSTerminationAtEdge) String() string {
 	return x.GoString()
 }
 
-func (x *EndpointLogging) GoString() string {
+func (x *EndpointTLSTerminationAtEdge) GoString() string {
 	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointLogging {\n")
+	fmt.Fprintf(&b, "EndpointTLSTerminationAtEdge {\n")
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
 	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
-	fmt.Fprintf(tw, "\tEventStreams\t%v\n", x.EventStreams)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointLoggingMutate struct {
-	// true if the module will be applied to traffic, false to disable. default true if
-	// unspecified
-	Enabled *bool `json:"enabled,omitempty"`
-	// list of all EventStreams that will be used to configure and export this
-	// endpoint's logs
-	EventStreamIDs []string `json:"event_stream_ids,omitempty"`
-}
-
-func (x *EndpointLoggingMutate) String() string {
-	return x.GoString()
-}
-
-func (x *EndpointLoggingMutate) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointLoggingMutate {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
-	fmt.Fprintf(tw, "\tEventStreamIDs\t%v\n", x.EventStreamIDs)
+	fmt.Fprintf(tw, "\tMinVersion\t%v\n", x.MinVersion)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -1705,100 +1924,328 @@ func (x *EndpointOIDC) GoString() string {
 	return b.String()
 }
 
-type EventStreamCreate struct {
-	// Arbitrary user-defined machine-readable data of this Event Stream. Optional, max
-	// 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// Human-readable description of the Event Stream. Optional, max 255 bytes.
-	Description string `json:"description,omitempty"`
-	// A list of protocol-specific fields you want to collect on each event.
-	Fields []string `json:"fields,omitempty"`
-	// The protocol that determines which events will be collected. Supported values
-	// are tcp_connection_closed and http_request_complete.
-	EventType string `json:"event_type,omitempty"`
-	// A list of Event Destination IDs which should be used for this Event Stream.
-	// Event Streams are required to have at least one Event Destination.
-	DestinationIDs []string `json:"destination_ids,omitempty"`
-	// The percentage of all events you would like to capture. Valid values range from
-	// 0.01, representing 1% of all events to 1.00, representing 100% of all events.
-	SamplingRate float64 `json:"sampling_rate,omitempty"`
+type EndpointBackend struct {
+	// true if the module will be applied to traffic, false to disable. default true if
+	// unspecified
+	Enabled *bool `json:"enabled,omitempty"`
+	// backend to be used to back this endpoint
+	Backend Ref `json:"backend,omitempty"`
 }
 
-func (x *EventStreamCreate) String() string {
+func (x *EndpointBackend) String() string {
 	return x.GoString()
 }
 
-func (x *EventStreamCreate) GoString() string {
+func (x *EndpointBackend) GoString() string {
 	var b bytes.Buffer
-	fmt.Fprintf(&b, "EventStreamCreate {\n")
+	fmt.Fprintf(&b, "EndpointBackend {\n")
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tFields\t%v\n", x.Fields)
-	fmt.Fprintf(tw, "\tEventType\t%v\n", x.EventType)
-	fmt.Fprintf(tw, "\tDestinationIDs\t%v\n", x.DestinationIDs)
-	fmt.Fprintf(tw, "\tSamplingRate\t%v\n", x.SamplingRate)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tBackend\t%v\n", x.Backend)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
 }
 
-type EventStreamUpdate struct {
-	// Unique identifier for this Event Stream.
+type EndpointBackendMutate struct {
+	// true if the module will be applied to traffic, false to disable. default true if
+	// unspecified
+	Enabled *bool `json:"enabled,omitempty"`
+	// backend to be used to back this endpoint
+	BackendID string `json:"backend_id,omitempty"`
+}
+
+func (x *EndpointBackendMutate) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointBackendMutate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointBackendMutate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tBackendID\t%v\n", x.BackendID)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointWebsocketTCPConverter struct {
+	// true if the module will be applied to traffic, false to disable. default true if
+	// unspecified
+	Enabled *bool `json:"enabled,omitempty"`
+}
+
+func (x *EndpointWebsocketTCPConverter) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointWebsocketTCPConverter) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointWebsocketTCPConverter {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeRouteItem struct {
+	// unique identifier of this edge
+	EdgeID string `json:"edge_id,omitempty"`
+	// unique identifier of this edge route
 	ID string `json:"id,omitempty"`
-	// Arbitrary user-defined machine-readable data of this Event Stream. Optional, max
-	// 4096 bytes.
-	Metadata *string `json:"metadata,omitempty"`
-	// Human-readable description of the Event Stream. Optional, max 255 bytes.
-	Description *string `json:"description,omitempty"`
-	// A list of protocol-specific fields you want to collect on each event.
-	Fields *[]string `json:"fields,omitempty"`
-	// A list of Event Destination IDs which should be used for this Event Stream.
-	// Event Streams are required to have at least one Event Destination.
-	DestinationIDs *[]string `json:"destination_ids,omitempty"`
-	// The percentage of all events you would like to capture. Valid values range from
-	// 0.01, representing 1% of all events to 1.00, representing 100% of all events.
-	SamplingRate *float64 `json:"sampling_rate,omitempty"`
 }
 
-func (x *EventStreamUpdate) String() string {
-	return fmt.Sprintf("EventStreamUpdate{ID: %v}", x.ID)
+func (x *EdgeRouteItem) String() string {
+	return fmt.Sprintf("EdgeRouteItem{ID: %v}", x.ID)
 
 }
 
-func (x *EventStreamUpdate) GoString() string {
+func (x *EdgeRouteItem) GoString() string {
 	var b bytes.Buffer
-	fmt.Fprintf(&b, "EventStreamUpdate {\n")
+	fmt.Fprintf(&b, "EdgeRouteItem {\n")
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
 	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tFields\t%v\n", x.Fields)
-	fmt.Fprintf(tw, "\tDestinationIDs\t%v\n", x.DestinationIDs)
-	fmt.Fprintf(tw, "\tSamplingRate\t%v\n", x.SamplingRate)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
 }
 
-type EventStreamList struct {
-	// The list of all Event Streams on this account.
-	EventStreams []EventStream `json:"event_streams,omitempty"`
-	// URI of the Event Stream list API resource.
+type HTTPSEdgeRouteCreate struct {
+	// unique identifier of this edge
+	EdgeID string `json:"edge_id,omitempty"`
+	// Type of match to use for this route. Valid values are "exact_path" and
+	// "path_prefix".
+	MatchType string `json:"match_type,omitempty"`
+	// Route selector: "/blog" or "example.com" or "example.com/blog"
+	Match string `json:"match,omitempty"`
+	// human-readable description of what this edge will be used for; optional, max 255
+	// bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this edge. Optional, max 4096
+	// bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// backend module configuration or null
+	Backend *EndpointBackendMutate `json:"backend,omitempty"`
+	// ip restriction module configuration or null
+	IPRestriction *EndpointIPPolicyMutate `json:"ip_restriction,omitempty"`
+	// circuit breaker module configuration or null
+	CircuitBreaker *EndpointCircuitBreaker `json:"circuit_breaker,omitempty"`
+	// compression module configuration or null
+	Compression *EndpointCompression `json:"compression,omitempty"`
+	// request headers module configuration or null
+	RequestHeaders *EndpointRequestHeaders `json:"request_headers,omitempty"`
+	// response headers module configuration or null
+	ResponseHeaders *EndpointResponseHeaders `json:"response_headers,omitempty"`
+	// webhook verification module configuration or null
+	WebhookVerification *EndpointWebhookValidation `json:"webhook_verification,omitempty"`
+	// oauth module configuration or null
+	OAuth *EndpointOAuth `json:"oauth,omitempty"`
+	// saml module configuration or null
+	SAML *EndpointSAMLMutate `json:"saml,omitempty"`
+	// oidc module configuration or null
+	OIDC *EndpointOIDC `json:"oidc,omitempty"`
+	// websocket to tcp adapter configuration or null
+	WebsocketTCPConverter *EndpointWebsocketTCPConverter `json:"websocket_tcp_converter,omitempty"`
+}
+
+func (x *HTTPSEdgeRouteCreate) String() string {
+	return x.GoString()
+}
+
+func (x *HTTPSEdgeRouteCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "HTTPSEdgeRouteCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
+	fmt.Fprintf(tw, "\tMatchType\t%v\n", x.MatchType)
+	fmt.Fprintf(tw, "\tMatch\t%v\n", x.Match)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tBackend\t%v\n", x.Backend)
+	fmt.Fprintf(tw, "\tIPRestriction\t%v\n", x.IPRestriction)
+	fmt.Fprintf(tw, "\tCircuitBreaker\t%v\n", x.CircuitBreaker)
+	fmt.Fprintf(tw, "\tCompression\t%v\n", x.Compression)
+	fmt.Fprintf(tw, "\tRequestHeaders\t%v\n", x.RequestHeaders)
+	fmt.Fprintf(tw, "\tResponseHeaders\t%v\n", x.ResponseHeaders)
+	fmt.Fprintf(tw, "\tWebhookVerification\t%v\n", x.WebhookVerification)
+	fmt.Fprintf(tw, "\tOAuth\t%v\n", x.OAuth)
+	fmt.Fprintf(tw, "\tSAML\t%v\n", x.SAML)
+	fmt.Fprintf(tw, "\tOIDC\t%v\n", x.OIDC)
+	fmt.Fprintf(tw, "\tWebsocketTCPConverter\t%v\n", x.WebsocketTCPConverter)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type HTTPSEdgeRouteUpdate struct {
+	// unique identifier of this edge
+	EdgeID string `json:"edge_id,omitempty"`
+	// unique identifier of this edge route
+	ID string `json:"id,omitempty"`
+	// Type of match to use for this route. Valid values are "exact_path" and
+	// "path_prefix".
+	MatchType string `json:"match_type,omitempty"`
+	// Route selector: "/blog" or "example.com" or "example.com/blog"
+	Match string `json:"match,omitempty"`
+	// human-readable description of what this edge will be used for; optional, max 255
+	// bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this edge. Optional, max 4096
+	// bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// backend module configuration or null
+	Backend *EndpointBackendMutate `json:"backend,omitempty"`
+	// ip restriction module configuration or null
+	IPRestriction *EndpointIPPolicyMutate `json:"ip_restriction,omitempty"`
+	// circuit breaker module configuration or null
+	CircuitBreaker *EndpointCircuitBreaker `json:"circuit_breaker,omitempty"`
+	// compression module configuration or null
+	Compression *EndpointCompression `json:"compression,omitempty"`
+	// request headers module configuration or null
+	RequestHeaders *EndpointRequestHeaders `json:"request_headers,omitempty"`
+	// response headers module configuration or null
+	ResponseHeaders *EndpointResponseHeaders `json:"response_headers,omitempty"`
+	// webhook verification module configuration or null
+	WebhookVerification *EndpointWebhookValidation `json:"webhook_verification,omitempty"`
+	// oauth module configuration or null
+	OAuth *EndpointOAuth `json:"oauth,omitempty"`
+	// saml module configuration or null
+	SAML *EndpointSAMLMutate `json:"saml,omitempty"`
+	// oidc module configuration or null
+	OIDC *EndpointOIDC `json:"oidc,omitempty"`
+	// websocket to tcp adapter configuration or null
+	WebsocketTCPConverter *EndpointWebsocketTCPConverter `json:"websocket_tcp_converter,omitempty"`
+}
+
+func (x *HTTPSEdgeRouteUpdate) String() string {
+	return fmt.Sprintf("HTTPSEdgeRouteUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *HTTPSEdgeRouteUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "HTTPSEdgeRouteUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tMatchType\t%v\n", x.MatchType)
+	fmt.Fprintf(tw, "\tMatch\t%v\n", x.Match)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tBackend\t%v\n", x.Backend)
+	fmt.Fprintf(tw, "\tIPRestriction\t%v\n", x.IPRestriction)
+	fmt.Fprintf(tw, "\tCircuitBreaker\t%v\n", x.CircuitBreaker)
+	fmt.Fprintf(tw, "\tCompression\t%v\n", x.Compression)
+	fmt.Fprintf(tw, "\tRequestHeaders\t%v\n", x.RequestHeaders)
+	fmt.Fprintf(tw, "\tResponseHeaders\t%v\n", x.ResponseHeaders)
+	fmt.Fprintf(tw, "\tWebhookVerification\t%v\n", x.WebhookVerification)
+	fmt.Fprintf(tw, "\tOAuth\t%v\n", x.OAuth)
+	fmt.Fprintf(tw, "\tSAML\t%v\n", x.SAML)
+	fmt.Fprintf(tw, "\tOIDC\t%v\n", x.OIDC)
+	fmt.Fprintf(tw, "\tWebsocketTCPConverter\t%v\n", x.WebsocketTCPConverter)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type HTTPSEdgeRoute struct {
+	// unique identifier of this edge
+	EdgeID string `json:"edge_id,omitempty"`
+	// unique identifier of this edge route
+	ID string `json:"id,omitempty"`
+	// timestamp when the edge configuration was created, RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// Type of match to use for this route. Valid values are "exact_path" and
+	// "path_prefix".
+	MatchType string `json:"match_type,omitempty"`
+	// Route selector: "/blog" or "example.com" or "example.com/blog"
+	Match string `json:"match,omitempty"`
+	// URI of the edge API resource
 	URI string `json:"uri,omitempty"`
-	// URI of the next page, or null if there is no next page.
+	// human-readable description of what this edge will be used for; optional, max 255
+	// bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this edge. Optional, max 4096
+	// bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// backend module configuration or null
+	Backend *EndpointBackend `json:"backend,omitempty"`
+	// ip restriction module configuration or null
+	IpRestriction *EndpointIPPolicy `json:"ip_restriction,omitempty"`
+	// circuit breaker module configuration or null
+	CircuitBreaker *EndpointCircuitBreaker `json:"circuit_breaker,omitempty"`
+	// compression module configuration or null
+	Compression *EndpointCompression `json:"compression,omitempty"`
+	// request headers module configuration or null
+	RequestHeaders *EndpointRequestHeaders `json:"request_headers,omitempty"`
+	// response headers module configuration or null
+	ResponseHeaders *EndpointResponseHeaders `json:"response_headers,omitempty"`
+	// webhook verification module configuration or null
+	WebhookVerification *EndpointWebhookValidation `json:"webhook_verification,omitempty"`
+	// oauth module configuration or null
+	OAuth *EndpointOAuth `json:"oauth,omitempty"`
+	// saml module configuration or null
+	SAML *EndpointSAML `json:"saml,omitempty"`
+	// oidc module configuration or null
+	OIDC *EndpointOIDC `json:"oidc,omitempty"`
+	// websocket to tcp adapter configuration or null
+	WebsocketTCPConverter *EndpointWebsocketTCPConverter `json:"websocket_tcp_converter,omitempty"`
+}
+
+func (x *HTTPSEdgeRoute) String() string {
+	return fmt.Sprintf("HTTPSEdgeRoute{ID: %v}", x.ID)
+
+}
+
+func (x *HTTPSEdgeRoute) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "HTTPSEdgeRoute {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tMatchType\t%v\n", x.MatchType)
+	fmt.Fprintf(tw, "\tMatch\t%v\n", x.Match)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tBackend\t%v\n", x.Backend)
+	fmt.Fprintf(tw, "\tIpRestriction\t%v\n", x.IpRestriction)
+	fmt.Fprintf(tw, "\tCircuitBreaker\t%v\n", x.CircuitBreaker)
+	fmt.Fprintf(tw, "\tCompression\t%v\n", x.Compression)
+	fmt.Fprintf(tw, "\tRequestHeaders\t%v\n", x.RequestHeaders)
+	fmt.Fprintf(tw, "\tResponseHeaders\t%v\n", x.ResponseHeaders)
+	fmt.Fprintf(tw, "\tWebhookVerification\t%v\n", x.WebhookVerification)
+	fmt.Fprintf(tw, "\tOAuth\t%v\n", x.OAuth)
+	fmt.Fprintf(tw, "\tSAML\t%v\n", x.SAML)
+	fmt.Fprintf(tw, "\tOIDC\t%v\n", x.OIDC)
+	fmt.Fprintf(tw, "\tWebsocketTCPConverter\t%v\n", x.WebsocketTCPConverter)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type HTTPSEdgeList struct {
+	// the list of all HTTPS Edges on this account
+	HTTPSEdges []HTTPSEdge `json:"https_edges,omitempty"`
+	// URI of the HTTPS Edge list API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
 	NextPageURI *string `json:"next_page_uri,omitempty"`
 }
 
-func (x *EventStreamList) String() string {
+func (x *HTTPSEdgeList) String() string {
 	return x.GoString()
 }
 
-func (x *EventStreamList) GoString() string {
+func (x *HTTPSEdgeList) GoString() string {
 	var b bytes.Buffer
-	fmt.Fprintf(&b, "EventStreamList {\n")
+	fmt.Fprintf(&b, "HTTPSEdgeList {\n")
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tEventStreams\t%v\n", x.EventStreams)
+	fmt.Fprintf(tw, "\tHTTPSEdges\t%v\n", x.HTTPSEdges)
 	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
 	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
 	tw.Flush()
@@ -1806,49 +2253,836 @@ func (x *EventStreamList) GoString() string {
 	return b.String()
 }
 
-type EventStream struct {
-	// Unique identifier for this Event Stream.
-	ID string `json:"id,omitempty"`
-	// URI of the Event Stream API resource.
-	URI string `json:"uri,omitempty"`
-	// Timestamp when the Event Stream was created, RFC 3339 format.
-	CreatedAt string `json:"created_at,omitempty"`
-	// Arbitrary user-defined machine-readable data of this Event Stream. Optional, max
-	// 4096 bytes.
-	Metadata string `json:"metadata,omitempty"`
-	// Human-readable description of the Event Stream. Optional, max 255 bytes.
+type HTTPSEdgeCreate struct {
+	// human-readable description of what this edge will be used for; optional, max 255
+	// bytes.
 	Description string `json:"description,omitempty"`
-	// A list of protocol-specific fields you want to collect on each event.
-	Fields []string `json:"fields,omitempty"`
-	// The protocol that determines which events will be collected. Supported values
-	// are tcp_connection_closed and http_request_complete.
-	EventType string `json:"event_type,omitempty"`
-	// A list of Event Destination IDs which should be used for this Event Stream.
-	// Event Streams are required to have at least one Event Destination.
-	DestinationIDs []string `json:"destination_ids,omitempty"`
-	// The percentage of all events you would like to capture. Valid values range from
-	// 0.01, representing 1% of all events to 1.00, representing 100% of all events.
-	SamplingRate float64 `json:"sampling_rate,omitempty"`
+	// arbitrary user-defined machine-readable data of this edge; optional, max 4096
+	// bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// hostports served by this edge
+	Hostports *[]string `json:"hostports,omitempty"`
+	// edge modules
+	MutualTLS      *EndpointMutualTLSMutate      `json:"mutual_tls,omitempty"`
+	TLSTermination *EndpointTLSTerminationAtEdge `json:"tls_termination,omitempty"`
 }
 
-func (x *EventStream) String() string {
-	return fmt.Sprintf("EventStream{ID: %v}", x.ID)
-
+func (x *HTTPSEdgeCreate) String() string {
+	return x.GoString()
 }
 
-func (x *EventStream) GoString() string {
+func (x *HTTPSEdgeCreate) GoString() string {
 	var b bytes.Buffer
-	fmt.Fprintf(&b, "EventStream {\n")
+	fmt.Fprintf(&b, "HTTPSEdgeCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tHostports\t%v\n", x.Hostports)
+	fmt.Fprintf(tw, "\tMutualTLS\t%v\n", x.MutualTLS)
+	fmt.Fprintf(tw, "\tTLSTermination\t%v\n", x.TLSTermination)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type HTTPSEdgeUpdate struct {
+	// unique identifier of this edge
+	ID string `json:"id,omitempty"`
+	// human-readable description of what this edge will be used for; optional, max 255
+	// bytes.
+	Description *string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this edge; optional, max 4096
+	// bytes.
+	Metadata *string `json:"metadata,omitempty"`
+	// hostports served by this edge
+	Hostports *[]string `json:"hostports,omitempty"`
+	// edge modules
+	MutualTLS      *EndpointMutualTLSMutate      `json:"mutual_tls,omitempty"`
+	TLSTermination *EndpointTLSTerminationAtEdge `json:"tls_termination,omitempty"`
+}
+
+func (x *HTTPSEdgeUpdate) String() string {
+	return fmt.Sprintf("HTTPSEdgeUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *HTTPSEdgeUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "HTTPSEdgeUpdate {\n")
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
 	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
-	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
-	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
-	fmt.Fprintf(tw, "\tFields\t%v\n", x.Fields)
-	fmt.Fprintf(tw, "\tEventType\t%v\n", x.EventType)
-	fmt.Fprintf(tw, "\tDestinationIDs\t%v\n", x.DestinationIDs)
-	fmt.Fprintf(tw, "\tSamplingRate\t%v\n", x.SamplingRate)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tHostports\t%v\n", x.Hostports)
+	fmt.Fprintf(tw, "\tMutualTLS\t%v\n", x.MutualTLS)
+	fmt.Fprintf(tw, "\tTLSTermination\t%v\n", x.TLSTermination)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type HTTPSEdge struct {
+	// unique identifier of this edge
+	ID string `json:"id,omitempty"`
+	// human-readable description of what this edge will be used for; optional, max 255
+	// bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this edge; optional, max 4096
+	// bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// timestamp when the edge configuration was created, RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// URI of the edge API resource
+	URI string `json:"uri,omitempty"`
+	// hostports served by this edge
+	Hostports *[]string `json:"hostports,omitempty"`
+	// edge modules
+	MutualTls      *EndpointMutualTLS      `json:"mutual_tls,omitempty"`
+	TlsTermination *EndpointTLSTermination `json:"tls_termination,omitempty"`
+	// routes
+	Routes []HTTPSEdgeRoute `json:"routes,omitempty"`
+}
+
+func (x *HTTPSEdge) String() string {
+	return fmt.Sprintf("HTTPSEdge{ID: %v}", x.ID)
+
+}
+
+func (x *HTTPSEdge) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "HTTPSEdge {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tHostports\t%v\n", x.Hostports)
+	fmt.Fprintf(tw, "\tMutualTls\t%v\n", x.MutualTls)
+	fmt.Fprintf(tw, "\tTlsTermination\t%v\n", x.TlsTermination)
+	fmt.Fprintf(tw, "\tRoutes\t%v\n", x.Routes)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeBackendReplace struct {
+	ID     string                `json:"id,omitempty"`
+	Module EndpointBackendMutate `json:"module,omitempty"`
+}
+
+func (x *EdgeBackendReplace) String() string {
+	return fmt.Sprintf("EdgeBackendReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeBackendReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeBackendReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeIPRestrictionReplace struct {
+	ID     string                 `json:"id,omitempty"`
+	Module EndpointIPPolicyMutate `json:"module,omitempty"`
+}
+
+func (x *EdgeIPRestrictionReplace) String() string {
+	return fmt.Sprintf("EdgeIPRestrictionReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeIPRestrictionReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeIPRestrictionReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeMutualTLSReplace struct {
+	ID     string                  `json:"id,omitempty"`
+	Module EndpointMutualTLSMutate `json:"module,omitempty"`
+}
+
+func (x *EdgeMutualTLSReplace) String() string {
+	return fmt.Sprintf("EdgeMutualTLSReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeMutualTLSReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeMutualTLSReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeTLSTerminationReplace struct {
+	ID     string                 `json:"id,omitempty"`
+	Module EndpointTLSTermination `json:"module,omitempty"`
+}
+
+func (x *EdgeTLSTerminationReplace) String() string {
+	return fmt.Sprintf("EdgeTLSTerminationReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeTLSTerminationReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeTLSTerminationReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeTLSTerminationAtEdgeReplace struct {
+	ID     string                       `json:"id,omitempty"`
+	Module EndpointTLSTerminationAtEdge `json:"module,omitempty"`
+}
+
+func (x *EdgeTLSTerminationAtEdgeReplace) String() string {
+	return fmt.Sprintf("EdgeTLSTerminationAtEdgeReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeTLSTerminationAtEdgeReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeTLSTerminationAtEdgeReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeRouteBackendReplace struct {
+	EdgeID string                `json:"edge_id,omitempty"`
+	ID     string                `json:"id,omitempty"`
+	Module EndpointBackendMutate `json:"module,omitempty"`
+}
+
+func (x *EdgeRouteBackendReplace) String() string {
+	return fmt.Sprintf("EdgeRouteBackendReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeRouteBackendReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeRouteBackendReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeRouteIPRestrictionReplace struct {
+	EdgeID string                 `json:"edge_id,omitempty"`
+	ID     string                 `json:"id,omitempty"`
+	Module EndpointIPPolicyMutate `json:"module,omitempty"`
+}
+
+func (x *EdgeRouteIPRestrictionReplace) String() string {
+	return fmt.Sprintf("EdgeRouteIPRestrictionReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeRouteIPRestrictionReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeRouteIPRestrictionReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeRouteRequestHeadersReplace struct {
+	EdgeID string                 `json:"edge_id,omitempty"`
+	ID     string                 `json:"id,omitempty"`
+	Module EndpointRequestHeaders `json:"module,omitempty"`
+}
+
+func (x *EdgeRouteRequestHeadersReplace) String() string {
+	return fmt.Sprintf("EdgeRouteRequestHeadersReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeRouteRequestHeadersReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeRouteRequestHeadersReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeRouteResponseHeadersReplace struct {
+	EdgeID string                  `json:"edge_id,omitempty"`
+	ID     string                  `json:"id,omitempty"`
+	Module EndpointResponseHeaders `json:"module,omitempty"`
+}
+
+func (x *EdgeRouteResponseHeadersReplace) String() string {
+	return fmt.Sprintf("EdgeRouteResponseHeadersReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeRouteResponseHeadersReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeRouteResponseHeadersReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeRouteCompressionReplace struct {
+	EdgeID string              `json:"edge_id,omitempty"`
+	ID     string              `json:"id,omitempty"`
+	Module EndpointCompression `json:"module,omitempty"`
+}
+
+func (x *EdgeRouteCompressionReplace) String() string {
+	return fmt.Sprintf("EdgeRouteCompressionReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeRouteCompressionReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeRouteCompressionReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeRouteCircuitBreakerReplace struct {
+	EdgeID string                 `json:"edge_id,omitempty"`
+	ID     string                 `json:"id,omitempty"`
+	Module EndpointCircuitBreaker `json:"module,omitempty"`
+}
+
+func (x *EdgeRouteCircuitBreakerReplace) String() string {
+	return fmt.Sprintf("EdgeRouteCircuitBreakerReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeRouteCircuitBreakerReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeRouteCircuitBreakerReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeRouteWebhookVerificationReplace struct {
+	EdgeID string                    `json:"edge_id,omitempty"`
+	ID     string                    `json:"id,omitempty"`
+	Module EndpointWebhookValidation `json:"module,omitempty"`
+}
+
+func (x *EdgeRouteWebhookVerificationReplace) String() string {
+	return fmt.Sprintf("EdgeRouteWebhookVerificationReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeRouteWebhookVerificationReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeRouteWebhookVerificationReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeRouteOAuthReplace struct {
+	EdgeID string        `json:"edge_id,omitempty"`
+	ID     string        `json:"id,omitempty"`
+	Module EndpointOAuth `json:"module,omitempty"`
+}
+
+func (x *EdgeRouteOAuthReplace) String() string {
+	return fmt.Sprintf("EdgeRouteOAuthReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeRouteOAuthReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeRouteOAuthReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeRouteSAMLReplace struct {
+	EdgeID string             `json:"edge_id,omitempty"`
+	ID     string             `json:"id,omitempty"`
+	Module EndpointSAMLMutate `json:"module,omitempty"`
+}
+
+func (x *EdgeRouteSAMLReplace) String() string {
+	return fmt.Sprintf("EdgeRouteSAMLReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeRouteSAMLReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeRouteSAMLReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeRouteOIDCReplace struct {
+	EdgeID string       `json:"edge_id,omitempty"`
+	ID     string       `json:"id,omitempty"`
+	Module EndpointOIDC `json:"module,omitempty"`
+}
+
+func (x *EdgeRouteOIDCReplace) String() string {
+	return fmt.Sprintf("EdgeRouteOIDCReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeRouteOIDCReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeRouteOIDCReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeRouteWebsocketTCPConverterReplace struct {
+	EdgeID string                        `json:"edge_id,omitempty"`
+	ID     string                        `json:"id,omitempty"`
+	Module EndpointWebsocketTCPConverter `json:"module,omitempty"`
+}
+
+func (x *EdgeRouteWebsocketTCPConverterReplace) String() string {
+	return fmt.Sprintf("EdgeRouteWebsocketTCPConverterReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeRouteWebsocketTCPConverterReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeRouteWebsocketTCPConverterReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type TCPEdgeList struct {
+	// the list of all TCP Edges on this account
+	TCPEdges []TCPEdge `json:"tcp_edges,omitempty"`
+	// URI of the TCP Edge list API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *TCPEdgeList) String() string {
+	return x.GoString()
+}
+
+func (x *TCPEdgeList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TCPEdgeList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tTCPEdges\t%v\n", x.TCPEdges)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type TCPEdgeCreate struct {
+	// human-readable description of what this edge will be used for; optional, max 255
+	// bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this edge. Optional, max 4096
+	// bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// hostports served by this edge
+	Hostports *[]string `json:"hostports,omitempty"`
+	// edge modules
+	Backend       *EndpointBackendMutate  `json:"backend,omitempty"`
+	IPRestriction *EndpointIPPolicyMutate `json:"ip_restriction,omitempty"`
+}
+
+func (x *TCPEdgeCreate) String() string {
+	return x.GoString()
+}
+
+func (x *TCPEdgeCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TCPEdgeCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tHostports\t%v\n", x.Hostports)
+	fmt.Fprintf(tw, "\tBackend\t%v\n", x.Backend)
+	fmt.Fprintf(tw, "\tIPRestriction\t%v\n", x.IPRestriction)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type TCPEdgeUpdate struct {
+	// unique identifier of this edge
+	ID string `json:"id,omitempty"`
+	// human-readable description of what this edge will be used for; optional, max 255
+	// bytes.
+	Description *string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this edge. Optional, max 4096
+	// bytes.
+	Metadata *string `json:"metadata,omitempty"`
+	// hostports served by this edge
+	Hostports *[]string `json:"hostports,omitempty"`
+	// edge modules
+	Backend       *EndpointBackendMutate  `json:"backend,omitempty"`
+	IPRestriction *EndpointIPPolicyMutate `json:"ip_restriction,omitempty"`
+}
+
+func (x *TCPEdgeUpdate) String() string {
+	return fmt.Sprintf("TCPEdgeUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *TCPEdgeUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TCPEdgeUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tHostports\t%v\n", x.Hostports)
+	fmt.Fprintf(tw, "\tBackend\t%v\n", x.Backend)
+	fmt.Fprintf(tw, "\tIPRestriction\t%v\n", x.IPRestriction)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type TCPEdge struct {
+	// unique identifier of this edge
+	ID string `json:"id,omitempty"`
+	// human-readable description of what this edge will be used for; optional, max 255
+	// bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this edge. Optional, max 4096
+	// bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// timestamp when the edge was created, RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// URI of the edge API resource
+	URI string `json:"uri,omitempty"`
+	// hostports served by this edge
+	Hostports *[]string `json:"hostports,omitempty"`
+	// edge modules
+	Backend       *EndpointBackend  `json:"backend,omitempty"`
+	IpRestriction *EndpointIPPolicy `json:"ip_restriction,omitempty"`
+}
+
+func (x *TCPEdge) String() string {
+	return fmt.Sprintf("TCPEdge{ID: %v}", x.ID)
+
+}
+
+func (x *TCPEdge) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TCPEdge {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tHostports\t%v\n", x.Hostports)
+	fmt.Fprintf(tw, "\tBackend\t%v\n", x.Backend)
+	fmt.Fprintf(tw, "\tIpRestriction\t%v\n", x.IpRestriction)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type TLSEdgeList struct {
+	// the list of all TLS Edges on this account
+	TLSEdges []TLSEdge `json:"tls_edges,omitempty"`
+	// URI of the TLS Edge list API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *TLSEdgeList) String() string {
+	return x.GoString()
+}
+
+func (x *TLSEdgeList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TLSEdgeList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tTLSEdges\t%v\n", x.TLSEdges)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type TLSEdgeCreate struct {
+	// human-readable description of what this edge will be used for; optional, max 255
+	// bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this edge. Optional, max 4096
+	// bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// hostports served by this edge
+	Hostports *[]string `json:"hostports,omitempty"`
+	// edge modules
+	Backend        *EndpointBackendMutate   `json:"backend,omitempty"`
+	IPRestriction  *EndpointIPPolicyMutate  `json:"ip_restriction,omitempty"`
+	MutualTLS      *EndpointMutualTLSMutate `json:"mutual_tls,omitempty"`
+	TLSTermination *EndpointTLSTermination  `json:"tls_termination,omitempty"`
+}
+
+func (x *TLSEdgeCreate) String() string {
+	return x.GoString()
+}
+
+func (x *TLSEdgeCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TLSEdgeCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tHostports\t%v\n", x.Hostports)
+	fmt.Fprintf(tw, "\tBackend\t%v\n", x.Backend)
+	fmt.Fprintf(tw, "\tIPRestriction\t%v\n", x.IPRestriction)
+	fmt.Fprintf(tw, "\tMutualTLS\t%v\n", x.MutualTLS)
+	fmt.Fprintf(tw, "\tTLSTermination\t%v\n", x.TLSTermination)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type TLSEdgeUpdate struct {
+	// unique identifier of this edge
+	ID string `json:"id,omitempty"`
+	// human-readable description of what this edge will be used for; optional, max 255
+	// bytes.
+	Description *string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this edge. Optional, max 4096
+	// bytes.
+	Metadata *string `json:"metadata,omitempty"`
+	// hostports served by this edge
+	Hostports *[]string `json:"hostports,omitempty"`
+	// edge modules
+	Backend        *EndpointBackendMutate   `json:"backend,omitempty"`
+	IPRestriction  *EndpointIPPolicyMutate  `json:"ip_restriction,omitempty"`
+	MutualTLS      *EndpointMutualTLSMutate `json:"mutual_tls,omitempty"`
+	TLSTermination *EndpointTLSTermination  `json:"tls_termination,omitempty"`
+}
+
+func (x *TLSEdgeUpdate) String() string {
+	return fmt.Sprintf("TLSEdgeUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *TLSEdgeUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TLSEdgeUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tHostports\t%v\n", x.Hostports)
+	fmt.Fprintf(tw, "\tBackend\t%v\n", x.Backend)
+	fmt.Fprintf(tw, "\tIPRestriction\t%v\n", x.IPRestriction)
+	fmt.Fprintf(tw, "\tMutualTLS\t%v\n", x.MutualTLS)
+	fmt.Fprintf(tw, "\tTLSTermination\t%v\n", x.TLSTermination)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type TLSEdge struct {
+	// unique identifier of this edge
+	ID string `json:"id,omitempty"`
+	// human-readable description of what this edge will be used for; optional, max 255
+	// bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this edge. Optional, max 4096
+	// bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// timestamp when the edge configuration was created, RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// URI of the edge API resource
+	URI string `json:"uri,omitempty"`
+	// hostports served by this edge
+	Hostports *[]string `json:"hostports,omitempty"`
+	// edge modules
+	Backend        *EndpointBackend        `json:"backend,omitempty"`
+	IpRestriction  *EndpointIPPolicy       `json:"ip_restriction,omitempty"`
+	MutualTls      *EndpointMutualTLS      `json:"mutual_tls,omitempty"`
+	TlsTermination *EndpointTLSTermination `json:"tls_termination,omitempty"`
+}
+
+func (x *TLSEdge) String() string {
+	return fmt.Sprintf("TLSEdge{ID: %v}", x.ID)
+
+}
+
+func (x *TLSEdge) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "TLSEdge {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tHostports\t%v\n", x.Hostports)
+	fmt.Fprintf(tw, "\tBackend\t%v\n", x.Backend)
+	fmt.Fprintf(tw, "\tIpRestriction\t%v\n", x.IpRestriction)
+	fmt.Fprintf(tw, "\tMutualTls\t%v\n", x.MutualTls)
+	fmt.Fprintf(tw, "\tTlsTermination\t%v\n", x.TlsTermination)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type Endpoint struct {
+	// unique endpoint resource identifier
+	ID string `json:"id,omitempty"`
+	// identifier of the region this endpoint belongs to
+	Region string `json:"region,omitempty"`
+	// timestamp when the endpoint was created in RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// timestamp when the endpoint was updated in RFC 3339 format
+	UpdatedAt string `json:"updated_at,omitempty"`
+	// URL of the hostport served by this endpoint
+	PublicURL string `json:"public_url,omitempty"`
+	// protocol served by this endpoint. one of http, https, tcp, or tls
+	Proto string `json:"proto,omitempty"`
+	// hostport served by this endpoint (hostname:port)
+	Hostport string `json:"hostport,omitempty"`
+	// whether the endpoint is ephemeral (served directly by an agent-initiated tunnel)
+	// or edge (served by an edge)
+	Type string `json:"type,omitempty"`
+	// user-supplied metadata of the associated tunnel or edge object
+	Metadata string `json:"metadata,omitempty"`
+	// the domain reserved for this endpoint
+	Domain *Ref `json:"domain,omitempty"`
+	// the address reserved for this endpoint
+	TCPAddr *Ref `json:"tcp_addr,omitempty"`
+	// the tunnel serving requests to this endpoint, if this is an ephemeral endpoint
+	Tunnel *Ref `json:"tunnel,omitempty"`
+	// the edge serving requests to this endpoint, if this is an edge endpoint
+	Edge *Ref `json:"edge,omitempty"`
+}
+
+func (x *Endpoint) String() string {
+	return fmt.Sprintf("Endpoint{ID: %v}", x.ID)
+
+}
+
+func (x *Endpoint) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "Endpoint {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tUpdatedAt\t%v\n", x.UpdatedAt)
+	fmt.Fprintf(tw, "\tPublicURL\t%v\n", x.PublicURL)
+	fmt.Fprintf(tw, "\tProto\t%v\n", x.Proto)
+	fmt.Fprintf(tw, "\tHostport\t%v\n", x.Hostport)
+	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDomain\t%v\n", x.Domain)
+	fmt.Fprintf(tw, "\tTCPAddr\t%v\n", x.TCPAddr)
+	fmt.Fprintf(tw, "\tTunnel\t%v\n", x.Tunnel)
+	fmt.Fprintf(tw, "\tEdge\t%v\n", x.Edge)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointList struct {
+	// the list of all active endpoints on this account
+	Endpoints []Endpoint `json:"endpoints,omitempty"`
+	// URI of the endpoints list API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *EndpointList) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEndpoints\t%v\n", x.Endpoints)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -2160,8 +3394,8 @@ type EventSubscriptionCreate struct {
 	Description string `json:"description,omitempty"`
 	// Sources containing the types for which this event subscription will trigger
 	Sources []EventSourceReplace `json:"sources,omitempty"`
-	// A list of Event Destination IDs which should be used for this Event Stream.
-	// Event Streams are required to have at least one Event Destination.
+	// A list of Event Destination IDs which should be used for this Event
+	// Subscription.
 	DestinationIDs []string `json:"destination_ids,omitempty"`
 }
 
@@ -2193,8 +3427,8 @@ type EventSubscriptionUpdate struct {
 	Description *string `json:"description,omitempty"`
 	// Sources containing the types for which this event subscription will trigger
 	Sources *[]EventSourceReplace `json:"sources,omitempty"`
-	// A list of Event Destination IDs which should be used for this Event Stream.
-	// Event Streams are required to have at least one Event Destination.
+	// A list of Event Destination IDs which should be used for this Event
+	// Subscription.
 	DestinationIDs *[]string `json:"destination_ids,omitempty"`
 }
 
@@ -2443,8 +3677,6 @@ type IPPolicyCreate struct {
 	// arbitrary user-defined machine-readable data of this IP policy. optional, max
 	// 4096 bytes.
 	Metadata string `json:"metadata,omitempty"`
-	// the IP policy action. Supported values are allow or deny
-	Action string `json:"action,omitempty"`
 }
 
 func (x *IPPolicyCreate) String() string {
@@ -2457,7 +3689,6 @@ func (x *IPPolicyCreate) GoString() string {
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
 	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tAction\t%v\n", x.Action)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -2503,8 +3734,6 @@ type IPPolicy struct {
 	// arbitrary user-defined machine-readable data of this IP policy. optional, max
 	// 4096 bytes.
 	Metadata string `json:"metadata,omitempty"`
-	// the IP policy action. Supported values are allow or deny
-	Action string `json:"action,omitempty"`
 }
 
 func (x *IPPolicy) String() string {
@@ -2521,7 +3750,6 @@ func (x *IPPolicy) GoString() string {
 	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
 	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tAction\t%v\n", x.Action)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -2563,6 +3791,8 @@ type IPPolicyRuleCreate struct {
 	CIDR string `json:"cidr,omitempty"`
 	// ID of the IP policy this IP policy rule will be attached to
 	IPPolicyID string `json:"ip_policy_id,omitempty"`
+	// the action to apply to the policy rule, either allow or deny
+	Action *string `json:"action,omitempty"`
 }
 
 func (x *IPPolicyRuleCreate) String() string {
@@ -2577,6 +3807,7 @@ func (x *IPPolicyRuleCreate) GoString() string {
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tCIDR\t%v\n", x.CIDR)
 	fmt.Fprintf(tw, "\tIPPolicyID\t%v\n", x.IPPolicyID)
+	fmt.Fprintf(tw, "\tAction\t%v\n", x.Action)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -2629,6 +3860,8 @@ type IPPolicyRule struct {
 	CIDR string `json:"cidr,omitempty"`
 	// object describing the IP policy this IP Policy Rule belongs to
 	IPPolicy Ref `json:"ip_policy,omitempty"`
+	// the action to apply to the policy rule, either allow or deny
+	Action string `json:"action,omitempty"`
 }
 
 func (x *IPPolicyRule) String() string {
@@ -2647,6 +3880,7 @@ func (x *IPPolicyRule) GoString() string {
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tCIDR\t%v\n", x.CIDR)
 	fmt.Fprintf(tw, "\tIPPolicy\t%v\n", x.IPPolicy)
+	fmt.Fprintf(tw, "\tAction\t%v\n", x.Action)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -2793,7 +4027,7 @@ func (x *IPRestriction) GoString() string {
 type IPRestrictionList struct {
 	// the list of all IP restrictions on this account
 	IPRestrictions []IPRestriction `json:"ip_restrictions,omitempty"`
-	// URI of the IP resrtrictions list API resource
+	// URI of the IP restrictions list API resource
 	URI string `json:"uri,omitempty"`
 	// URI of the next page, or null if there is no next page
 	NextPageURI *string `json:"next_page_uri,omitempty"`
@@ -2815,258 +4049,6 @@ func (x *IPRestrictionList) GoString() string {
 	return b.String()
 }
 
-type EndpointLoggingReplace struct {
-	ID     string                `json:"id,omitempty"`
-	Module EndpointLoggingMutate `json:"module,omitempty"`
-}
-
-func (x *EndpointLoggingReplace) String() string {
-	return fmt.Sprintf("EndpointLoggingReplace{ID: %v}", x.ID)
-
-}
-
-func (x *EndpointLoggingReplace) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointLoggingReplace {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointCircuitBreakerReplace struct {
-	ID     string                 `json:"id,omitempty"`
-	Module EndpointCircuitBreaker `json:"module,omitempty"`
-}
-
-func (x *EndpointCircuitBreakerReplace) String() string {
-	return fmt.Sprintf("EndpointCircuitBreakerReplace{ID: %v}", x.ID)
-
-}
-
-func (x *EndpointCircuitBreakerReplace) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointCircuitBreakerReplace {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointCompressionReplace struct {
-	ID     string              `json:"id,omitempty"`
-	Module EndpointCompression `json:"module,omitempty"`
-}
-
-func (x *EndpointCompressionReplace) String() string {
-	return fmt.Sprintf("EndpointCompressionReplace{ID: %v}", x.ID)
-
-}
-
-func (x *EndpointCompressionReplace) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointCompressionReplace {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointTLSTerminationReplace struct {
-	ID     string                 `json:"id,omitempty"`
-	Module EndpointTLSTermination `json:"module,omitempty"`
-}
-
-func (x *EndpointTLSTerminationReplace) String() string {
-	return fmt.Sprintf("EndpointTLSTerminationReplace{ID: %v}", x.ID)
-
-}
-
-func (x *EndpointTLSTerminationReplace) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointTLSTerminationReplace {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointIPPolicyReplace struct {
-	ID     string                 `json:"id,omitempty"`
-	Module EndpointIPPolicyMutate `json:"module,omitempty"`
-}
-
-func (x *EndpointIPPolicyReplace) String() string {
-	return fmt.Sprintf("EndpointIPPolicyReplace{ID: %v}", x.ID)
-
-}
-
-func (x *EndpointIPPolicyReplace) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointIPPolicyReplace {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointMutualTLSReplace struct {
-	ID     string                  `json:"id,omitempty"`
-	Module EndpointMutualTLSMutate `json:"module,omitempty"`
-}
-
-func (x *EndpointMutualTLSReplace) String() string {
-	return fmt.Sprintf("EndpointMutualTLSReplace{ID: %v}", x.ID)
-
-}
-
-func (x *EndpointMutualTLSReplace) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointMutualTLSReplace {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointRequestHeadersReplace struct {
-	ID     string                 `json:"id,omitempty"`
-	Module EndpointRequestHeaders `json:"module,omitempty"`
-}
-
-func (x *EndpointRequestHeadersReplace) String() string {
-	return fmt.Sprintf("EndpointRequestHeadersReplace{ID: %v}", x.ID)
-
-}
-
-func (x *EndpointRequestHeadersReplace) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointRequestHeadersReplace {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointResponseHeadersReplace struct {
-	ID     string                  `json:"id,omitempty"`
-	Module EndpointResponseHeaders `json:"module,omitempty"`
-}
-
-func (x *EndpointResponseHeadersReplace) String() string {
-	return fmt.Sprintf("EndpointResponseHeadersReplace{ID: %v}", x.ID)
-
-}
-
-func (x *EndpointResponseHeadersReplace) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointResponseHeadersReplace {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointOAuthReplace struct {
-	ID     string        `json:"id,omitempty"`
-	Module EndpointOAuth `json:"module,omitempty"`
-}
-
-func (x *EndpointOAuthReplace) String() string {
-	return fmt.Sprintf("EndpointOAuthReplace{ID: %v}", x.ID)
-
-}
-
-func (x *EndpointOAuthReplace) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointOAuthReplace {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointWebhookValidationReplace struct {
-	ID     string                    `json:"id,omitempty"`
-	Module EndpointWebhookValidation `json:"module,omitempty"`
-}
-
-func (x *EndpointWebhookValidationReplace) String() string {
-	return fmt.Sprintf("EndpointWebhookValidationReplace{ID: %v}", x.ID)
-
-}
-
-func (x *EndpointWebhookValidationReplace) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointWebhookValidationReplace {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointSAMLReplace struct {
-	ID     string             `json:"id,omitempty"`
-	Module EndpointSAMLMutate `json:"module,omitempty"`
-}
-
-func (x *EndpointSAMLReplace) String() string {
-	return fmt.Sprintf("EndpointSAMLReplace{ID: %v}", x.ID)
-
-}
-
-func (x *EndpointSAMLReplace) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointSAMLReplace {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointOIDCReplace struct {
-	ID     string       `json:"id,omitempty"`
-	Module EndpointOIDC `json:"module,omitempty"`
-}
-
-func (x *EndpointOIDCReplace) String() string {
-	return fmt.Sprintf("EndpointOIDCReplace{ID: %v}", x.ID)
-
-}
-
-func (x *EndpointOIDCReplace) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointOIDCReplace {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
-	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
 type ReservedAddrCreate struct {
 	// human-readable description of what this reserved address will be used for
 	Description string `json:"description,omitempty"`
@@ -3076,9 +4058,6 @@ type ReservedAddrCreate struct {
 	// reserve the address in this geographic ngrok datacenter. Optional, default is
 	// us. (au, eu, ap, us, jp, in, sa)
 	Region string `json:"region,omitempty"`
-	// ID of an endpoint configuration of type tcp that will be used to handle inbound
-	// traffic to this address
-	EndpointConfigurationID *string `json:"endpoint_configuration_id,omitempty"`
 }
 
 func (x *ReservedAddrCreate) String() string {
@@ -3092,7 +4071,6 @@ func (x *ReservedAddrCreate) GoString() string {
 	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
-	fmt.Fprintf(tw, "\tEndpointConfigurationID\t%v\n", x.EndpointConfigurationID)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -3105,9 +4083,6 @@ type ReservedAddrUpdate struct {
 	// arbitrary user-defined machine-readable data of this reserved address. Optional,
 	// max 4096 bytes.
 	Metadata *string `json:"metadata,omitempty"`
-	// ID of an endpoint configuration of type tcp that will be used to handle inbound
-	// traffic to this address
-	EndpointConfigurationID *string `json:"endpoint_configuration_id,omitempty"`
 }
 
 func (x *ReservedAddrUpdate) String() string {
@@ -3122,7 +4097,6 @@ func (x *ReservedAddrUpdate) GoString() string {
 	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
 	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tEndpointConfigurationID\t%v\n", x.EndpointConfigurationID)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -3145,9 +4119,6 @@ type ReservedAddr struct {
 	// reserve the address in this geographic ngrok datacenter. Optional, default is
 	// us. (au, eu, ap, us, jp, in, sa)
 	Region string `json:"region,omitempty"`
-	// object reference to the endpoint configuration that will be applied to traffic
-	// to this address
-	EndpointConfiguration *Ref `json:"endpoint_configuration,omitempty"`
 }
 
 func (x *ReservedAddr) String() string {
@@ -3166,7 +4137,6 @@ func (x *ReservedAddr) GoString() string {
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tAddr\t%v\n", x.Addr)
 	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
-	fmt.Fprintf(tw, "\tEndpointConfiguration\t%v\n", x.EndpointConfiguration)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -3209,12 +4179,6 @@ type ReservedDomainCreate struct {
 	// arbitrary user-defined machine-readable data of this reserved domain. Optional,
 	// max 4096 bytes.
 	Metadata string `json:"metadata,omitempty"`
-	// ID of an endpoint configuration of type http that will be used to handle inbound
-	// http traffic to this domain
-	HTTPEndpointConfigurationID *string `json:"http_endpoint_configuration_id,omitempty"`
-	// ID of an endpoint configuration of type https that will be used to handle
-	// inbound https traffic to this domain
-	HTTPSEndpointConfigurationID *string `json:"https_endpoint_configuration_id,omitempty"`
 	// ID of a user-uploaded TLS certificate to use for connections to targeting this
 	// domain. Optional, mutually exclusive with certificate_management_policy.
 	CertificateID *string `json:"certificate_id,omitempty"`
@@ -3236,8 +4200,6 @@ func (x *ReservedDomainCreate) GoString() string {
 	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
 	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tHTTPEndpointConfigurationID\t%v\n", x.HTTPEndpointConfigurationID)
-	fmt.Fprintf(tw, "\tHTTPSEndpointConfigurationID\t%v\n", x.HTTPSEndpointConfigurationID)
 	fmt.Fprintf(tw, "\tCertificateID\t%v\n", x.CertificateID)
 	fmt.Fprintf(tw, "\tCertificateManagementPolicy\t%v\n", x.CertificateManagementPolicy)
 	tw.Flush()
@@ -3252,12 +4214,6 @@ type ReservedDomainUpdate struct {
 	// arbitrary user-defined machine-readable data of this reserved domain. Optional,
 	// max 4096 bytes.
 	Metadata *string `json:"metadata,omitempty"`
-	// ID of an endpoint configuration of type http that will be used to handle inbound
-	// http traffic to this domain
-	HTTPEndpointConfigurationID *string `json:"http_endpoint_configuration_id,omitempty"`
-	// ID of an endpoint configuration of type https that will be used to handle
-	// inbound https traffic to this domain
-	HTTPSEndpointConfigurationID *string `json:"https_endpoint_configuration_id,omitempty"`
 	// ID of a user-uploaded TLS certificate to use for connections to targeting this
 	// domain. Optional, mutually exclusive with certificate_management_policy.
 	CertificateID *string `json:"certificate_id,omitempty"`
@@ -3279,8 +4235,6 @@ func (x *ReservedDomainUpdate) GoString() string {
 	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
 	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
-	fmt.Fprintf(tw, "\tHTTPEndpointConfigurationID\t%v\n", x.HTTPEndpointConfigurationID)
-	fmt.Fprintf(tw, "\tHTTPSEndpointConfigurationID\t%v\n", x.HTTPSEndpointConfigurationID)
 	fmt.Fprintf(tw, "\tCertificateID\t%v\n", x.CertificateID)
 	fmt.Fprintf(tw, "\tCertificateManagementPolicy\t%v\n", x.CertificateManagementPolicy)
 	tw.Flush()
@@ -3308,12 +4262,6 @@ type ReservedDomain struct {
 	// DNS CNAME target for a custom hostname, or null if the reserved domain is a
 	// subdomain of *.ngrok.io
 	CNAMETarget *string `json:"cname_target,omitempty"`
-	// object referencing the endpoint configuration applied to http traffic on this
-	// domain
-	HTTPEndpointConfiguration *Ref `json:"http_endpoint_configuration,omitempty"`
-	// object referencing the endpoint configuration applied to https traffic on this
-	// domain
-	HTTPSEndpointConfiguration *Ref `json:"https_endpoint_configuration,omitempty"`
 	// object referencing the TLS certificate used for connections to this domain. This
 	// can be either a user-uploaded certificate, the most recently issued automatic
 	// one, or null otherwise.
@@ -3348,8 +4296,6 @@ func (x *ReservedDomain) GoString() string {
 	fmt.Fprintf(tw, "\tDomain\t%v\n", x.Domain)
 	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
 	fmt.Fprintf(tw, "\tCNAMETarget\t%v\n", x.CNAMETarget)
-	fmt.Fprintf(tw, "\tHTTPEndpointConfiguration\t%v\n", x.HTTPEndpointConfiguration)
-	fmt.Fprintf(tw, "\tHTTPSEndpointConfiguration\t%v\n", x.HTTPSEndpointConfiguration)
 	fmt.Fprintf(tw, "\tCertificate\t%v\n", x.Certificate)
 	fmt.Fprintf(tw, "\tCertificateManagementPolicy\t%v\n", x.CertificateManagementPolicy)
 	fmt.Fprintf(tw, "\tCertificateManagementStatus\t%v\n", x.CertificateManagementStatus)
@@ -3901,7 +4847,7 @@ type SSHUserCertificateCreate struct {
 	// a public key in OpenSSH Authorized Keys format that this certificate signs
 	PublicKey string `json:"public_key,omitempty"`
 	// the list of principals included in the ssh user certificate. This is the list of
-	// usernames that the certificate holder may sign in as on a machine authorizinig
+	// usernames that the certificate holder may sign in as on a machine authorizing
 	// the signing certificate authority. Dangerously, if no principals are specified,
 	// this certificate may be used to log in as any user.
 	Principals []string `json:"principals,omitempty"`
@@ -4004,7 +4950,7 @@ type SSHUserCertificate struct {
 	// the ssh certificate authority that is used to sign this ssh user certificate
 	SSHCertificateAuthorityID string `json:"ssh_certificate_authority_id,omitempty"`
 	// the list of principals included in the ssh user certificate. This is the list of
-	// usernames that the certificate holder may sign in as on a machine authorizinig
+	// usernames that the certificate holder may sign in as on a machine authorizing
 	// the signing certificate authority. Dangerously, if no principals are specified,
 	// this certificate may be used to log in as any user.
 	Principals []string `json:"principals,omitempty"`
@@ -4370,7 +5316,7 @@ func (x *TunnelSessionsUpdate) GoString() string {
 type Tunnel struct {
 	// unique tunnel resource identifier
 	ID string `json:"id,omitempty"`
-	// URL of the tunnel's public endpoint
+	// URL of the ephemeral tunnel's public endpoint
 	PublicURL string `json:"public_url,omitempty"`
 	// timestamp when the tunnel was initiated in RFC 3339 format
 	StartedAt string `json:"started_at,omitempty"`
@@ -4380,12 +5326,23 @@ type Tunnel struct {
 	// top-level  (https://ngrok.com/docs#config_metadata)metadata configuration
 	// option.
 	Metadata string `json:"metadata,omitempty"`
-	// tunnel protocol. one of http, https, tcp or tls
+	// tunnel protocol for ephemeral tunnels. one of http, https, tcp or tls
 	Proto string `json:"proto,omitempty"`
 	// identifier of tune region where the tunnel is running
 	Region string `json:"region,omitempty"`
 	// reference object pointing to the tunnel session on which this tunnel was started
 	TunnelSession Ref `json:"tunnel_session,omitempty"`
+	// the ephemeral endpoint this tunnel is associated with, if this is an
+	// agent-initiated tunnel
+	Endpoint *Ref `json:"endpoint,omitempty"`
+	// the labels the tunnel group backends will match against, if this is a backend
+	// tunnel
+	Labels map[string]string `json:"labels,omitempty"`
+	// tunnel group backends served by this backend tunnel
+	Backends *[]Ref `json:"backends,omitempty"`
+	// upstream address the ngrok agent forwards traffic over this tunnel to. this may
+	// be expressed as a URL or a network address.
+	ForwardsTo string `json:"forwards_to,omitempty"`
 }
 
 func (x *Tunnel) String() string {
@@ -4404,6 +5361,10 @@ func (x *Tunnel) GoString() string {
 	fmt.Fprintf(tw, "\tProto\t%v\n", x.Proto)
 	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
 	fmt.Fprintf(tw, "\tTunnelSession\t%v\n", x.TunnelSession)
+	fmt.Fprintf(tw, "\tEndpoint\t%v\n", x.Endpoint)
+	fmt.Fprintf(tw, "\tLabels\t%v\n", x.Labels)
+	fmt.Fprintf(tw, "\tBackends\t%v\n", x.Backends)
+	fmt.Fprintf(tw, "\tForwardsTo\t%v\n", x.ForwardsTo)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()

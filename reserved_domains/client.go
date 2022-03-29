@@ -8,8 +8,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v3"
-	"github.com/ngrok/ngrok-api-go/v3/internal/api"
+	"github.com/ngrok/ngrok-api-go/v4"
+	"github.com/ngrok/ngrok-api-go/v4/internal/api"
 )
 
 // Reserved Domains are hostnames that you can listen for traffic on. Domains
@@ -262,52 +262,6 @@ func (c *Client) DeleteCertificate(ctx context.Context, id string) error {
 
 	var path bytes.Buffer
 	if err := template.Must(template.New("delete_certificate_path").Parse("/reserved_domains/{{ .ID }}/certificate")).Execute(&path, arg); err != nil {
-		panic(err)
-	}
-	arg.ID = ""
-	var (
-		apiURL  = &url.URL{Path: path.String()}
-		bodyArg interface{}
-	)
-	apiURL.Path = path.String()
-
-	if err := c.apiClient.Do(ctx, "DELETE", apiURL, bodyArg, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Detach the http endpoint configuration attached to a reserved domain.
-//
-// https://ngrok.com/docs/api#api-reserved-domains-delete-http-endpoint-config
-func (c *Client) DeleteHTTPEndpointConfig(ctx context.Context, id string) error {
-	arg := &ngrok.Item{ID: id}
-
-	var path bytes.Buffer
-	if err := template.Must(template.New("delete_http_endpoint_config_path").Parse("/reserved_domains/{{ .ID }}/http_endpoint_configuration")).Execute(&path, arg); err != nil {
-		panic(err)
-	}
-	arg.ID = ""
-	var (
-		apiURL  = &url.URL{Path: path.String()}
-		bodyArg interface{}
-	)
-	apiURL.Path = path.String()
-
-	if err := c.apiClient.Do(ctx, "DELETE", apiURL, bodyArg, nil); err != nil {
-		return err
-	}
-	return nil
-}
-
-// Detach the https endpoint configuration attached to a reserved domain.
-//
-// https://ngrok.com/docs/api#api-reserved-domains-delete-https-endpoint-config
-func (c *Client) DeleteHTTPSEndpointConfig(ctx context.Context, id string) error {
-	arg := &ngrok.Item{ID: id}
-
-	var path bytes.Buffer
-	if err := template.Must(template.New("delete_https_endpoint_config_path").Parse("/reserved_domains/{{ .ID }}/https_endpoint_configuration")).Execute(&path, arg); err != nil {
 		panic(err)
 	}
 	arg.ID = ""

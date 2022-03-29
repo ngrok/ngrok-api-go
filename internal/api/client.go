@@ -10,7 +10,7 @@ import (
 	"net/http"
 	"net/url"
 
-	"github.com/ngrok/ngrok-api-go/v3"
+	"github.com/ngrok/ngrok-api-go/v4"
 )
 
 const (
@@ -52,7 +52,7 @@ func (c *Client) buildRequest(ctx context.Context, method string, reqURL *url.UR
 	}
 
 	r.Header.Set("authorization", fmt.Sprintf("Bearer %s", c.cfg.APIKey))
-	r.Header.Set("user-agent", "github.com/ngrok/ngrok-api-go/v3")
+	r.Header.Set("user-agent", "github.com/ngrok/ngrok-api-go/v4")
 	r.Header.Set("ngrok-version", apiVersion)
 	if body != nil {
 		r.Header.Set("content-type", "application/json")

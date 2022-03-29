@@ -8,8 +8,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v3"
-	"github.com/ngrok/ngrok-api-go/v3/internal/api"
+	"github.com/ngrok/ngrok-api-go/v4"
+	"github.com/ngrok/ngrok-api-go/v4/internal/api"
 )
 
 // SSH Credentials are SSH public keys that can be used to start SSH tunnels
