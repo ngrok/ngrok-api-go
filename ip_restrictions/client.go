@@ -8,12 +8,12 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v3"
-	"github.com/ngrok/ngrok-api-go/v3/internal/api"
+	"github.com/ngrok/ngrok-api-go/v4"
+	"github.com/ngrok/ngrok-api-go/v4/internal/api"
 )
 
 // An IP restriction is a restriction placed on the CIDRs that are allowed to
-//  initate traffic to a specific aspect of your ngrok account. An IP
+//  initiate traffic to a specific aspect of your ngrok account. An IP
 //  restriction has a type which defines the ingress it applies to. IP
 //  restrictions can be used to enforce the source IPs that can make API
 //  requests, log in to the dashboard, start ngrok agents, and connect to your

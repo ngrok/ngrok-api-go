@@ -8,8 +8,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v3"
-	"github.com/ngrok/ngrok-api-go/v3/internal/api"
+	"github.com/ngrok/ngrok-api-go/v4"
+	"github.com/ngrok/ngrok-api-go/v4/internal/api"
 )
 
 // Tunnels provide endpoints to access services exposed by a running ngrok
@@ -132,4 +132,28 @@ func (it *Iter) Item() *ngrok.Tunnel {
 // after Next() returns false.
 func (it *Iter) Err() error {
 	return it.err
+}
+
+// Get the status of a tunnel by ID
+//
+// https://ngrok.com/docs/api#api-tunnels-get
+func (c *Client) Get(ctx context.Context, id string) (*ngrok.Tunnel, error) {
+	arg := &ngrok.Item{ID: id}
+
+	var res ngrok.Tunnel
+	var path bytes.Buffer
+	if err := template.Must(template.New("get_path").Parse("/tunnels/{{ .ID }}")).Execute(&path, arg); err != nil {
+		panic(err)
+	}
+	arg.ID = ""
+	var (
+		apiURL  = &url.URL{Path: path.String()}
+		bodyArg interface{}
+	)
+	apiURL.Path = path.String()
+
+	if err := c.apiClient.Do(ctx, "GET", apiURL, bodyArg, &res); err != nil {
+		return nil, err
+	}
+	return &res, nil
 }
