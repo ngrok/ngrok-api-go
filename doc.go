@@ -27,9 +27,9 @@
 //
 //     func example(ctx context.Context) error {
 //             domains := reserved_domains.NewClient(ngrok.NewClientConfig("<API KEY>"))
-//             d, err := domains.Create(context.Background(), &ngrok.ReservedDomainsCreate{
+//             d, err := domains.Create(ctx, &ngrok.ReservedDomainCreate{
 //                     Name: fmt.Sprintf("hello-gopher-%x", rand.Int()),
-//             }
+//             })
 //             if err != nil {
 //                     return err
 //             }
@@ -85,7 +85,7 @@
 // ngrok.Bool() for the caller to wrap literals as pointer values. For example:
 //
 //     creds := credentials.NewClient(ngrok.NewClientConfig("<API KEY>"))
-//     c, err := creds.Update(ctx, &ngrok.IPPolicyUpdate{
+//     c, err := creds.Update(ctx, &ngrok.CredentialUpdate{
 //             ID:          "cr_1kYzunEyn6XHHlqyMBLrj5nxkoz",
 //             Description: ngrok.String("this optional description is a pointer to a string"),
 //     })
@@ -141,7 +141,7 @@
 // would structure your code like the following example:
 //
 //     domains := reserved_domains.NewClient(ngrok.NewClientConfig("<API KEY>"))
-//     d, err := domains.Create(ctx, &ngrok.ReservedDomainsCreate{
+//     d, err := domains.Create(ctx, &ngrok.ReservedDomainCreate{
 //             Region: "invalid",
 //             Name:   "gopher",
 //     })
