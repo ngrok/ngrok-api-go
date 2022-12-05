@@ -8,8 +8,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v4"
-	"github.com/ngrok/ngrok-api-go/v4/internal/api"
+	"github.com/ngrok/ngrok-api-go/v5"
+	"github.com/ngrok/ngrok-api-go/v5/internal/api"
 )
 
 // IP Policies are reusable groups of CIDR ranges with an allow or deny

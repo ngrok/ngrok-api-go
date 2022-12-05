@@ -15,6 +15,7 @@ type ClientConfig struct {
 	APIKey     string
 	BaseURL    *url.URL
 	HTTPClient *http.Client
+	UserAgent  *string
 }
 
 func NewClientConfig(apiKey string, opts ...ClientConfigOption) *ClientConfig {
@@ -24,12 +25,14 @@ func NewClientConfig(apiKey string, opts ...ClientConfigOption) *ClientConfig {
 		APIKey:     apiKey,
 		BaseURL:    configOpts.baseURL,
 		HTTPClient: configOpts.httpClient,
+		UserAgent:  configOpts.userAgent,
 	}
 }
 
 type clientConfigOpts struct {
 	baseURL    *url.URL
 	httpClient *http.Client
+	userAgent  *string
 }
 
 type ClientConfigOption func(cc *clientConfigOpts)
@@ -59,5 +62,11 @@ func WithBaseURL(baseURL string) ClientConfigOption {
 func WithHTTPClient(httpClient *http.Client) ClientConfigOption {
 	return func(cc *clientConfigOpts) {
 		cc.httpClient = httpClient
+	}
+}
+
+func WithUserAgent(userAgent string) ClientConfigOption {
+	return func(cc *clientConfigOpts) {
+		cc.userAgent = &userAgent
 	}
 }

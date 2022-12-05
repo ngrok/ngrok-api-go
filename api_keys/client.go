@@ -8,15 +8,14 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v4"
-	"github.com/ngrok/ngrok-api-go/v4/internal/api"
+	"github.com/ngrok/ngrok-api-go/v5"
+	"github.com/ngrok/ngrok-api-go/v5/internal/api"
 )
 
-// API Keys are used to authenticate to the
-// (https://ngrok.com/docs/api#authentication)ngrok
-//  API. You may use the API itself
+// API Keys are used to authenticate to the ngrok
+//  API (https://ngrok.com/docs/api#authentication). You may use the API itself
 //  to provision and manage API Keys but you'll need to provision your first API
-//  key from the  (https://dashboard.ngrok.com/api/keys)API Keys page on your
+//  key from the API Keys page (https://dashboard.ngrok.com/api/keys) on your
 //  ngrok.com dashboard.
 
 type Client struct {

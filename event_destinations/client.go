@@ -8,8 +8,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v4"
-	"github.com/ngrok/ngrok-api-go/v4/internal/api"
+	"github.com/ngrok/ngrok-api-go/v5"
+	"github.com/ngrok/ngrok-api-go/v5/internal/api"
 )
 
 type Client struct {
@@ -21,8 +21,7 @@ func NewClient(cfg *ngrok.ClientConfig) *Client {
 }
 
 // Create a new Event Destination. It will not apply to anything until it is
-// associated with an Event Stream, and that Event Stream is associated with an
-// Endpoint Config.
+// associated with an Event Subscription.
 //
 // https://ngrok.com/docs/api#api-event-destinations-create
 func (c *Client) Create(ctx context.Context, arg *ngrok.EventDestinationCreate) (*ngrok.EventDestination, error) {
