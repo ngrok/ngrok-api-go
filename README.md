@@ -1,4 +1,6 @@
 # ngrok API client library for Golang
+[![CI](https://github.com/ngrok/ngrok-api-go/actions/workflows/ci.yml/badge.svg)](https://github.com/ngrok/ngrok-api-go/actions/workflows/ci.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/ngrok/ngrok-api-go.svg)](https://pkg.go.dev/github.com/ngrok/ngrok-api-go/v5)
 
 This library wraps the [ngrok HTTP API](https://ngrok.com/docs/api) to make it
 easier to consume in Go.
