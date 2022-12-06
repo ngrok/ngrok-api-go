@@ -434,6 +434,263 @@ func (x *APIKeyList) GoString() string {
 	return b.String()
 }
 
+type ApplicationSession struct {
+	// unique application session resource identifier
+	ID string `json:"id,omitempty"`
+	// URI of the application session API resource
+	URI string `json:"uri,omitempty"`
+	// URL of the hostport served by this endpoint
+	PublicURL string `json:"public_url,omitempty"`
+	// browser session details of the application session
+	BrowserSession BrowserSession `json:"browser_session,omitempty"`
+	// application user this session is associated with
+	ApplicationUser *Ref `json:"application_user,omitempty"`
+	// timestamp when the user was created in RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// timestamp when the user was last active in RFC 3339 format
+	LastActive string `json:"last_active,omitempty"`
+	// timestamp when session expires in RFC 3339 format
+	ExpiresAt string `json:"expires_at,omitempty"`
+	// ephemeral endpoint this session is associated with
+	Endpoint *Ref `json:"endpoint,omitempty"`
+	// edge this session is associated with, null if the endpoint is agent-initiated
+	Edge *Ref `json:"edge,omitempty"`
+	// route this session is associated with, null if the endpoint is agent-initiated
+	Route *Ref `json:"route,omitempty"`
+}
+
+func (x *ApplicationSession) String() string {
+	return fmt.Sprintf("ApplicationSession{ID: %v}", x.ID)
+
+}
+
+func (x *ApplicationSession) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ApplicationSession {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tPublicURL\t%v\n", x.PublicURL)
+	fmt.Fprintf(tw, "\tBrowserSession\t%v\n", x.BrowserSession)
+	fmt.Fprintf(tw, "\tApplicationUser\t%v\n", x.ApplicationUser)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tLastActive\t%v\n", x.LastActive)
+	fmt.Fprintf(tw, "\tExpiresAt\t%v\n", x.ExpiresAt)
+	fmt.Fprintf(tw, "\tEndpoint\t%v\n", x.Endpoint)
+	fmt.Fprintf(tw, "\tEdge\t%v\n", x.Edge)
+	fmt.Fprintf(tw, "\tRoute\t%v\n", x.Route)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type ApplicationSessionList struct {
+	// list of all application sessions on this account
+	ApplicationSessions []ApplicationSession `json:"application_sessions,omitempty"`
+	// URI of the application session list API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *ApplicationSessionList) String() string {
+	return x.GoString()
+}
+
+func (x *ApplicationSessionList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ApplicationSessionList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tApplicationSessions\t%v\n", x.ApplicationSessions)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type BrowserSession struct {
+	// HTTP User-Agent data
+	UserAgent UserAgent `json:"user_agent,omitempty"`
+	// IP address
+	IPAddress string `json:"ip_address,omitempty"`
+	// IP geolocation data
+	Location *Location `json:"location,omitempty"`
+}
+
+func (x *BrowserSession) String() string {
+	return x.GoString()
+}
+
+func (x *BrowserSession) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "BrowserSession {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tUserAgent\t%v\n", x.UserAgent)
+	fmt.Fprintf(tw, "\tIPAddress\t%v\n", x.IPAddress)
+	fmt.Fprintf(tw, "\tLocation\t%v\n", x.Location)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type UserAgent struct {
+	// raw User-Agent request header
+	Raw string `json:"raw,omitempty"`
+	// browser name (e.g. Chrome)
+	BrowserName string `json:"browser_name,omitempty"`
+	// browser version (e.g. 102)
+	BrowserVersion string `json:"browser_version,omitempty"`
+	// type of device (e.g. Desktop)
+	DeviceType string `json:"device_type,omitempty"`
+	// operating system name (e.g. MacOS)
+	OSName string `json:"os_name,omitempty"`
+	// operating system version (e.g. 10.15.7)
+	OSVersion string `json:"os_version,omitempty"`
+}
+
+func (x *UserAgent) String() string {
+	return x.GoString()
+}
+
+func (x *UserAgent) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "UserAgent {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tRaw\t%v\n", x.Raw)
+	fmt.Fprintf(tw, "\tBrowserName\t%v\n", x.BrowserName)
+	fmt.Fprintf(tw, "\tBrowserVersion\t%v\n", x.BrowserVersion)
+	fmt.Fprintf(tw, "\tDeviceType\t%v\n", x.DeviceType)
+	fmt.Fprintf(tw, "\tOSName\t%v\n", x.OSName)
+	fmt.Fprintf(tw, "\tOSVersion\t%v\n", x.OSVersion)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type Location struct {
+	// ISO country code
+	CountryCode *string `json:"country_code,omitempty"`
+	// geographical latitude
+	Latitude *float64 `json:"latitude,omitempty"`
+	// geographical longitude
+	Longitude *float64 `json:"longitude,omitempty"`
+	// accuracy radius of the geographical coordinates
+	LatLongRadiusKm *uint64 `json:"lat_long_radius_km,omitempty"`
+}
+
+func (x *Location) String() string {
+	return x.GoString()
+}
+
+func (x *Location) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "Location {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tCountryCode\t%v\n", x.CountryCode)
+	fmt.Fprintf(tw, "\tLatitude\t%v\n", x.Latitude)
+	fmt.Fprintf(tw, "\tLongitude\t%v\n", x.Longitude)
+	fmt.Fprintf(tw, "\tLatLongRadiusKm\t%v\n", x.LatLongRadiusKm)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type ApplicationUser struct {
+	// unique application user resource identifier
+	ID string `json:"id,omitempty"`
+	// URI of the application user API resource
+	URI string `json:"uri,omitempty"`
+	// identity provider that the user authenticated with
+	IdentityProvider IdentityProvider `json:"identity_provider,omitempty"`
+	// unique user identifier
+	ProviderUserID string `json:"provider_user_id,omitempty"`
+	// user username
+	Username string `json:"username,omitempty"`
+	// user email
+	Email string `json:"email,omitempty"`
+	// user common name
+	Name string `json:"name,omitempty"`
+	// timestamp when the user was created in RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// timestamp when the user was last active in RFC 3339 format
+	LastActive string `json:"last_active,omitempty"`
+	// timestamp when the user last signed-in in RFC 3339 format
+	LastLogin string `json:"last_login,omitempty"`
+}
+
+func (x *ApplicationUser) String() string {
+	return fmt.Sprintf("ApplicationUser{ID: %v}", x.ID)
+
+}
+
+func (x *ApplicationUser) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ApplicationUser {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tIdentityProvider\t%v\n", x.IdentityProvider)
+	fmt.Fprintf(tw, "\tProviderUserID\t%v\n", x.ProviderUserID)
+	fmt.Fprintf(tw, "\tUsername\t%v\n", x.Username)
+	fmt.Fprintf(tw, "\tEmail\t%v\n", x.Email)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tLastActive\t%v\n", x.LastActive)
+	fmt.Fprintf(tw, "\tLastLogin\t%v\n", x.LastLogin)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type ApplicationUserList struct {
+	// list of all application users on this account
+	ApplicationUsers []ApplicationUser `json:"application_users,omitempty"`
+	// URI of the application user list API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *ApplicationUserList) String() string {
+	return x.GoString()
+}
+
+func (x *ApplicationUserList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ApplicationUserList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tApplicationUsers\t%v\n", x.ApplicationUsers)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type IdentityProvider struct {
+	// name of the identity provider (e.g. Google)
+	Name string `json:"name,omitempty"`
+	// URL of the identity provider (e.g. https://accounts.google.com
+	// (https://accounts.google.com))
+	URL string `json:"url,omitempty"`
+}
+
+func (x *IdentityProvider) String() string {
+	return x.GoString()
+}
+
+func (x *IdentityProvider) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "IdentityProvider {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tURL\t%v\n", x.URL)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type FailoverBackend struct {
 	// unique identifier for this Failover backend
 	ID string `json:"id,omitempty"`
@@ -627,7 +884,7 @@ type HTTPResponseBackendUpdate struct {
 	// body to return as fixed content
 	Body *string `json:"body,omitempty"`
 	// headers to return
-	Headers *map[string]string `json:"headers,omitempty"`
+	Headers map[string]string `json:"headers,omitempty"`
 	// status code to return
 	StatusCode *int32 `json:"status_code,omitempty"`
 }
@@ -1044,13 +1301,16 @@ type CredentialCreate struct {
 	Metadata string `json:"metadata,omitempty"`
 	// optional list of ACL rules. If unspecified, the credential will have no
 	// restrictions. The only allowed ACL rule at this time is the bind rule. The bind
-	// rule allows the caller to restrict what domains and addresses the token is
-	// allowed to bind. For example, to allow the token to open a tunnel on
+	// rule allows the caller to restrict what domains, addresses, and labels the token
+	// is allowed to bind. For example, to allow the token to open a tunnel on
 	// example.ngrok.io your ACL would include the rule bind:example.ngrok.io. Bind
-	// rules may specify a leading wildcard to match multiple domains with a common
-	// suffix. For example, you may specify a rule of bind:*.example.com which will
-	// allow x.example.com, y.example.com, *.example.com, etc. A rule of '*' is
-	// equivalent to no acl at all and will explicitly permit all actions.
+	// rules for domains may specify a leading wildcard to match multiple domains with
+	// a common suffix. For example, you may specify a rule of bind:*.example.com which
+	// will allow x.example.com, y.example.com, *.example.com, etc. Bind rules for
+	// labels may specify a wildcard key and/or value to match multiple labels. For
+	// example, you may specify a rule of bind:*=example which will allow x=example,
+	// y=example, etc. A rule of '*' is equivalent to no acl at all and will explicitly
+	// permit all actions.
 	ACL []string `json:"acl,omitempty"`
 }
 
@@ -1080,14 +1340,17 @@ type CredentialUpdate struct {
 	Metadata *string `json:"metadata,omitempty"`
 	// optional list of ACL rules. If unspecified, the credential will have no
 	// restrictions. The only allowed ACL rule at this time is the bind rule. The bind
-	// rule allows the caller to restrict what domains and addresses the token is
-	// allowed to bind. For example, to allow the token to open a tunnel on
+	// rule allows the caller to restrict what domains, addresses, and labels the token
+	// is allowed to bind. For example, to allow the token to open a tunnel on
 	// example.ngrok.io your ACL would include the rule bind:example.ngrok.io. Bind
-	// rules may specify a leading wildcard to match multiple domains with a common
-	// suffix. For example, you may specify a rule of bind:*.example.com which will
-	// allow x.example.com, y.example.com, *.example.com, etc. A rule of '*' is
-	// equivalent to no acl at all and will explicitly permit all actions.
-	ACL *[]string `json:"acl,omitempty"`
+	// rules for domains may specify a leading wildcard to match multiple domains with
+	// a common suffix. For example, you may specify a rule of bind:*.example.com which
+	// will allow x.example.com, y.example.com, *.example.com, etc. Bind rules for
+	// labels may specify a wildcard key and/or value to match multiple labels. For
+	// example, you may specify a rule of bind:*=example which will allow x=example,
+	// y=example, etc. A rule of '*' is equivalent to no acl at all and will explicitly
+	// permit all actions.
+	ACL []string `json:"acl,omitempty"`
 }
 
 func (x *CredentialUpdate) String() string {
@@ -1127,13 +1390,16 @@ type Credential struct {
 	Token *string `json:"token,omitempty"`
 	// optional list of ACL rules. If unspecified, the credential will have no
 	// restrictions. The only allowed ACL rule at this time is the bind rule. The bind
-	// rule allows the caller to restrict what domains and addresses the token is
-	// allowed to bind. For example, to allow the token to open a tunnel on
+	// rule allows the caller to restrict what domains, addresses, and labels the token
+	// is allowed to bind. For example, to allow the token to open a tunnel on
 	// example.ngrok.io your ACL would include the rule bind:example.ngrok.io. Bind
-	// rules may specify a leading wildcard to match multiple domains with a common
-	// suffix. For example, you may specify a rule of bind:*.example.com which will
-	// allow x.example.com, y.example.com, *.example.com, etc. A rule of '*' is
-	// equivalent to no acl at all and will explicitly permit all actions.
+	// rules for domains may specify a leading wildcard to match multiple domains with
+	// a common suffix. For example, you may specify a rule of bind:*.example.com which
+	// will allow x.example.com, y.example.com, *.example.com, etc. Bind rules for
+	// labels may specify a wildcard key and/or value to match multiple labels. For
+	// example, you may specify a rule of bind:*=example which will allow x=example,
+	// y=example, etc. A rule of '*' is equivalent to no acl at all and will explicitly
+	// permit all actions.
 	ACL []string `json:"acl,omitempty"`
 }
 
@@ -1188,8 +1454,9 @@ type EndpointWebhookValidation struct {
 	// unspecified
 	Enabled *bool `json:"enabled,omitempty"`
 	// a string indicating which webhook provider will be sending webhooks to this
-	// endpoint. Value must be one of the supported providers: SLACK, SNS, STRIPE,
-	// GITHUB, TWILIO, SHOPIFY, GITLAB, INTERCOM, SENDGRID, XERO, PAGERDUTY.
+	// endpoint. Value must be one of the supported providers defined at
+	// https://ngrok.com/docs/cloud-edge#webhook-verification
+	// (https://ngrok.com/docs/cloud-edge#webhook-verification)
 	Provider string `json:"provider,omitempty"`
 	// a string secret used to validate requests from the given provider. All providers
 	// except AWS SNS require a secret
@@ -1533,6 +1800,14 @@ type EndpointOAuthProvider struct {
 	Microsoft *EndpointOAuthMicrosoft `json:"microsoft,omitempty"`
 	// configuration for using google as the identity provider
 	Google *EndpointOAuthGoogle `json:"google,omitempty"`
+	// configuration for using linkedin as the identity provider
+	Linkedin *EndpointOAuthLinkedIn `json:"linkedin,omitempty"`
+	// configuration for using gitlab as the identity provider
+	Gitlab *EndpointOAuthGitLab `json:"gitlab,omitempty"`
+	// configuration for using twitch as the identity provider
+	Twitch *EndpointOAuthTwitch `json:"twitch,omitempty"`
+	// configuration for using amazon as the identity provider
+	Amazon *EndpointOAuthAmazon `json:"amazon,omitempty"`
 }
 
 func (x *EndpointOAuthProvider) String() string {
@@ -1547,6 +1822,10 @@ func (x *EndpointOAuthProvider) GoString() string {
 	fmt.Fprintf(tw, "\tFacebook\t%v\n", x.Facebook)
 	fmt.Fprintf(tw, "\tMicrosoft\t%v\n", x.Microsoft)
 	fmt.Fprintf(tw, "\tGoogle\t%v\n", x.Google)
+	fmt.Fprintf(tw, "\tLinkedin\t%v\n", x.Linkedin)
+	fmt.Fprintf(tw, "\tGitlab\t%v\n", x.Gitlab)
+	fmt.Fprintf(tw, "\tTwitch\t%v\n", x.Twitch)
+	fmt.Fprintf(tw, "\tAmazon\t%v\n", x.Amazon)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -1715,6 +1994,110 @@ func (x *EndpointOAuthGoogle) String() string {
 func (x *EndpointOAuthGoogle) GoString() string {
 	var b bytes.Buffer
 	fmt.Fprintf(&b, "EndpointOAuthGoogle {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tClientID\t%v\n", x.ClientID)
+	fmt.Fprintf(tw, "\tClientSecret\t%v\n", x.ClientSecret)
+	fmt.Fprintf(tw, "\tScopes\t%v\n", x.Scopes)
+	fmt.Fprintf(tw, "\tEmailAddresses\t%v\n", x.EmailAddresses)
+	fmt.Fprintf(tw, "\tEmailDomains\t%v\n", x.EmailDomains)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointOAuthLinkedIn struct {
+	ClientID       *string  `json:"client_id,omitempty"`
+	ClientSecret   *string  `json:"client_secret,omitempty"`
+	Scopes         []string `json:"scopes,omitempty"`
+	EmailAddresses []string `json:"email_addresses,omitempty"`
+	EmailDomains   []string `json:"email_domains,omitempty"`
+}
+
+func (x *EndpointOAuthLinkedIn) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointOAuthLinkedIn) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointOAuthLinkedIn {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tClientID\t%v\n", x.ClientID)
+	fmt.Fprintf(tw, "\tClientSecret\t%v\n", x.ClientSecret)
+	fmt.Fprintf(tw, "\tScopes\t%v\n", x.Scopes)
+	fmt.Fprintf(tw, "\tEmailAddresses\t%v\n", x.EmailAddresses)
+	fmt.Fprintf(tw, "\tEmailDomains\t%v\n", x.EmailDomains)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointOAuthGitLab struct {
+	ClientID       *string  `json:"client_id,omitempty"`
+	ClientSecret   *string  `json:"client_secret,omitempty"`
+	Scopes         []string `json:"scopes,omitempty"`
+	EmailAddresses []string `json:"email_addresses,omitempty"`
+	EmailDomains   []string `json:"email_domains,omitempty"`
+}
+
+func (x *EndpointOAuthGitLab) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointOAuthGitLab) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointOAuthGitLab {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tClientID\t%v\n", x.ClientID)
+	fmt.Fprintf(tw, "\tClientSecret\t%v\n", x.ClientSecret)
+	fmt.Fprintf(tw, "\tScopes\t%v\n", x.Scopes)
+	fmt.Fprintf(tw, "\tEmailAddresses\t%v\n", x.EmailAddresses)
+	fmt.Fprintf(tw, "\tEmailDomains\t%v\n", x.EmailDomains)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointOAuthTwitch struct {
+	ClientID       *string  `json:"client_id,omitempty"`
+	ClientSecret   *string  `json:"client_secret,omitempty"`
+	Scopes         []string `json:"scopes,omitempty"`
+	EmailAddresses []string `json:"email_addresses,omitempty"`
+	EmailDomains   []string `json:"email_domains,omitempty"`
+}
+
+func (x *EndpointOAuthTwitch) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointOAuthTwitch) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointOAuthTwitch {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tClientID\t%v\n", x.ClientID)
+	fmt.Fprintf(tw, "\tClientSecret\t%v\n", x.ClientSecret)
+	fmt.Fprintf(tw, "\tScopes\t%v\n", x.Scopes)
+	fmt.Fprintf(tw, "\tEmailAddresses\t%v\n", x.EmailAddresses)
+	fmt.Fprintf(tw, "\tEmailDomains\t%v\n", x.EmailDomains)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointOAuthAmazon struct {
+	ClientID       *string  `json:"client_id,omitempty"`
+	ClientSecret   *string  `json:"client_secret,omitempty"`
+	Scopes         []string `json:"scopes,omitempty"`
+	EmailAddresses []string `json:"email_addresses,omitempty"`
+	EmailDomains   []string `json:"email_domains,omitempty"`
+}
+
+func (x *EndpointOAuthAmazon) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointOAuthAmazon) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointOAuthAmazon {\n")
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
 	fmt.Fprintf(tw, "\tClientID\t%v\n", x.ClientID)
 	fmt.Fprintf(tw, "\tClientSecret\t%v\n", x.ClientSecret)
@@ -2261,7 +2644,7 @@ type HTTPSEdgeCreate struct {
 	// bytes.
 	Metadata string `json:"metadata,omitempty"`
 	// hostports served by this edge
-	Hostports *[]string `json:"hostports,omitempty"`
+	Hostports []string `json:"hostports,omitempty"`
 	// edge modules
 	MutualTLS      *EndpointMutualTLSMutate      `json:"mutual_tls,omitempty"`
 	TLSTermination *EndpointTLSTerminationAtEdge `json:"tls_termination,omitempty"`
@@ -2295,7 +2678,7 @@ type HTTPSEdgeUpdate struct {
 	// bytes.
 	Metadata *string `json:"metadata,omitempty"`
 	// hostports served by this edge
-	Hostports *[]string `json:"hostports,omitempty"`
+	Hostports []string `json:"hostports,omitempty"`
 	// edge modules
 	MutualTLS      *EndpointMutualTLSMutate      `json:"mutual_tls,omitempty"`
 	TLSTermination *EndpointTLSTerminationAtEdge `json:"tls_termination,omitempty"`
@@ -2335,7 +2718,7 @@ type HTTPSEdge struct {
 	// URI of the edge API resource
 	URI string `json:"uri,omitempty"`
 	// hostports served by this edge
-	Hostports *[]string `json:"hostports,omitempty"`
+	Hostports []string `json:"hostports,omitempty"`
 	// edge modules
 	MutualTls      *EndpointMutualTLS      `json:"mutual_tls,omitempty"`
 	TlsTermination *EndpointTLSTermination `json:"tls_termination,omitempty"`
@@ -2757,7 +3140,7 @@ type TCPEdgeCreate struct {
 	// bytes.
 	Metadata string `json:"metadata,omitempty"`
 	// hostports served by this edge
-	Hostports *[]string `json:"hostports,omitempty"`
+	Hostports []string `json:"hostports,omitempty"`
 	// edge modules
 	Backend       *EndpointBackendMutate  `json:"backend,omitempty"`
 	IPRestriction *EndpointIPPolicyMutate `json:"ip_restriction,omitempty"`
@@ -2791,7 +3174,7 @@ type TCPEdgeUpdate struct {
 	// bytes.
 	Metadata *string `json:"metadata,omitempty"`
 	// hostports served by this edge
-	Hostports *[]string `json:"hostports,omitempty"`
+	Hostports []string `json:"hostports,omitempty"`
 	// edge modules
 	Backend       *EndpointBackendMutate  `json:"backend,omitempty"`
 	IPRestriction *EndpointIPPolicyMutate `json:"ip_restriction,omitempty"`
@@ -2831,7 +3214,7 @@ type TCPEdge struct {
 	// URI of the edge API resource
 	URI string `json:"uri,omitempty"`
 	// hostports served by this edge
-	Hostports *[]string `json:"hostports,omitempty"`
+	Hostports []string `json:"hostports,omitempty"`
 	// edge modules
 	Backend       *EndpointBackend  `json:"backend,omitempty"`
 	IpRestriction *EndpointIPPolicy `json:"ip_restriction,omitempty"`
@@ -2892,7 +3275,7 @@ type TLSEdgeCreate struct {
 	// bytes.
 	Metadata string `json:"metadata,omitempty"`
 	// hostports served by this edge
-	Hostports *[]string `json:"hostports,omitempty"`
+	Hostports []string `json:"hostports,omitempty"`
 	// edge modules
 	Backend        *EndpointBackendMutate   `json:"backend,omitempty"`
 	IPRestriction  *EndpointIPPolicyMutate  `json:"ip_restriction,omitempty"`
@@ -2930,7 +3313,7 @@ type TLSEdgeUpdate struct {
 	// bytes.
 	Metadata *string `json:"metadata,omitempty"`
 	// hostports served by this edge
-	Hostports *[]string `json:"hostports,omitempty"`
+	Hostports []string `json:"hostports,omitempty"`
 	// edge modules
 	Backend        *EndpointBackendMutate   `json:"backend,omitempty"`
 	IPRestriction  *EndpointIPPolicyMutate  `json:"ip_restriction,omitempty"`
@@ -2974,7 +3357,7 @@ type TLSEdge struct {
 	// URI of the edge API resource
 	URI string `json:"uri,omitempty"`
 	// hostports served by this edge
-	Hostports *[]string `json:"hostports,omitempty"`
+	Hostports []string `json:"hostports,omitempty"`
 	// edge modules
 	Backend        *EndpointBackend        `json:"backend,omitempty"`
 	IpRestriction  *EndpointIPPolicy       `json:"ip_restriction,omitempty"`
@@ -3426,10 +3809,10 @@ type EventSubscriptionUpdate struct {
 	// max 255 chars.
 	Description *string `json:"description,omitempty"`
 	// Sources containing the types for which this event subscription will trigger
-	Sources *[]EventSourceReplace `json:"sources,omitempty"`
+	Sources []EventSourceReplace `json:"sources,omitempty"`
 	// A list of Event Destination IDs which should be used for this Event
 	// Subscription.
-	DestinationIDs *[]string `json:"destination_ids,omitempty"`
+	DestinationIDs []string `json:"destination_ids,omitempty"`
 }
 
 func (x *EventSubscriptionUpdate) String() string {
@@ -4171,6 +4554,8 @@ type ReservedDomainCreate struct {
 	// the domain name to reserve. It may be a full domain name like app.example.com.
 	// If the name does not contain a '.' it will reserve that subdomain on ngrok.io.
 	Name string `json:"name,omitempty"`
+	// hostname of the reserved domain
+	Domain string `json:"domain,omitempty"`
 	// reserve the domain in this geographic ngrok datacenter. Optional, default is us.
 	// (au, eu, ap, us, jp, in, sa)
 	Region string `json:"region,omitempty"`
@@ -4197,6 +4582,7 @@ func (x *ReservedDomainCreate) GoString() string {
 	fmt.Fprintf(&b, "ReservedDomainCreate {\n")
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
 	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tDomain\t%v\n", x.Domain)
 	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
 	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
@@ -4542,13 +4928,16 @@ type SSHCredentialCreate struct {
 	Metadata string `json:"metadata,omitempty"`
 	// optional list of ACL rules. If unspecified, the credential will have no
 	// restrictions. The only allowed ACL rule at this time is the bind rule. The bind
-	// rule allows the caller to restrict what domains and addresses the token is
-	// allowed to bind. For example, to allow the token to open a tunnel on
+	// rule allows the caller to restrict what domains, addresses, and labels the token
+	// is allowed to bind. For example, to allow the token to open a tunnel on
 	// example.ngrok.io your ACL would include the rule bind:example.ngrok.io. Bind
-	// rules may specify a leading wildcard to match multiple domains with a common
-	// suffix. For example, you may specify a rule of bind:*.example.com which will
-	// allow x.example.com, y.example.com, *.example.com, etc. A rule of '*' is
-	// equivalent to no acl at all and will explicitly permit all actions.
+	// rules for domains may specify a leading wildcard to match multiple domains with
+	// a common suffix. For example, you may specify a rule of bind:*.example.com which
+	// will allow x.example.com, y.example.com, *.example.com, etc. Bind rules for
+	// labels may specify a wildcard key and/or value to match multiple labels. For
+	// example, you may specify a rule of bind:*=example which will allow x=example,
+	// y=example, etc. A rule of '*' is equivalent to no acl at all and will explicitly
+	// permit all actions.
 	ACL []string `json:"acl,omitempty"`
 	// the PEM-encoded public key of the SSH keypair that will be used to authenticate
 	PublicKey string `json:"public_key,omitempty"`
@@ -4581,14 +4970,17 @@ type SSHCredentialUpdate struct {
 	Metadata *string `json:"metadata,omitempty"`
 	// optional list of ACL rules. If unspecified, the credential will have no
 	// restrictions. The only allowed ACL rule at this time is the bind rule. The bind
-	// rule allows the caller to restrict what domains and addresses the token is
-	// allowed to bind. For example, to allow the token to open a tunnel on
+	// rule allows the caller to restrict what domains, addresses, and labels the token
+	// is allowed to bind. For example, to allow the token to open a tunnel on
 	// example.ngrok.io your ACL would include the rule bind:example.ngrok.io. Bind
-	// rules may specify a leading wildcard to match multiple domains with a common
-	// suffix. For example, you may specify a rule of bind:*.example.com which will
-	// allow x.example.com, y.example.com, *.example.com, etc. A rule of '*' is
-	// equivalent to no acl at all and will explicitly permit all actions.
-	ACL *[]string `json:"acl,omitempty"`
+	// rules for domains may specify a leading wildcard to match multiple domains with
+	// a common suffix. For example, you may specify a rule of bind:*.example.com which
+	// will allow x.example.com, y.example.com, *.example.com, etc. Bind rules for
+	// labels may specify a wildcard key and/or value to match multiple labels. For
+	// example, you may specify a rule of bind:*=example which will allow x=example,
+	// y=example, etc. A rule of '*' is equivalent to no acl at all and will explicitly
+	// permit all actions.
+	ACL []string `json:"acl,omitempty"`
 }
 
 func (x *SSHCredentialUpdate) String() string {
@@ -4626,13 +5018,16 @@ type SSHCredential struct {
 	PublicKey string `json:"public_key,omitempty"`
 	// optional list of ACL rules. If unspecified, the credential will have no
 	// restrictions. The only allowed ACL rule at this time is the bind rule. The bind
-	// rule allows the caller to restrict what domains and addresses the token is
-	// allowed to bind. For example, to allow the token to open a tunnel on
+	// rule allows the caller to restrict what domains, addresses, and labels the token
+	// is allowed to bind. For example, to allow the token to open a tunnel on
 	// example.ngrok.io your ACL would include the rule bind:example.ngrok.io. Bind
-	// rules may specify a leading wildcard to match multiple domains with a common
-	// suffix. For example, you may specify a rule of bind:*.example.com which will
-	// allow x.example.com, y.example.com, *.example.com, etc. A rule of '*' is
-	// equivalent to no acl at all and will explicitly permit all actions.
+	// rules for domains may specify a leading wildcard to match multiple domains with
+	// a common suffix. For example, you may specify a rule of bind:*.example.com which
+	// will allow x.example.com, y.example.com, *.example.com, etc. Bind rules for
+	// labels may specify a wildcard key and/or value to match multiple labels. For
+	// example, you may specify a rule of bind:*=example which will allow x=example,
+	// y=example, etc. A rule of '*' is equivalent to no acl at all and will explicitly
+	// permit all actions.
 	ACL []string `json:"acl,omitempty"`
 }
 
@@ -4852,9 +5247,10 @@ type SSHUserCertificateCreate struct {
 	// this certificate may be used to log in as any user.
 	Principals []string `json:"principals,omitempty"`
 	// A map of critical options included in the certificate. Only two critical options
-	// are currently defined by OpenSSH: force-command and source-address. See
-	// (https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys)the
-	// OpenSSH certificate protocol spec for additional details.
+	// are currently defined by OpenSSH: force-command and source-address. See the
+	// OpenSSH certificate protocol spec
+	// (https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys) for
+	// additional details.
 	CriticalOptions map[string]string `json:"critical_options,omitempty"`
 	// A map of extensions included in the certificate. Extensions are additional
 	// metadata that can be interpreted by the SSH server for any purpose. These can be
@@ -4862,8 +5258,9 @@ type SSHUserCertificateCreate struct {
 	// forwarding, and more. If unspecified, the certificate will include limited
 	// permissions with the following extension map: {"permit-pty": "",
 	// "permit-user-rc": ""} OpenSSH understands a number of predefined extensions. See
-	// (https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys)the
-	// OpenSSH certificate protocol spec for additional details.
+	// the OpenSSH certificate protocol spec
+	// (https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys) for
+	// additional details.
 	Extensions map[string]string `json:"extensions,omitempty"`
 	// The time when the user certificate becomes valid, in RFC 3339 format. Defaults
 	// to the current time if unspecified.
@@ -4955,9 +5352,10 @@ type SSHUserCertificate struct {
 	// this certificate may be used to log in as any user.
 	Principals []string `json:"principals,omitempty"`
 	// A map of critical options included in the certificate. Only two critical options
-	// are currently defined by OpenSSH: force-command and source-address. See
-	// (https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys)the
-	// OpenSSH certificate protocol spec for additional details.
+	// are currently defined by OpenSSH: force-command and source-address. See the
+	// OpenSSH certificate protocol spec
+	// (https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys) for
+	// additional details.
 	CriticalOptions map[string]string `json:"critical_options,omitempty"`
 	// A map of extensions included in the certificate. Extensions are additional
 	// metadata that can be interpreted by the SSH server for any purpose. These can be
@@ -4965,8 +5363,9 @@ type SSHUserCertificate struct {
 	// forwarding, and more. If unspecified, the certificate will include limited
 	// permissions with the following extension map: {"permit-pty": "",
 	// "permit-user-rc": ""} OpenSSH understands a number of predefined extensions. See
-	// (https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys)the
-	// OpenSSH certificate protocol spec for additional details.
+	// the OpenSSH certificate protocol spec
+	// (https://github.com/openssh/openssh-portable/blob/master/PROTOCOL.certkeys) for
+	// additional details.
 	Extensions map[string]string `json:"extensions,omitempty"`
 	// the time when the ssh host certificate becomes valid, in RFC 3339 format.
 	ValidAfter string `json:"valid_after,omitempty"`
@@ -5038,11 +5437,11 @@ type TLSCertificateCreate struct {
 	// arbitrary user-defined machine-readable data of this TLS certificate. optional,
 	// max 4096 bytes.
 	Metadata string `json:"metadata,omitempty"`
-	// chain of PEM-encoded certificates, leaf first. See
-	// (https://ngrok.com/docs/api#tls-certificates-pem)Certificate Bundles.
+	// chain of PEM-encoded certificates, leaf first. See Certificate Bundles
+	// (https://ngrok.com/docs/api#tls-certificates-pem).
 	CertificatePEM string `json:"certificate_pem,omitempty"`
-	// private key for the TLS certificate, PEM-encoded. See
-	// (https://ngrok.com/docs/ngrok-link#tls-certificates-key)Private Keys.
+	// private key for the TLS certificate, PEM-encoded. See Private Keys
+	// (https://ngrok.com/docs/ngrok-link#tls-certificates-key).
 	PrivateKeyPEM string `json:"private_key_pem,omitempty"`
 }
 
@@ -5101,8 +5500,8 @@ type TLSCertificate struct {
 	// arbitrary user-defined machine-readable data of this TLS certificate. optional,
 	// max 4096 bytes.
 	Metadata string `json:"metadata,omitempty"`
-	// chain of PEM-encoded certificates, leaf first. See
-	// (https://ngrok.com/docs/api#tls-certificates-pem)Certificate Bundles.
+	// chain of PEM-encoded certificates, leaf first. See Certificate Bundles
+	// (https://ngrok.com/docs/api#tls-certificates-pem).
 	CertificatePEM string `json:"certificate_pem,omitempty"`
 	// subject common name from the leaf of this TLS certificate
 	SubjectCommonName string `json:"subject_common_name,omitempty"`
@@ -5321,10 +5720,10 @@ type Tunnel struct {
 	// timestamp when the tunnel was initiated in RFC 3339 format
 	StartedAt string `json:"started_at,omitempty"`
 	// user-supplied metadata for the tunnel defined in the ngrok configuration file.
-	// See the tunnel  (https://ngrok.com/docs#tunnel-definitions-metadata)metadata
-	// configuration option In API version 0, this value was instead pulled from the
-	// top-level  (https://ngrok.com/docs#config_metadata)metadata configuration
-	// option.
+	// See the tunnel metadata configuration option
+	// (https://ngrok.com/docs#tunnel-definitions-metadata) In API version 0, this
+	// value was instead pulled from the top-level metadata configuration option
+	// (https://ngrok.com/docs#config_metadata).
 	Metadata string `json:"metadata,omitempty"`
 	// tunnel protocol for ephemeral tunnels. one of http, https, tcp or tls
 	Proto string `json:"proto,omitempty"`
@@ -5339,7 +5738,7 @@ type Tunnel struct {
 	// tunnel
 	Labels map[string]string `json:"labels,omitempty"`
 	// tunnel group backends served by this backend tunnel
-	Backends *[]Ref `json:"backends,omitempty"`
+	Backends []Ref `json:"backends,omitempty"`
 	// upstream address the ngrok agent forwards traffic over this tunnel to. this may
 	// be expressed as a URL or a network address.
 	ForwardsTo string `json:"forwards_to,omitempty"`

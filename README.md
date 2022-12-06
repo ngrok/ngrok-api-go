@@ -1,4 +1,6 @@
 # ngrok API client library for Golang
+[![CI](https://github.com/ngrok/ngrok-api-go/actions/workflows/ci.yml/badge.svg)](https://github.com/ngrok/ngrok-api-go/actions/workflows/ci.yml)
+[![Go Reference](https://pkg.go.dev/badge/github.com/ngrok/ngrok-api-go.svg)](https://pkg.go.dev/github.com/ngrok/ngrok-api-go/v5)
 
 This library wraps the [ngrok HTTP API](https://ngrok.com/docs/api) to make it
 easier to consume in Go.
@@ -7,15 +9,15 @@ easier to consume in Go.
 
 Installation is as simple as using `go get`.
 
-    go get github.com/ngrok/ngrok-api-go/v4
+    go get github.com/ngrok/ngrok-api-go/v5
 
 ## Documentation
 
-A quickstart guide and a full API reference are included in the [ngrok go API documentation on pkg.go.dev](https://pkg.go.dev/github.com/ngrok/ngrok-api-go/v4)
+A quickstart guide and a full API reference are included in the [ngrok go API documentation on pkg.go.dev](https://pkg.go.dev/github.com/ngrok/ngrok-api-go/v5)
 
 ## Quickstart
 
-Please consult the [documentation](https://pkg.go.dev/github.com/ngrok/ngrok-api-go/v4) for additional examples.
+Please consult the [documentation](https://pkg.go.dev/github.com/ngrok/ngrok-api-go/v5) for additional examples.
 
 ### Create an IP Policy that allows traffic from some subnets
 
@@ -27,9 +29,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ngrok/ngrok-api-go/v4"
-	"github.com/ngrok/ngrok-api-go/v4/ip_policies"
-	"github.com/ngrok/ngrok-api-go/v4/ip_policy_rules"
+	"github.com/ngrok/ngrok-api-go/v5"
+	"github.com/ngrok/ngrok-api-go/v5/ip_policies"
+	"github.com/ngrok/ngrok-api-go/v5/ip_policy_rules"
 )
 
 func main() {
@@ -75,8 +77,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ngrok/ngrok-api-go/v4"
-	"github.com/ngrok/ngrok-api-go/v4/tunnels"
+	"github.com/ngrok/ngrok-api-go/v5"
+	"github.com/ngrok/ngrok-api-go/v5/tunnels"
 )
 
 func main() {
