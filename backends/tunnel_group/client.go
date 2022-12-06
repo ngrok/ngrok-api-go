@@ -8,8 +8,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v4"
-	"github.com/ngrok/ngrok-api-go/v4/internal/api"
+	"github.com/ngrok/ngrok-api-go/v5"
+	"github.com/ngrok/ngrok-api-go/v5/internal/api"
 )
 
 // A Tunnel Group Backend balances traffic among all online tunnels that match

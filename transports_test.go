@@ -6,7 +6,6 @@ import (
 	"bytes"
 	"fmt"
 	"io"
-	"io/ioutil"
 	"math/rand"
 	"net/http"
 	"net/http/httputil"
@@ -58,7 +57,7 @@ func (s *mockTransport) SetResponse(statusCode int, body string) {
 			"Connection":     []string{"close"},
 		},
 		ContentLength: int64(len(body)),
-		Body:          ioutil.NopCloser(bytes.NewReader([]byte(body))),
+		Body:          io.NopCloser(bytes.NewReader([]byte(body))),
 	})
 	s.mockResponseError = append(s.mockResponseError, nil)
 }

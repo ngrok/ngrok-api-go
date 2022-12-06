@@ -8,8 +8,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v4"
-	"github.com/ngrok/ngrok-api-go/v4/internal/api"
+	"github.com/ngrok/ngrok-api-go/v5"
+	"github.com/ngrok/ngrok-api-go/v5/internal/api"
 )
 
 // Reserved Domains are hostnames that you can listen for traffic on. Domains
@@ -29,6 +29,9 @@ func NewClient(cfg *ngrok.ClientConfig) *Client {
 //
 // https://ngrok.com/docs/api#api-reserved-domains-create
 func (c *Client) Create(ctx context.Context, arg *ngrok.ReservedDomainCreate) (*ngrok.ReservedDomain, error) {
+	if arg == nil {
+		arg = new(ngrok.ReservedDomainCreate)
+	}
 	var res ngrok.ReservedDomain
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/reserved_domains")).Execute(&path, arg); err != nil {
