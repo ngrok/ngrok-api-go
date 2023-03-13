@@ -328,6 +328,10 @@ type APIKeyCreate struct {
 	Description string `json:"description,omitempty"`
 	// arbitrary user-defined data of this API key. optional, max 4096 bytes
 	Metadata string `json:"metadata,omitempty"`
+	// If supplied at credential creation, ownership will be assigned to the specified
+	// User or Bot. Only admins may specify an owner other than themselves. Defaults to
+	// the authenticated User or Bot.
+	OwnerId *string `json:"owner_id,omitempty"`
 }
 
 func (x *APIKeyCreate) String() string {
@@ -340,6 +344,7 @@ func (x *APIKeyCreate) GoString() string {
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
 	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tOwnerId\t%v\n", x.OwnerId)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -387,6 +392,10 @@ type APIKey struct {
 	// authenticate request to the ngrok API. This value is only available one time, on
 	// the API response from key creation. Otherwise it is null.
 	Token *string `json:"token,omitempty"`
+	// If supplied at credential creation, ownership will be assigned to the specified
+	// User or Bot. Only admins may specify an owner other than themselves. Defaults to
+	// the authenticated User or Bot.
+	OwnerId *string `json:"owner_id,omitempty"`
 }
 
 func (x *APIKey) String() string {
@@ -404,6 +413,7 @@ func (x *APIKey) GoString() string {
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
 	fmt.Fprintf(tw, "\tToken\t%v\n", x.Token)
+	fmt.Fprintf(tw, "\tOwnerId\t%v\n", x.OwnerId)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -1312,6 +1322,10 @@ type CredentialCreate struct {
 	// y=example, etc. A rule of '*' is equivalent to no acl at all and will explicitly
 	// permit all actions.
 	ACL []string `json:"acl,omitempty"`
+	// If supplied at credential creation, ownership will be assigned to the specified
+	// User or Bot. Only admins may specify an owner other than themselves. Defaults to
+	// the authenticated User or Bot.
+	OwnerId *string `json:"owner_id,omitempty"`
 }
 
 func (x *CredentialCreate) String() string {
@@ -1325,6 +1339,7 @@ func (x *CredentialCreate) GoString() string {
 	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tACL\t%v\n", x.ACL)
+	fmt.Fprintf(tw, "\tOwnerId\t%v\n", x.OwnerId)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -1401,6 +1416,10 @@ type Credential struct {
 	// y=example, etc. A rule of '*' is equivalent to no acl at all and will explicitly
 	// permit all actions.
 	ACL []string `json:"acl,omitempty"`
+	// If supplied at credential creation, ownership will be assigned to the specified
+	// User or Bot. Only admins may specify an owner other than themselves. Defaults to
+	// the authenticated User or Bot.
+	OwnerId *string `json:"owner_id,omitempty"`
 }
 
 func (x *Credential) String() string {
@@ -1419,6 +1438,7 @@ func (x *Credential) GoString() string {
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tToken\t%v\n", x.Token)
 	fmt.Fprintf(tw, "\tACL\t%v\n", x.ACL)
+	fmt.Fprintf(tw, "\tOwnerId\t%v\n", x.OwnerId)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -1455,8 +1475,8 @@ type EndpointWebhookValidation struct {
 	Enabled *bool `json:"enabled,omitempty"`
 	// a string indicating which webhook provider will be sending webhooks to this
 	// endpoint. Value must be one of the supported providers defined at
-	// https://ngrok.com/docs/cloud-edge#webhook-verification
-	// (https://ngrok.com/docs/cloud-edge#webhook-verification)
+	// https://ngrok.com/docs/cloud-edge/modules/webhook
+	// (https://ngrok.com/docs/cloud-edge/modules/webhook)
 	Provider string `json:"provider,omitempty"`
 	// a string secret used to validate requests from the given provider. All providers
 	// except AWS SNS require a secret
@@ -4941,6 +4961,10 @@ type SSHCredentialCreate struct {
 	ACL []string `json:"acl,omitempty"`
 	// the PEM-encoded public key of the SSH keypair that will be used to authenticate
 	PublicKey string `json:"public_key,omitempty"`
+	// If supplied at credential creation, ownership will be assigned to the specified
+	// User or Bot. Only admins may specify an owner other than themselves. Defaults to
+	// the authenticated User or Bot.
+	OwnerId *string `json:"owner_id,omitempty"`
 }
 
 func (x *SSHCredentialCreate) String() string {
@@ -4955,6 +4979,7 @@ func (x *SSHCredentialCreate) GoString() string {
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tACL\t%v\n", x.ACL)
 	fmt.Fprintf(tw, "\tPublicKey\t%v\n", x.PublicKey)
+	fmt.Fprintf(tw, "\tOwnerId\t%v\n", x.OwnerId)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -5029,6 +5054,10 @@ type SSHCredential struct {
 	// y=example, etc. A rule of '*' is equivalent to no acl at all and will explicitly
 	// permit all actions.
 	ACL []string `json:"acl,omitempty"`
+	// If supplied at credential creation, ownership will be assigned to the specified
+	// User or Bot. Only admins may specify an owner other than themselves. Defaults to
+	// the authenticated User or Bot.
+	OwnerId *string `json:"owner_id,omitempty"`
 }
 
 func (x *SSHCredential) String() string {
@@ -5047,6 +5076,7 @@ func (x *SSHCredential) GoString() string {
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tPublicKey\t%v\n", x.PublicKey)
 	fmt.Fprintf(tw, "\tACL\t%v\n", x.ACL)
+	fmt.Fprintf(tw, "\tOwnerId\t%v\n", x.OwnerId)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
