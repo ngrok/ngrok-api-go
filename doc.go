@@ -1,3 +1,5 @@
+// Code generated for API Clients. DO NOT EDIT.
+
 // Package ngrok makes it easy to work with the ngrok API from Go. The package
 // is fully code generated and should always be up to date with the latest
 // ngrok API.

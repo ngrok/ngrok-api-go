@@ -1,3 +1,5 @@
+// Code generated for API Clients. DO NOT EDIT.
+
 package api
 
 import "runtime/debug"
