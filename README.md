@@ -1,15 +1,21 @@
+<!-- Code generated for API Clients. DO NOT EDIT. -->
+
 # ngrok API client library for Golang
-[![CI](https://github.com/ngrok/ngrok-api-go/actions/workflows/ci.yml/badge.svg)](https://github.com/ngrok/ngrok-api-go/actions/workflows/ci.yml)
-[![Go Reference](https://pkg.go.dev/badge/github.com/ngrok/ngrok-api-go.svg)](https://pkg.go.dev/github.com/ngrok/ngrok-api-go/v5)
 
 This library wraps the [ngrok HTTP API](https://ngrok.com/docs/api) to make it
 easier to consume in Go.
+
+For creating ngrok tunnels directly from your Go application, check out the [ngrok Go Agent SDK](https://github.com/ngrok/ngrok-go) instead.
 
 ## Installation
 
 Installation is as simple as using `go get`.
 
     go get github.com/ngrok/ngrok-api-go/v5
+
+## Support
+
+The best place to get support using this library is through the [ngrok Slack Community](https://ngrok.com/slack). If you find any bugs, please contribute by opening a [new GitHub issue](https://github.com/ngrok/ngrok-api-go/issues/new/choose).
 
 ## Documentation
 
