@@ -1655,14 +1655,198 @@ func (x *CredentialList) GoString() string {
 	return b.String()
 }
 
+type EndpointJWTValidationIssuerConfig struct {
+	// the list of allowed issuers.
+	AllowList []EndpointJWTValidationIssuer `json:"allow_list,omitempty"`
+}
+
+func (x *EndpointJWTValidationIssuerConfig) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointJWTValidationIssuerConfig) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointJWTValidationIssuerConfig {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tAllowList\t%v\n", x.AllowList)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointJWTValidationIssuer struct {
+	// the URL of the issuer.
+	Value string `json:"value,omitempty"`
+}
+
+func (x *EndpointJWTValidationIssuer) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointJWTValidationIssuer) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointJWTValidationIssuer {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tValue\t%v\n", x.Value)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointJWTValidationAudienceConfig struct {
+	// the list of allowed audiences.
+	AllowList []EndpointJWTValidationAudience `json:"allow_list,omitempty"`
+}
+
+func (x *EndpointJWTValidationAudienceConfig) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointJWTValidationAudienceConfig) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointJWTValidationAudienceConfig {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tAllowList\t%v\n", x.AllowList)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointJWTValidationAudience struct {
+	// the audience value.
+	Value string `json:"value,omitempty"`
+}
+
+func (x *EndpointJWTValidationAudience) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointJWTValidationAudience) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointJWTValidationAudience {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tValue\t%v\n", x.Value)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointJWTValidationHTTPConfig struct {
+	// the list of tokens to validate.
+	Tokens []EndpointJWTValidationHTTPToken `json:"tokens,omitempty"`
+}
+
+func (x *EndpointJWTValidationHTTPConfig) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointJWTValidationHTTPConfig) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointJWTValidationHTTPConfig {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tTokens\t%v\n", x.Tokens)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointJWTValidationHTTPToken struct {
+	// the type of the JWT, which acts as a hint to ngrok about how to parse. Must be
+	// one of "jwt", "at+jwt", or "it+jwt".
+	Type string `json:"type,omitempty"`
+	// the type of location to expect the JWT. Must be one of "header" or "body".
+	Method string `json:"method,omitempty"`
+	// the name of the header or body field where the JWT is expected.
+	Name string `json:"name,omitempty"`
+	// any prefix to strip from the JWT before parsing.
+	Prefix *string `json:"prefix,omitempty"`
+}
+
+func (x *EndpointJWTValidationHTTPToken) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointJWTValidationHTTPToken) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointJWTValidationHTTPToken {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
+	fmt.Fprintf(tw, "\tMethod\t%v\n", x.Method)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tPrefix\t%v\n", x.Prefix)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointJWTValidationSigningConfig struct {
+	// the list of allowed signing algorithms.
+	AllowedAlgorithms []string `json:"allowed_algorithms,omitempty"`
+	// the configuration for the JWT signing keys.
+	Keys EndpointJWTValidationSigningKeys `json:"keys,omitempty"`
+}
+
+func (x *EndpointJWTValidationSigningConfig) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointJWTValidationSigningConfig) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointJWTValidationSigningConfig {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tAllowedAlgorithms\t%v\n", x.AllowedAlgorithms)
+	fmt.Fprintf(tw, "\tKeys\t%v\n", x.Keys)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointJWTValidationSigningKeys struct {
+	// the configuration for acquiring the key material used to verify the signed JWTs.
+	Sources EndpointJWTValidationSigningKeySources `json:"sources,omitempty"`
+}
+
+func (x *EndpointJWTValidationSigningKeys) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointJWTValidationSigningKeys) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointJWTValidationSigningKeys {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tSources\t%v\n", x.Sources)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointJWTValidationSigningKeySources struct {
+	// the list of URLs which serve the possible signing keys in JWKS format.
+	AdditionalJkus []string `json:"additional_jkus,omitempty"`
+}
+
+func (x *EndpointJWTValidationSigningKeySources) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointJWTValidationSigningKeySources) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointJWTValidationSigningKeySources {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tAdditionalJkus\t%v\n", x.AdditionalJkus)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EndpointWebhookValidation struct {
 	// true if the module will be applied to traffic, false to disable. default true if
 	// unspecified
 	Enabled *bool `json:"enabled,omitempty"`
 	// a string indicating which webhook provider will be sending webhooks to this
 	// endpoint. Value must be one of the supported providers defined at
-	// https://ngrok.com/docs/cloud-edge/modules/webhook
-	// (https://ngrok.com/docs/cloud-edge/modules/webhook)
+	// https://ngrok.com/docs/cloud-edge/modules/webhook-verification
+	// (https://ngrok.com/docs/cloud-edge/modules/webhook-verification)
 	Provider string `json:"provider,omitempty"`
 	// a string secret used to validate requests from the given provider. All providers
 	// except AWS SNS require a secret
@@ -2581,6 +2765,60 @@ func (x *EndpointWebsocketTCPConverter) GoString() string {
 	return b.String()
 }
 
+type EndpointUserAgentFilter struct {
+	Enabled              *bool    `json:"enabled,omitempty"`
+	UserAgentFilterAllow []string `json:"allow,omitempty"`
+	UserAgentFilterDeny  []string `json:"deny,omitempty"`
+}
+
+func (x *EndpointUserAgentFilter) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointUserAgentFilter) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointUserAgentFilter {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tUserAgentFilterAllow\t%v\n", x.UserAgentFilterAllow)
+	fmt.Fprintf(tw, "\tUserAgentFilterDeny\t%v\n", x.UserAgentFilterDeny)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointJWTValidation struct {
+	// true if the module will be applied to traffic, false to disable. default true if
+	// unspecified
+	Enabled *bool `json:"enabled,omitempty"`
+	// configuration about the Issuer(s) of the JWTs.
+	Issuer EndpointJWTValidationIssuerConfig `json:"issuer,omitempty"`
+	// configuration about the Audience(s) of the JWTs.
+	Audience EndpointJWTValidationAudienceConfig `json:"audience,omitempty"`
+	// configuration about the HTTP requests containing JWTs.
+	Http EndpointJWTValidationHTTPConfig `json:"http,omitempty"`
+	// configuration about signed JWTs (JWS).
+	Jws EndpointJWTValidationSigningConfig `json:"jws,omitempty"`
+}
+
+func (x *EndpointJWTValidation) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointJWTValidation) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointJWTValidation {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	fmt.Fprintf(tw, "\tIssuer\t%v\n", x.Issuer)
+	fmt.Fprintf(tw, "\tAudience\t%v\n", x.Audience)
+	fmt.Fprintf(tw, "\tHttp\t%v\n", x.Http)
+	fmt.Fprintf(tw, "\tJws\t%v\n", x.Jws)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type EdgeRouteItem struct {
 	// unique identifier of this edge
 	EdgeID string `json:"edge_id,omitempty"`
@@ -2640,6 +2878,9 @@ type HTTPSEdgeRouteCreate struct {
 	OIDC *EndpointOIDC `json:"oidc,omitempty"`
 	// websocket to tcp adapter configuration or null
 	WebsocketTCPConverter *EndpointWebsocketTCPConverter `json:"websocket_tcp_converter,omitempty"`
+	UserAgentFilter       *EndpointUserAgentFilter       `json:"user_agent_filter,omitempty"`
+	// jwt validation module configuration or null
+	JWTValidation *EndpointJWTValidation `json:"jwt_validation,omitempty"`
 }
 
 func (x *HTTPSEdgeRouteCreate) String() string {
@@ -2666,6 +2907,8 @@ func (x *HTTPSEdgeRouteCreate) GoString() string {
 	fmt.Fprintf(tw, "\tSAML\t%v\n", x.SAML)
 	fmt.Fprintf(tw, "\tOIDC\t%v\n", x.OIDC)
 	fmt.Fprintf(tw, "\tWebsocketTCPConverter\t%v\n", x.WebsocketTCPConverter)
+	fmt.Fprintf(tw, "\tUserAgentFilter\t%v\n", x.UserAgentFilter)
+	fmt.Fprintf(tw, "\tJWTValidation\t%v\n", x.JWTValidation)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -2709,6 +2952,9 @@ type HTTPSEdgeRouteUpdate struct {
 	OIDC *EndpointOIDC `json:"oidc,omitempty"`
 	// websocket to tcp adapter configuration or null
 	WebsocketTCPConverter *EndpointWebsocketTCPConverter `json:"websocket_tcp_converter,omitempty"`
+	UserAgentFilter       *EndpointUserAgentFilter       `json:"user_agent_filter,omitempty"`
+	// jwt validation module configuration or null
+	JWTValidation *EndpointJWTValidation `json:"jwt_validation,omitempty"`
 }
 
 func (x *HTTPSEdgeRouteUpdate) String() string {
@@ -2737,6 +2983,8 @@ func (x *HTTPSEdgeRouteUpdate) GoString() string {
 	fmt.Fprintf(tw, "\tSAML\t%v\n", x.SAML)
 	fmt.Fprintf(tw, "\tOIDC\t%v\n", x.OIDC)
 	fmt.Fprintf(tw, "\tWebsocketTCPConverter\t%v\n", x.WebsocketTCPConverter)
+	fmt.Fprintf(tw, "\tUserAgentFilter\t%v\n", x.UserAgentFilter)
+	fmt.Fprintf(tw, "\tJWTValidation\t%v\n", x.JWTValidation)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -2784,6 +3032,9 @@ type HTTPSEdgeRoute struct {
 	OIDC *EndpointOIDC `json:"oidc,omitempty"`
 	// websocket to tcp adapter configuration or null
 	WebsocketTCPConverter *EndpointWebsocketTCPConverter `json:"websocket_tcp_converter,omitempty"`
+	UserAgentFilter       *EndpointUserAgentFilter       `json:"user_agent_filter,omitempty"`
+	// jwt validation module configuration or null
+	JWTValidation *EndpointJWTValidation `json:"jwt_validation,omitempty"`
 }
 
 func (x *HTTPSEdgeRoute) String() string {
@@ -2814,6 +3065,8 @@ func (x *HTTPSEdgeRoute) GoString() string {
 	fmt.Fprintf(tw, "\tSAML\t%v\n", x.SAML)
 	fmt.Fprintf(tw, "\tOIDC\t%v\n", x.OIDC)
 	fmt.Fprintf(tw, "\tWebsocketTCPConverter\t%v\n", x.WebsocketTCPConverter)
+	fmt.Fprintf(tw, "\tUserAgentFilter\t%v\n", x.UserAgentFilter)
+	fmt.Fprintf(tw, "\tJWTValidation\t%v\n", x.JWTValidation)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -3306,6 +3559,52 @@ func (x *EdgeRouteWebsocketTCPConverterReplace) String() string {
 func (x *EdgeRouteWebsocketTCPConverterReplace) GoString() string {
 	var b bytes.Buffer
 	fmt.Fprintf(&b, "EdgeRouteWebsocketTCPConverterReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeRouteUserAgentFilterReplace struct {
+	EdgeID string                  `json:"edge_id,omitempty"`
+	ID     string                  `json:"id,omitempty"`
+	Module EndpointUserAgentFilter `json:"module,omitempty"`
+}
+
+func (x *EdgeRouteUserAgentFilterReplace) String() string {
+	return fmt.Sprintf("EdgeRouteUserAgentFilterReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeRouteUserAgentFilterReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeRouteUserAgentFilterReplace {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EdgeRouteJWTValidationReplace struct {
+	EdgeID string                `json:"edge_id,omitempty"`
+	ID     string                `json:"id,omitempty"`
+	Module EndpointJWTValidation `json:"module,omitempty"`
+}
+
+func (x *EdgeRouteJWTValidationReplace) String() string {
+	return fmt.Sprintf("EdgeRouteJWTValidationReplace{ID: %v}", x.ID)
+
+}
+
+func (x *EdgeRouteJWTValidationReplace) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EdgeRouteJWTValidationReplace {\n")
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
 	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
 	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
@@ -4792,8 +5091,10 @@ func (x *ReservedAddrList) GoString() string {
 type ReservedDomainCreate struct {
 	// hostname of the reserved domain
 	Domain string `json:"domain,omitempty"`
-	// reserve the domain in this geographic ngrok datacenter. Optional, default is us.
-	// (au, eu, ap, us, jp, in, sa)
+	// deprecated: With the launch of the ngrok Global Network domains traffic is now
+	// handled globally. This field applied only to endpoints. Note that agents may
+	// still connect to specific regions. Optional, null by default. (au, eu, ap, us,
+	// jp, in, sa)
 	Region string `json:"region,omitempty"`
 	// human-readable description of what this reserved domain will be used for
 	Description string `json:"description,omitempty"`
@@ -4877,11 +5178,13 @@ type ReservedDomain struct {
 	Metadata string `json:"metadata,omitempty"`
 	// hostname of the reserved domain
 	Domain string `json:"domain,omitempty"`
-	// reserve the domain in this geographic ngrok datacenter. Optional, default is us.
-	// (au, eu, ap, us, jp, in, sa)
+	// deprecated: With the launch of the ngrok Global Network domains traffic is now
+	// handled globally. This field applied only to endpoints. Note that agents may
+	// still connect to specific regions. Optional, null by default. (au, eu, ap, us,
+	// jp, in, sa)
 	Region string `json:"region,omitempty"`
 	// DNS CNAME target for a custom hostname, or null if the reserved domain is a
-	// subdomain of *.ngrok.io
+	// subdomain of an ngrok owned domain (e.g. *.ngrok.app)
 	CNAMETarget *string `json:"cname_target,omitempty"`
 	// object referencing the TLS certificate used for connections to this domain. This
 	// can be either a user-uploaded certificate, the most recently issued automatic

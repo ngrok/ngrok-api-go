@@ -81,7 +81,7 @@ func (c *Client) readResponse(resp *http.Response, out interface{}) error {
 	if resp.Body != nil {
 		defer resp.Body.Close()
 	}
-	if resp.StatusCode >= 400 {
+	if resp.StatusCode >= http.StatusBadRequest {
 		return c.readErrorResponse(resp)
 	}
 	return c.readResponseBody(resp, out)
