@@ -1127,6 +1127,147 @@ func (x *HTTPResponseBackendList) GoString() string {
 	return b.String()
 }
 
+type StaticBackend struct {
+	// unique identifier for this static backend
+	ID string `json:"id,omitempty"`
+	// URI of the StaticBackend API resource
+	URI string `json:"uri,omitempty"`
+	// timestamp when the backend was created, RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// human-readable description of this backend. Optional
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this backend. Optional
+	Metadata string `json:"metadata,omitempty"`
+	// the address to forward to
+	Address string `json:"address,omitempty"`
+	// tls configuration to use
+	TLS StaticBackendTLS `json:"tls,omitempty"`
+}
+
+func (x *StaticBackend) String() string {
+	return fmt.Sprintf("StaticBackend{ID: %v}", x.ID)
+
+}
+
+func (x *StaticBackend) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "StaticBackend {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tAddress\t%v\n", x.Address)
+	fmt.Fprintf(tw, "\tTLS\t%v\n", x.TLS)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type StaticBackendTLS struct {
+	// if TLS is checked
+	Enabled bool `json:"enabled,omitempty"`
+}
+
+func (x *StaticBackendTLS) String() string {
+	return x.GoString()
+}
+
+func (x *StaticBackendTLS) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "StaticBackendTLS {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type StaticBackendCreate struct {
+	// human-readable description of this backend. Optional
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this backend. Optional
+	Metadata string `json:"metadata,omitempty"`
+	// the address to forward to
+	Address string `json:"address,omitempty"`
+	// tls configuration to use
+	TLS StaticBackendTLS `json:"tls,omitempty"`
+}
+
+func (x *StaticBackendCreate) String() string {
+	return x.GoString()
+}
+
+func (x *StaticBackendCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "StaticBackendCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tAddress\t%v\n", x.Address)
+	fmt.Fprintf(tw, "\tTLS\t%v\n", x.TLS)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type StaticBackendUpdate struct {
+	ID string `json:"id,omitempty"`
+	// human-readable description of this backend. Optional
+	Description *string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this backend. Optional
+	Metadata *string `json:"metadata,omitempty"`
+	// the address to forward to
+	Address string `json:"address,omitempty"`
+	// tls configuration to use
+	TLS StaticBackendTLS `json:"tls,omitempty"`
+}
+
+func (x *StaticBackendUpdate) String() string {
+	return fmt.Sprintf("StaticBackendUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *StaticBackendUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "StaticBackendUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tAddress\t%v\n", x.Address)
+	fmt.Fprintf(tw, "\tTLS\t%v\n", x.TLS)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type StaticBackendList struct {
+	// the list of all static backends on this account
+	Backends []StaticBackend `json:"backends,omitempty"`
+	// URI of the static backends list API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *StaticBackendList) String() string {
+	return x.GoString()
+}
+
+func (x *StaticBackendList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "StaticBackendList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tBackends\t%v\n", x.Backends)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type TunnelGroupBackend struct {
 	// unique identifier for this TunnelGroup backend
 	ID string `json:"id,omitempty"`
