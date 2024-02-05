@@ -1,4 +1,10 @@
 <!-- Code generated for API Clients. DO NOT EDIT. -->
+## v5.2.0
+
+ENHANCEMENTS:
+
+* Added support for the Traffic Policy module on TCP edges, TLS edges, and HTTPS edge routes. A Traffic Policy allows traffic to and from your edges to be shaped and influenced by defining rules that contain expression to filter the traffic and actions to take effect.
+* Added `static_backend` resource, which defines a static address at which traffic should be forwarded.
 
 ## v5.1.0
 
