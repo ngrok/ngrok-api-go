@@ -1,10 +1,17 @@
 <!-- Code generated for API Clients. DO NOT EDIT. -->
-## v5.2.0
+## v5.3.0
 
 ENHANCEMENTS:
 
 * Added support for the Traffic Policy module on TCP edges, TLS edges, and HTTPS edge routes. A Traffic Policy allows traffic to and from your edges to be shaped and influenced by defining rules that contain expression to filter the traffic and actions to take effect.
 * Added `static_backend` resource, which defines a static address at which traffic should be forwarded.
+
+## v5.2.0
+
+ENHANCEMENTS:
+
+* Added support for the User Agent Filter module on HTTPS edge routes. The User Agent Filter module enables you to block bots, crawlers, or certain browsers from accessing your web application. It allows or denies traffic based on the User-Agent header of incoming HTTP requests.
+* Added support for the JWT Validation module on HTTPS edge routes. The JWT Validation module allows or denies traffic based on validation of the JSON Web Token (JWT) provided within the request that was initiated to your ngrok endpoints.
 
 ## v5.1.0
 
