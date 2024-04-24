@@ -1,4 +1,10 @@
 <!-- Code generated for API Clients. DO NOT EDIT. -->
+## v5.3.1
+
+INTERNAL:
+
+* Moved location of BaseClient
+
 ## v5.3.0
 
 ENHANCEMENTS:
