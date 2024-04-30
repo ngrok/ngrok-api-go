@@ -1497,6 +1497,110 @@ func (x *WeightedBackendList) GoString() string {
 	return b.String()
 }
 
+type BotUser struct {
+	// unique API key resource identifier
+	ID string `json:"id,omitempty"`
+	// URI to the API resource of this bot user
+	URI string `json:"uri,omitempty"`
+	// human-readable name used to identify the bot
+	Name string `json:"name,omitempty"`
+	// whether or not the bot is active
+	Active bool `json:"active,omitempty"`
+	// timestamp when the api key was created, RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+}
+
+func (x *BotUser) String() string {
+	return fmt.Sprintf("BotUser{ID: %v}", x.ID)
+
+}
+
+func (x *BotUser) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "BotUser {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tActive\t%v\n", x.Active)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type BotUserCreate struct {
+	// human-readable name used to identify the bot
+	Name string `json:"name,omitempty"`
+	// whether or not the bot is active
+	Active *bool `json:"active,omitempty"`
+}
+
+func (x *BotUserCreate) String() string {
+	return x.GoString()
+}
+
+func (x *BotUserCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "BotUserCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tActive\t%v\n", x.Active)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type BotUserUpdate struct {
+	ID string `json:"id,omitempty"`
+	// human-readable name used to identify the bot
+	Name *string `json:"name,omitempty"`
+	// whether or not the bot is active
+	Active *bool `json:"active,omitempty"`
+}
+
+func (x *BotUserUpdate) String() string {
+	return fmt.Sprintf("BotUserUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *BotUserUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "BotUserUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tActive\t%v\n", x.Active)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type BotUserList struct {
+	// the list of all bot users on this account
+	BotUsers []BotUser `json:"bot_users,omitempty"`
+	// URI of the bot users list API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *BotUserList) String() string {
+	return x.GoString()
+}
+
+func (x *BotUserList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "BotUserList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tBotUsers\t%v\n", x.BotUsers)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type CertificateAuthorityCreate struct {
 	// human-readable description of this Certificate Authority. optional, max 255
 	// bytes.

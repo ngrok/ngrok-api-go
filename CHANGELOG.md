@@ -1,4 +1,10 @@
 <!-- Code generated for API Clients. DO NOT EDIT. -->
+## v5.4.0
+
+ENHANCEMENTS:
+
+* Added support for the Bot User API. The Bot User API allows you to manage the bots that are registered to your ngrok account. You can automate the creation, management, and deletion of bot users in your account.
+
 ## v5.3.1
 
 INTERNAL:
