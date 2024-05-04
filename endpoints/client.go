@@ -27,62 +27,39 @@ func NewClient(cfg *ngrok.ClientConfig) *Client {
 // List all active endpoints on the account
 //
 // https://ngrok.com/docs/api#api-endpoints-list
-func (c *Client) list(ctx context.Context, arg *ngrok.Paging) (*ngrok.EndpointList, error) {
-	if arg == nil {
-		arg = new(ngrok.Paging)
-	}
-	var res ngrok.EndpointList
-	var path bytes.Buffer
-	if err := template.Must(template.New("list_path").Parse("/endpoints")).Execute(&path, arg); err != nil {
-		panic(err)
-	}
-	var (
-		apiURL  = &url.URL{Path: path.String()}
-		bodyArg interface{}
-	)
-	apiURL.Path = path.String()
-	queryVals := make(url.Values)
-	if arg.BeforeID != nil {
-		queryVals.Set("before_id", *arg.BeforeID)
-	}
-	if arg.Limit != nil {
-		queryVals.Set("limit", *arg.Limit)
-	}
-	apiURL.RawQuery = queryVals.Encode()
-
-	if err := c.apiClient.Do(ctx, "GET", apiURL, bodyArg, &res); err != nil {
-		return nil, err
-	}
-	return &res, nil
-}
-
-// List all active endpoints on the account
-//
-// https://ngrok.com/docs/api#api-endpoints-list
 func (c *Client) List(paging *ngrok.Paging) *Iter {
 	if paging == nil {
 		paging = new(ngrok.Paging)
 	}
-	if paging.Limit == nil {
-		paging.Limit = ngrok.String("100")
+	var path bytes.Buffer
+	if err := template.Must(template.New("list_path").Parse("/endpoints")).Execute(&path, paging); err != nil {
+		panic(err)
 	}
+	var apiURL = &url.URL{Path: path.String()}
+	queryVals := make(url.Values)
+	if paging.BeforeID != nil {
+		queryVals.Set("before_id", *paging.BeforeID)
+	}
+	if paging.Limit != nil {
+		queryVals.Set("limit", *paging.Limit)
+	}
+	apiURL.RawQuery = queryVals.Encode()
 	return &Iter{
-		client:     c,
-		limit:      paging.Limit,
-		lastItemID: paging.BeforeID,
-		n:          -1,
+		client:   c,
+		n:        -1,
+		nextPage: apiURL,
 	}
 }
 
 // Iter allows the caller to iterate through a list of values while
 // automatically fetching new pages worth of values from the API.
 type Iter struct {
-	client     *Client
-	n          int
-	items      []ngrok.Endpoint
-	err        error
-	limit      *string
-	lastItemID *string
+	client *Client
+	n      int
+	items  []ngrok.Endpoint
+	err    error
+
+	nextPage *url.URL
 }
 
 // Next returns true if there is another value available in the iterator. If it
@@ -98,18 +75,31 @@ func (it *Iter) Next(ctx context.Context) bool {
 
 	// is there an available item?
 	if it.n < len(it.items) {
-		it.lastItemID = ngrok.String(it.Item().ID)
 		return true
 	}
 
+	// no more items, do we have a next page?
+	if it.nextPage == nil {
+		return false
+	}
+
 	// fetch the next page
-	resp, err := it.client.list(ctx, &ngrok.Paging{
-		BeforeID: it.lastItemID,
-		Limit:    it.limit,
-	})
+	var resp ngrok.EndpointList
+	err := it.client.apiClient.Do(ctx, "GET", it.nextPage, nil, &resp)
 	if err != nil {
 		it.err = err
 		return false
+	}
+
+	// parse the next page URI as soon as we get it and store it
+	// so we can use it on the next fetch
+	if resp.NextPageURI != nil {
+		it.nextPage, it.err = url.Parse(*resp.NextPageURI)
+		if it.err != nil {
+			return false
+		}
+	} else {
+		it.nextPage = nil
 	}
 
 	// page with zero items means there are no more
