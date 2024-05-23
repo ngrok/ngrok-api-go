@@ -1,4 +1,11 @@
 <!-- Code generated for API Clients. DO NOT EDIT. -->
+
+## v5.4.1
+
+FIXES:
+
+* Fixed an issue with pagination for some resources, like `reserved_addrs`, by using the `next_page_uri` returned in the response instead of the id of the last resource.
+
 ## v5.4.0
 
 ENHANCEMENTS:
