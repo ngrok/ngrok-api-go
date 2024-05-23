@@ -13,11 +13,13 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+var mocksEnabled = os.Getenv("TEST_NO_MOCK") != "true"
+
 func TestIPPolicy(t *testing.T) {
 	var opts []ngrok.ClientConfigOption
 
 	var mock mockTransport
-	if os.Getenv("TEST_NO_MOCK") != "true" {
+	if mocksEnabled {
 		opts = append(opts, ngrok.WithHTTPClient(&http.Client{
 			Transport: &mock,
 		}))
@@ -65,7 +67,6 @@ func TestIPPolicy(t *testing.T) {
 	require.Equal(t, updatedInstance, getAfterUpdateInstance)
 
 	mock.SetResponse(200, `{"ip_policies":[{"id":"ipp_1sbMfZquosZtu5mZPgA91UDFaDC","uri":"https://api.ngrok.com/ip_policies/ipp_1sbMfZquosZtu5mZPgA91UDFaDC","created_at":"2021-05-16T03:48:59Z","description":"ngrok-api-go tests","metadata":"{\"device-id\": \"malamute-12\"}"},{"id":"ipp_1qXI4T0q6cgkoOVvqSEjU7LiWIr","uri":"https://api.ngrok.com/ip_policies/ipp_1qXI4T0q6cgkoOVvqSEjU7LiWIr","created_at":"2021-03-31T19:35:16Z","description":"martin demo","metadata":""}],"uri":"https://api.ngrok.com/ip_policies","next_page_uri":null}`)
-	mock.SetResponse(200, `{"ip_policies":[],"uri":"https://api.ngrok.com/ip_policies","next_page_uri":null}`)
 	iter := policies.List(nil)
 	var iterPolicies []*ngrok.IPPolicy
 	for iter.Next(ctx) {
@@ -83,4 +84,30 @@ func TestIPPolicy(t *testing.T) {
 	mock.SetResponse(404, `{"status_code":404,"msg":"Resource not found","details":{"operation_id":"op_1sbMfWvXaRA26gTJoBPIgyPD8MF"}}`)
 	_, err = policies.Get(ctx, createInstance.ID)
 	require.True(t, ngrok.IsNotFound(err))
+}
+
+func TestIPPoliciesListMultiplePages(t *testing.T) {
+	if !mocksEnabled {
+		t.Skip("skipping test in live mode")
+	}
+
+	var opts []ngrok.ClientConfigOption
+	var mock mockTransport
+	opts = append(opts, ngrok.WithHTTPClient(&http.Client{
+		Transport: &mock,
+	}))
+
+	ctx := context.Background()
+	clientConfig := ngrok.NewClientConfig(os.Getenv("NGROK_API_KEY"), opts...)
+	policies := ip_policies.NewClient(clientConfig)
+
+	mock.SetResponse(200, `{"ip_policies":[{"id":"ipp_1sbMfZquosZtu5mZPgA91UDFaDC","uri":"https://api.ngrok.com/ip_policies/ipp_1sbMfZquosZtu5mZPgA91UDFaDC","created_at":"2021-05-16T03:48:59Z","description":"ngrok-api-go tests","metadata":"{\"device-id\": \"malamute-12\"}"},{"id":"ipp_1qXI4T0q6cgkoOVvqSEjU7LiWIr","uri":"https://api.ngrok.com/ip_policies/ipp_1qXI4T0q6cgkoOVvqSEjU7LiWIr","created_at":"2021-03-31T19:35:16Z","description":"martin demo","metadata":""}],"uri":"https://api.ngrok.com/ip_policies","next_page_uri":"https://api.ngrok.com/ip_policies?limit=2&before_id=ipp_1qXI4T0q6cgkoOVvqSEjU7LiWIr"}`)
+	mock.SetResponse(200, `{"ip_policies":[{"id":"ipp_1sbMfZquosZtu5mZPgA91UDFaDD","uri":"https://api.ngrok.com/ip_policies/ipp_1sbMfZquosZtu5mZPgA91UDFaDD","created_at":"2021-05-16T03:48:59Z","description":"ngrok-api-go tests 2","metadata":"{\"device-id\": \"malamute-12\"}"}],"uri":"https://api.ngrok.com/ip_policies","next_page_uri":null}`)
+	iter := policies.List(nil)
+	var iterPolicies []*ngrok.IPPolicy
+	for iter.Next(ctx) {
+		iterPolicies = append(iterPolicies, iter.Item())
+	}
+	require.NoError(t, iter.Err())
+	require.Len(t, iterPolicies, 3)
 }
