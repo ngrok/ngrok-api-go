@@ -1,6 +1,6 @@
 // Code generated for API Clients. DO NOT EDIT.
 
-package tcp_edge_policy
+package tls_edge_traffic_policy
 
 import (
 	"bytes"
@@ -20,13 +20,13 @@ func NewClient(cfg *ngrok.ClientConfig) *Client {
 	return &Client{apiClient: api.NewClient(cfg)}
 }
 
-func (c *Client) Replace(ctx context.Context, arg *ngrok.EdgePolicyReplace) (*ngrok.EndpointPolicy, error) {
+func (c *Client) Replace(ctx context.Context, arg *ngrok.EdgeTrafficPolicyReplace) (*ngrok.EndpointTrafficPolicy, error) {
 	if arg == nil {
-		arg = new(ngrok.EdgePolicyReplace)
+		arg = new(ngrok.EdgeTrafficPolicyReplace)
 	}
-	var res ngrok.EndpointPolicy
+	var res ngrok.EndpointTrafficPolicy
 	var path bytes.Buffer
-	if err := template.Must(template.New("replace_path").Parse("/edges/tcp/{{ .ID }}/policy")).Execute(&path, arg); err != nil {
+	if err := template.Must(template.New("replace_path").Parse("/edges/tls/{{ .ID }}/traffic_policy")).Execute(&path, arg); err != nil {
 		panic(err)
 	}
 	arg.ID = ""
@@ -43,12 +43,12 @@ func (c *Client) Replace(ctx context.Context, arg *ngrok.EdgePolicyReplace) (*ng
 	return &res, nil
 }
 
-func (c *Client) Get(ctx context.Context, id string) (*ngrok.EndpointPolicy, error) {
+func (c *Client) Get(ctx context.Context, id string) (*ngrok.EndpointTrafficPolicy, error) {
 	arg := &ngrok.Item{ID: id}
 
-	var res ngrok.EndpointPolicy
+	var res ngrok.EndpointTrafficPolicy
 	var path bytes.Buffer
-	if err := template.Must(template.New("get_path").Parse("/edges/tcp/{{ .ID }}/policy")).Execute(&path, arg); err != nil {
+	if err := template.Must(template.New("get_path").Parse("/edges/tls/{{ .ID }}/traffic_policy")).Execute(&path, arg); err != nil {
 		panic(err)
 	}
 	arg.ID = ""
@@ -68,7 +68,7 @@ func (c *Client) Delete(ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
-	if err := template.Must(template.New("delete_path").Parse("/edges/tcp/{{ .ID }}/policy")).Execute(&path, arg); err != nil {
+	if err := template.Must(template.New("delete_path").Parse("/edges/tls/{{ .ID }}/traffic_policy")).Execute(&path, arg); err != nil {
 		panic(err)
 	}
 	arg.ID = ""

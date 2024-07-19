@@ -2848,74 +2848,24 @@ func (x *EndpointUserAgentFilter) GoString() string {
 	return b.String()
 }
 
-type EndpointPolicy struct {
+type EndpointTrafficPolicy struct {
 	// true if the module will be applied to traffic, false to disable. default true if
 	// unspecified
 	Enabled *bool `json:"enabled,omitempty"`
-	// the inbound rules of the traffic policy.
-	Inbound []EndpointRule `json:"inbound,omitempty"`
-	// the outbound rules on the traffic policy.
-	Outbound []EndpointRule `json:"outbound,omitempty"`
+	// the traffic policy that should be applied to the traffic on your endpoint.
+	Value any `json:"value,omitempty"`
 }
 
-func (x *EndpointPolicy) String() string {
+func (x *EndpointTrafficPolicy) String() string {
 	return x.GoString()
 }
 
-func (x *EndpointPolicy) GoString() string {
+func (x *EndpointTrafficPolicy) GoString() string {
 	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointPolicy {\n")
+	fmt.Fprintf(&b, "EndpointTrafficPolicy {\n")
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
 	fmt.Fprintf(tw, "\tEnabled\t%v\n", x.Enabled)
-	fmt.Fprintf(tw, "\tInbound\t%v\n", x.Inbound)
-	fmt.Fprintf(tw, "\tOutbound\t%v\n", x.Outbound)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointRule struct {
-	// cel expressions that filter traffic the policy rule applies to.
-	Expressions []string `json:"expressions,omitempty"`
-	// the set of actions on a policy rule.
-	Actions []EndpointAction `json:"actions,omitempty"`
-	// the name of the rule that is part of the traffic policy.
-	Name string `json:"name,omitempty"`
-}
-
-func (x *EndpointRule) String() string {
-	return x.GoString()
-}
-
-func (x *EndpointRule) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointRule {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tExpressions\t%v\n", x.Expressions)
-	fmt.Fprintf(tw, "\tActions\t%v\n", x.Actions)
-	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
-	tw.Flush()
-	fmt.Fprintf(&b, "}\n")
-	return b.String()
-}
-
-type EndpointAction struct {
-	// the type of action on the policy rule.
-	Type string `json:"type,omitempty"`
-	// the configuration for the action on the policy rule.
-	Config any `json:"config,omitempty"`
-}
-
-func (x *EndpointAction) String() string {
-	return x.GoString()
-}
-
-func (x *EndpointAction) GoString() string {
-	var b bytes.Buffer
-	fmt.Fprintf(&b, "EndpointAction {\n")
-	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
-	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
-	fmt.Fprintf(tw, "\tConfig\t%v\n", x.Config)
+	fmt.Fprintf(tw, "\tValue\t%v\n", x.Value)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -2982,7 +2932,7 @@ type HTTPSEdgeRouteCreate struct {
 	WebsocketTCPConverter *EndpointWebsocketTCPConverter `json:"websocket_tcp_converter,omitempty"`
 	UserAgentFilter       *EndpointUserAgentFilter       `json:"user_agent_filter,omitempty"`
 	// the traffic policy associated with this edge or null
-	Policy *EndpointPolicy `json:"policy,omitempty"`
+	TrafficPolicy *EndpointTrafficPolicy `json:"traffic_policy,omitempty"`
 }
 
 func (x *HTTPSEdgeRouteCreate) String() string {
@@ -3010,7 +2960,7 @@ func (x *HTTPSEdgeRouteCreate) GoString() string {
 	fmt.Fprintf(tw, "\tOIDC\t%v\n", x.OIDC)
 	fmt.Fprintf(tw, "\tWebsocketTCPConverter\t%v\n", x.WebsocketTCPConverter)
 	fmt.Fprintf(tw, "\tUserAgentFilter\t%v\n", x.UserAgentFilter)
-	fmt.Fprintf(tw, "\tPolicy\t%v\n", x.Policy)
+	fmt.Fprintf(tw, "\tTrafficPolicy\t%v\n", x.TrafficPolicy)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -3056,7 +3006,7 @@ type HTTPSEdgeRouteUpdate struct {
 	WebsocketTCPConverter *EndpointWebsocketTCPConverter `json:"websocket_tcp_converter,omitempty"`
 	UserAgentFilter       *EndpointUserAgentFilter       `json:"user_agent_filter,omitempty"`
 	// the traffic policy associated with this edge or null
-	Policy *EndpointPolicy `json:"policy,omitempty"`
+	TrafficPolicy *EndpointTrafficPolicy `json:"traffic_policy,omitempty"`
 }
 
 func (x *HTTPSEdgeRouteUpdate) String() string {
@@ -3086,7 +3036,7 @@ func (x *HTTPSEdgeRouteUpdate) GoString() string {
 	fmt.Fprintf(tw, "\tOIDC\t%v\n", x.OIDC)
 	fmt.Fprintf(tw, "\tWebsocketTCPConverter\t%v\n", x.WebsocketTCPConverter)
 	fmt.Fprintf(tw, "\tUserAgentFilter\t%v\n", x.UserAgentFilter)
-	fmt.Fprintf(tw, "\tPolicy\t%v\n", x.Policy)
+	fmt.Fprintf(tw, "\tTrafficPolicy\t%v\n", x.TrafficPolicy)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -3136,7 +3086,7 @@ type HTTPSEdgeRoute struct {
 	WebsocketTCPConverter *EndpointWebsocketTCPConverter `json:"websocket_tcp_converter,omitempty"`
 	UserAgentFilter       *EndpointUserAgentFilter       `json:"user_agent_filter,omitempty"`
 	// the traffic policy associated with this edge or null
-	Policy *EndpointPolicy `json:"policy,omitempty"`
+	TrafficPolicy *EndpointTrafficPolicy `json:"traffic_policy,omitempty"`
 }
 
 func (x *HTTPSEdgeRoute) String() string {
@@ -3168,7 +3118,7 @@ func (x *HTTPSEdgeRoute) GoString() string {
 	fmt.Fprintf(tw, "\tOIDC\t%v\n", x.OIDC)
 	fmt.Fprintf(tw, "\tWebsocketTCPConverter\t%v\n", x.WebsocketTCPConverter)
 	fmt.Fprintf(tw, "\tUserAgentFilter\t%v\n", x.UserAgentFilter)
-	fmt.Fprintf(tw, "\tPolicy\t%v\n", x.Policy)
+	fmt.Fprintf(tw, "\tTrafficPolicy\t%v\n", x.TrafficPolicy)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -3417,19 +3367,19 @@ func (x *EdgeTLSTerminationAtEdgeReplace) GoString() string {
 	return b.String()
 }
 
-type EdgePolicyReplace struct {
-	ID     string         `json:"id,omitempty"`
-	Module EndpointPolicy `json:"module,omitempty"`
+type EdgeTrafficPolicyReplace struct {
+	ID     string                `json:"id,omitempty"`
+	Module EndpointTrafficPolicy `json:"module,omitempty"`
 }
 
-func (x *EdgePolicyReplace) String() string {
-	return fmt.Sprintf("EdgePolicyReplace{ID: %v}", x.ID)
+func (x *EdgeTrafficPolicyReplace) String() string {
+	return fmt.Sprintf("EdgeTrafficPolicyReplace{ID: %v}", x.ID)
 
 }
 
-func (x *EdgePolicyReplace) GoString() string {
+func (x *EdgeTrafficPolicyReplace) GoString() string {
 	var b bytes.Buffer
-	fmt.Fprintf(&b, "EdgePolicyReplace {\n")
+	fmt.Fprintf(&b, "EdgeTrafficPolicyReplace {\n")
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
 	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
 	fmt.Fprintf(tw, "\tModule\t%v\n", x.Module)
@@ -3714,20 +3664,20 @@ func (x *EdgeRouteUserAgentFilterReplace) GoString() string {
 	return b.String()
 }
 
-type EdgeRoutePolicyReplace struct {
-	EdgeID string         `json:"edge_id,omitempty"`
-	ID     string         `json:"id,omitempty"`
-	Module EndpointPolicy `json:"module,omitempty"`
+type EdgeRouteTrafficPolicyReplace struct {
+	EdgeID string                `json:"edge_id,omitempty"`
+	ID     string                `json:"id,omitempty"`
+	Module EndpointTrafficPolicy `json:"module,omitempty"`
 }
 
-func (x *EdgeRoutePolicyReplace) String() string {
-	return fmt.Sprintf("EdgeRoutePolicyReplace{ID: %v}", x.ID)
+func (x *EdgeRouteTrafficPolicyReplace) String() string {
+	return fmt.Sprintf("EdgeRouteTrafficPolicyReplace{ID: %v}", x.ID)
 
 }
 
-func (x *EdgeRoutePolicyReplace) GoString() string {
+func (x *EdgeRouteTrafficPolicyReplace) GoString() string {
 	var b bytes.Buffer
-	fmt.Fprintf(&b, "EdgeRoutePolicyReplace {\n")
+	fmt.Fprintf(&b, "EdgeRouteTrafficPolicyReplace {\n")
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
 	fmt.Fprintf(tw, "\tEdgeID\t%v\n", x.EdgeID)
 	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
@@ -3775,7 +3725,7 @@ type TCPEdgeCreate struct {
 	Backend       *EndpointBackendMutate  `json:"backend,omitempty"`
 	IPRestriction *EndpointIPPolicyMutate `json:"ip_restriction,omitempty"`
 	// the traffic policy associated with this edge or null
-	Policy *EndpointPolicy `json:"policy,omitempty"`
+	TrafficPolicy *EndpointTrafficPolicy `json:"traffic_policy,omitempty"`
 }
 
 func (x *TCPEdgeCreate) String() string {
@@ -3791,7 +3741,7 @@ func (x *TCPEdgeCreate) GoString() string {
 	fmt.Fprintf(tw, "\tHostports\t%v\n", x.Hostports)
 	fmt.Fprintf(tw, "\tBackend\t%v\n", x.Backend)
 	fmt.Fprintf(tw, "\tIPRestriction\t%v\n", x.IPRestriction)
-	fmt.Fprintf(tw, "\tPolicy\t%v\n", x.Policy)
+	fmt.Fprintf(tw, "\tTrafficPolicy\t%v\n", x.TrafficPolicy)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -3812,7 +3762,7 @@ type TCPEdgeUpdate struct {
 	Backend       *EndpointBackendMutate  `json:"backend,omitempty"`
 	IPRestriction *EndpointIPPolicyMutate `json:"ip_restriction,omitempty"`
 	// the traffic policy associated with this edge or null
-	Policy *EndpointPolicy `json:"policy,omitempty"`
+	TrafficPolicy *EndpointTrafficPolicy `json:"traffic_policy,omitempty"`
 }
 
 func (x *TCPEdgeUpdate) String() string {
@@ -3830,7 +3780,7 @@ func (x *TCPEdgeUpdate) GoString() string {
 	fmt.Fprintf(tw, "\tHostports\t%v\n", x.Hostports)
 	fmt.Fprintf(tw, "\tBackend\t%v\n", x.Backend)
 	fmt.Fprintf(tw, "\tIPRestriction\t%v\n", x.IPRestriction)
-	fmt.Fprintf(tw, "\tPolicy\t%v\n", x.Policy)
+	fmt.Fprintf(tw, "\tTrafficPolicy\t%v\n", x.TrafficPolicy)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -3855,7 +3805,7 @@ type TCPEdge struct {
 	Backend       *EndpointBackend  `json:"backend,omitempty"`
 	IpRestriction *EndpointIPPolicy `json:"ip_restriction,omitempty"`
 	// the traffic policy associated with this edge or null
-	Policy *EndpointPolicy `json:"policy,omitempty"`
+	TrafficPolicy *EndpointTrafficPolicy `json:"traffic_policy,omitempty"`
 }
 
 func (x *TCPEdge) String() string {
@@ -3875,7 +3825,7 @@ func (x *TCPEdge) GoString() string {
 	fmt.Fprintf(tw, "\tHostports\t%v\n", x.Hostports)
 	fmt.Fprintf(tw, "\tBackend\t%v\n", x.Backend)
 	fmt.Fprintf(tw, "\tIpRestriction\t%v\n", x.IpRestriction)
-	fmt.Fprintf(tw, "\tPolicy\t%v\n", x.Policy)
+	fmt.Fprintf(tw, "\tTrafficPolicy\t%v\n", x.TrafficPolicy)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -3921,7 +3871,7 @@ type TLSEdgeCreate struct {
 	MutualTLS      *EndpointMutualTLSMutate `json:"mutual_tls,omitempty"`
 	TLSTermination *EndpointTLSTermination  `json:"tls_termination,omitempty"`
 	// the traffic policy associated with this edge or null
-	Policy *EndpointPolicy `json:"policy,omitempty"`
+	TrafficPolicy *EndpointTrafficPolicy `json:"traffic_policy,omitempty"`
 }
 
 func (x *TLSEdgeCreate) String() string {
@@ -3939,7 +3889,7 @@ func (x *TLSEdgeCreate) GoString() string {
 	fmt.Fprintf(tw, "\tIPRestriction\t%v\n", x.IPRestriction)
 	fmt.Fprintf(tw, "\tMutualTLS\t%v\n", x.MutualTLS)
 	fmt.Fprintf(tw, "\tTLSTermination\t%v\n", x.TLSTermination)
-	fmt.Fprintf(tw, "\tPolicy\t%v\n", x.Policy)
+	fmt.Fprintf(tw, "\tTrafficPolicy\t%v\n", x.TrafficPolicy)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -3962,7 +3912,7 @@ type TLSEdgeUpdate struct {
 	MutualTLS      *EndpointMutualTLSMutate `json:"mutual_tls,omitempty"`
 	TLSTermination *EndpointTLSTermination  `json:"tls_termination,omitempty"`
 	// the traffic policy associated with this edge or null
-	Policy *EndpointPolicy `json:"policy,omitempty"`
+	TrafficPolicy *EndpointTrafficPolicy `json:"traffic_policy,omitempty"`
 }
 
 func (x *TLSEdgeUpdate) String() string {
@@ -3982,7 +3932,7 @@ func (x *TLSEdgeUpdate) GoString() string {
 	fmt.Fprintf(tw, "\tIPRestriction\t%v\n", x.IPRestriction)
 	fmt.Fprintf(tw, "\tMutualTLS\t%v\n", x.MutualTLS)
 	fmt.Fprintf(tw, "\tTLSTermination\t%v\n", x.TLSTermination)
-	fmt.Fprintf(tw, "\tPolicy\t%v\n", x.Policy)
+	fmt.Fprintf(tw, "\tTrafficPolicy\t%v\n", x.TrafficPolicy)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -4009,7 +3959,7 @@ type TLSEdge struct {
 	MutualTls      *EndpointMutualTLS      `json:"mutual_tls,omitempty"`
 	TlsTermination *EndpointTLSTermination `json:"tls_termination,omitempty"`
 	// the traffic policy associated with this edge or null
-	Policy *EndpointPolicy `json:"policy,omitempty"`
+	TrafficPolicy *EndpointTrafficPolicy `json:"traffic_policy,omitempty"`
 }
 
 func (x *TLSEdge) String() string {
@@ -4031,7 +3981,7 @@ func (x *TLSEdge) GoString() string {
 	fmt.Fprintf(tw, "\tIpRestriction\t%v\n", x.IpRestriction)
 	fmt.Fprintf(tw, "\tMutualTls\t%v\n", x.MutualTls)
 	fmt.Fprintf(tw, "\tTlsTermination\t%v\n", x.TlsTermination)
-	fmt.Fprintf(tw, "\tPolicy\t%v\n", x.Policy)
+	fmt.Fprintf(tw, "\tTrafficPolicy\t%v\n", x.TrafficPolicy)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -4262,7 +4212,8 @@ type EventTarget struct {
 	// Configuration used to send events to Amazon CloudWatch Logs.
 	CloudwatchLogs *EventTargetCloudwatchLogs `json:"cloudwatch_logs,omitempty"`
 	// Configuration used to send events to Datadog.
-	Datadog *EventTargetDatadog `json:"datadog,omitempty"`
+	Datadog            *EventTargetDatadog            `json:"datadog,omitempty"`
+	AzureLogsIngestion *EventTargetAzureLogsIngestion `json:"azure_logs_ingestion,omitempty"`
 }
 
 func (x *EventTarget) String() string {
@@ -4277,6 +4228,7 @@ func (x *EventTarget) GoString() string {
 	fmt.Fprintf(tw, "\tKinesis\t%v\n", x.Kinesis)
 	fmt.Fprintf(tw, "\tCloudwatchLogs\t%v\n", x.CloudwatchLogs)
 	fmt.Fprintf(tw, "\tDatadog\t%v\n", x.Datadog)
+	fmt.Fprintf(tw, "\tAzureLogsIngestion\t%v\n", x.AzureLogsIngestion)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -4376,6 +4328,40 @@ func (x *EventTargetDatadog) GoString() string {
 	fmt.Fprintf(tw, "\tDdtags\t%v\n", x.Ddtags)
 	fmt.Fprintf(tw, "\tService\t%v\n", x.Service)
 	fmt.Fprintf(tw, "\tDdsite\t%v\n", x.Ddsite)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EventTargetAzureLogsIngestion struct {
+	// Tenant ID for the Azure account
+	TenantId string `json:"tenant_id,omitempty"`
+	// Client ID for the application client
+	ClientId string `json:"client_id,omitempty"`
+	// Client Secret for the application client
+	ClientSecret string `json:"client_secret,omitempty"`
+	// Data collection endpoint logs ingestion URI
+	LogsIngestionURI string `json:"logs_ingestion_uri,omitempty"`
+	// Data collection rule immutable ID
+	DataCollectionRuleId string `json:"data_collection_rule_id,omitempty"`
+	// Data collection stream name to use as destination, located instide the DCR
+	DataCollectionStreamName string `json:"data_collection_stream_name,omitempty"`
+}
+
+func (x *EventTargetAzureLogsIngestion) String() string {
+	return x.GoString()
+}
+
+func (x *EventTargetAzureLogsIngestion) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EventTargetAzureLogsIngestion {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tTenantId\t%v\n", x.TenantId)
+	fmt.Fprintf(tw, "\tClientId\t%v\n", x.ClientId)
+	fmt.Fprintf(tw, "\tClientSecret\t%v\n", x.ClientSecret)
+	fmt.Fprintf(tw, "\tLogsIngestionURI\t%v\n", x.LogsIngestionURI)
+	fmt.Fprintf(tw, "\tDataCollectionRuleId\t%v\n", x.DataCollectionRuleId)
+	fmt.Fprintf(tw, "\tDataCollectionStreamName\t%v\n", x.DataCollectionStreamName)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
