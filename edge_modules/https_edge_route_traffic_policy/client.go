@@ -1,6 +1,6 @@
 // Code generated for API Clients. DO NOT EDIT.
 
-package https_edge_route_policy
+package https_edge_route_traffic_policy
 
 import (
 	"bytes"
@@ -20,13 +20,13 @@ func NewClient(cfg *ngrok.ClientConfig) *Client {
 	return &Client{apiClient: api.NewClient(cfg)}
 }
 
-func (c *Client) Replace(ctx context.Context, arg *ngrok.EdgeRoutePolicyReplace) (*ngrok.EndpointPolicy, error) {
+func (c *Client) Replace(ctx context.Context, arg *ngrok.EdgeRouteTrafficPolicyReplace) (*ngrok.EndpointTrafficPolicy, error) {
 	if arg == nil {
-		arg = new(ngrok.EdgeRoutePolicyReplace)
+		arg = new(ngrok.EdgeRouteTrafficPolicyReplace)
 	}
-	var res ngrok.EndpointPolicy
+	var res ngrok.EndpointTrafficPolicy
 	var path bytes.Buffer
-	if err := template.Must(template.New("replace_path").Parse("/edges/https/{{ .EdgeID }}/routes/{{ .ID }}/policy")).Execute(&path, arg); err != nil {
+	if err := template.Must(template.New("replace_path").Parse("/edges/https/{{ .EdgeID }}/routes/{{ .ID }}/traffic_policy")).Execute(&path, arg); err != nil {
 		panic(err)
 	}
 	arg.EdgeID = ""
@@ -44,13 +44,13 @@ func (c *Client) Replace(ctx context.Context, arg *ngrok.EdgeRoutePolicyReplace)
 	return &res, nil
 }
 
-func (c *Client) Get(ctx context.Context, arg *ngrok.EdgeRouteItem) (*ngrok.EndpointPolicy, error) {
+func (c *Client) Get(ctx context.Context, arg *ngrok.EdgeRouteItem) (*ngrok.EndpointTrafficPolicy, error) {
 	if arg == nil {
 		arg = new(ngrok.EdgeRouteItem)
 	}
-	var res ngrok.EndpointPolicy
+	var res ngrok.EndpointTrafficPolicy
 	var path bytes.Buffer
-	if err := template.Must(template.New("get_path").Parse("/edges/https/{{ .EdgeID }}/routes/{{ .ID }}/policy")).Execute(&path, arg); err != nil {
+	if err := template.Must(template.New("get_path").Parse("/edges/https/{{ .EdgeID }}/routes/{{ .ID }}/traffic_policy")).Execute(&path, arg); err != nil {
 		panic(err)
 	}
 	arg.EdgeID = ""
@@ -72,7 +72,7 @@ func (c *Client) Delete(ctx context.Context, arg *ngrok.EdgeRouteItem) error {
 		arg = new(ngrok.EdgeRouteItem)
 	}
 	var path bytes.Buffer
-	if err := template.Must(template.New("delete_path").Parse("/edges/https/{{ .EdgeID }}/routes/{{ .ID }}/policy")).Execute(&path, arg); err != nil {
+	if err := template.Must(template.New("delete_path").Parse("/edges/https/{{ .EdgeID }}/routes/{{ .ID }}/traffic_policy")).Execute(&path, arg); err != nil {
 		panic(err)
 	}
 	arg.EdgeID = ""
