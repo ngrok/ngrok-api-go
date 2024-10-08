@@ -3999,14 +3999,19 @@ type Endpoint struct {
 	// URL of the hostport served by this endpoint
 	PublicURL string `json:"public_url,omitempty"`
 	// protocol served by this endpoint. one of http, https, tcp, or tls
-	Proto string `json:"proto,omitempty"`
-	// hostport served by this endpoint (hostname:port)
+	Proto  string `json:"proto,omitempty"`
+	Scheme string `json:"scheme,omitempty"`
+	// hostport served by this endpoint (hostname:port) -> soon to be deprecated
 	Hostport string `json:"hostport,omitempty"`
+	Host     string `json:"host,omitempty"`
+	Port     int64  `json:"port,omitempty"`
 	// whether the endpoint is ephemeral (served directly by an agent-initiated tunnel)
-	// or edge (served by an edge)
+	// or edge (served by an edge) or cloud (represents a cloud endpoint)
 	Type string `json:"type,omitempty"`
 	// user-supplied metadata of the associated tunnel or edge object
 	Metadata string `json:"metadata,omitempty"`
+	// user-supplied description of the associated tunnel
+	Description string `json:"description,omitempty"`
 	// the domain reserved for this endpoint
 	Domain *Ref `json:"domain,omitempty"`
 	// the address reserved for this endpoint
@@ -4015,6 +4020,22 @@ type Endpoint struct {
 	Tunnel *Ref `json:"tunnel,omitempty"`
 	// the edge serving requests to this endpoint, if this is an edge endpoint
 	Edge *Ref `json:"edge,omitempty"`
+	// the local address the tunnel forwards to
+	UpstreamURL string `json:"upstream_url,omitempty"`
+	// the protocol the agent uses to forward with
+	UpstreamProto string `json:"upstream_proto,omitempty"`
+	// the url of the endpoint
+	URL string `json:"url,omitempty"`
+	// The ID of the owner (bot or user) that owns this endpoint
+	PrincipalID *Ref `json:"principal_id,omitempty"`
+	// The traffic policy attached to this endpoint
+	TrafficPolicy string `json:"traffic_policy,omitempty"`
+	// the bindings associated with this endpoint
+	Bindings []string `json:"bindings,omitempty"`
+	// The tunnel session of the agent for this endpoint
+	TunnelSession *Ref `json:"tunnel_session,omitempty"`
+	// URI of the clep API resource
+	URI string `json:"uri,omitempty"`
 }
 
 func (x *Endpoint) String() string {
@@ -4032,13 +4053,25 @@ func (x *Endpoint) GoString() string {
 	fmt.Fprintf(tw, "\tUpdatedAt\t%v\n", x.UpdatedAt)
 	fmt.Fprintf(tw, "\tPublicURL\t%v\n", x.PublicURL)
 	fmt.Fprintf(tw, "\tProto\t%v\n", x.Proto)
+	fmt.Fprintf(tw, "\tScheme\t%v\n", x.Scheme)
 	fmt.Fprintf(tw, "\tHostport\t%v\n", x.Hostport)
+	fmt.Fprintf(tw, "\tHost\t%v\n", x.Host)
+	fmt.Fprintf(tw, "\tPort\t%v\n", x.Port)
 	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
 	fmt.Fprintf(tw, "\tDomain\t%v\n", x.Domain)
 	fmt.Fprintf(tw, "\tTCPAddr\t%v\n", x.TCPAddr)
 	fmt.Fprintf(tw, "\tTunnel\t%v\n", x.Tunnel)
 	fmt.Fprintf(tw, "\tEdge\t%v\n", x.Edge)
+	fmt.Fprintf(tw, "\tUpstreamURL\t%v\n", x.UpstreamURL)
+	fmt.Fprintf(tw, "\tUpstreamProto\t%v\n", x.UpstreamProto)
+	fmt.Fprintf(tw, "\tURL\t%v\n", x.URL)
+	fmt.Fprintf(tw, "\tPrincipalID\t%v\n", x.PrincipalID)
+	fmt.Fprintf(tw, "\tTrafficPolicy\t%v\n", x.TrafficPolicy)
+	fmt.Fprintf(tw, "\tBindings\t%v\n", x.Bindings)
+	fmt.Fprintf(tw, "\tTunnelSession\t%v\n", x.TunnelSession)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -4344,7 +4377,7 @@ type EventTargetAzureLogsIngestion struct {
 	LogsIngestionURI string `json:"logs_ingestion_uri,omitempty"`
 	// Data collection rule immutable ID
 	DataCollectionRuleId string `json:"data_collection_rule_id,omitempty"`
-	// Data collection stream name to use as destination, located instide the DCR
+	// Data collection stream name to use as destination, located inside the DCR
 	DataCollectionStreamName string `json:"data_collection_stream_name,omitempty"`
 }
 
