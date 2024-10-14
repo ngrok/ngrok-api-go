@@ -8,8 +8,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v5"
-	"github.com/ngrok/ngrok-api-go/v5/internal/api"
+	"github.com/ngrok/ngrok-api-go/v6"
+	"github.com/ngrok/ngrok-api-go/v6/internal/api"
 )
 
 // Endpoints provides an API for querying the endpoint objects
@@ -22,6 +22,31 @@ type Client struct {
 
 func NewClient(cfg *ngrok.ClientConfig) *Client {
 	return &Client{apiClient: api.NewClient(cfg)}
+}
+
+// Create an endpoint, currently available only for cloud endpoints
+//
+// https://ngrok.com/docs/api#api-endpoints-create
+func (c *Client) Create(ctx context.Context, arg *ngrok.EndpointCreate) (*ngrok.Endpoint, error) {
+	if arg == nil {
+		arg = new(ngrok.EndpointCreate)
+	}
+	var res ngrok.Endpoint
+	var path bytes.Buffer
+	if err := template.Must(template.New("create_path").Parse("/endpoints")).Execute(&path, arg); err != nil {
+		panic(err)
+	}
+	var (
+		apiURL  = &url.URL{Path: path.String()}
+		bodyArg interface{}
+	)
+	apiURL.Path = path.String()
+	bodyArg = arg
+
+	if err := c.apiClient.Do(ctx, "POST", apiURL, bodyArg, &res); err != nil {
+		return nil, err
+	}
+	return &res, nil
 }
 
 // List all active endpoints on the account
@@ -147,4 +172,53 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.Endpoint, error) {
 		return nil, err
 	}
 	return &res, nil
+}
+
+// Update an Endpoint by ID, currently available only for cloud endpoints
+//
+// https://ngrok.com/docs/api#api-endpoints-update
+func (c *Client) Update(ctx context.Context, arg *ngrok.EndpointUpdate) (*ngrok.Endpoint, error) {
+	if arg == nil {
+		arg = new(ngrok.EndpointUpdate)
+	}
+	var res ngrok.Endpoint
+	var path bytes.Buffer
+	if err := template.Must(template.New("update_path").Parse("/endpoints/{{ .ID }}")).Execute(&path, arg); err != nil {
+		panic(err)
+	}
+	arg.ID = ""
+	var (
+		apiURL  = &url.URL{Path: path.String()}
+		bodyArg interface{}
+	)
+	apiURL.Path = path.String()
+	bodyArg = arg
+
+	if err := c.apiClient.Do(ctx, "PATCH", apiURL, bodyArg, &res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
+
+// Delete an Endpoint by ID, currently available only for cloud endpoints
+//
+// https://ngrok.com/docs/api#api-endpoints-delete
+func (c *Client) Delete(ctx context.Context, id string) error {
+	arg := &ngrok.Item{ID: id}
+
+	var path bytes.Buffer
+	if err := template.Must(template.New("delete_path").Parse("/endpoints/{{ .ID }}")).Execute(&path, arg); err != nil {
+		panic(err)
+	}
+	arg.ID = ""
+	var (
+		apiURL  = &url.URL{Path: path.String()}
+		bodyArg interface{}
+	)
+	apiURL.Path = path.String()
+
+	if err := c.apiClient.Do(ctx, "DELETE", apiURL, bodyArg, nil); err != nil {
+		return err
+	}
+	return nil
 }
