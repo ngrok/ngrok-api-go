@@ -8,8 +8,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v5"
-	"github.com/ngrok/ngrok-api-go/v5/internal/api"
+	"github.com/ngrok/ngrok-api-go/v6"
+	"github.com/ngrok/ngrok-api-go/v6/internal/api"
 )
 
 // Certificate Authorities are x509 certificates that are used to sign other
