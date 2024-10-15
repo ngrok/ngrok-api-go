@@ -5206,6 +5206,302 @@ func (x *IPRestrictionList) GoString() string {
 	return b.String()
 }
 
+type KubernetesOperatorCreate struct {
+	// human-readable description of this Kubernetes Operator. optional, max 255 bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this Kubernetes Operator.
+	// optional, max 4096 bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// features enabled for this Kubernetes Operator. a subset of {"bindings",
+	// "ingress", and "gateway"}
+	EnabledFeatures []string `json:"enabled_features,omitempty"`
+	// the ngrok region in which the ingress for this operator is served. defaults to
+	// "global"
+	Region string `json:"region,omitempty"`
+	// information about the deployment of this Kubernetes Operator
+	Deployment KubernetesOperatorDeployment `json:"deployment,omitempty"`
+	// configuration for the Bindings feature of this Kubernetes Operator. set only if
+	// enabling the "bindings" feature
+	Binding *KubernetesOperatorBindingCreate `json:"binding,omitempty"`
+}
+
+func (x *KubernetesOperatorCreate) String() string {
+	return x.GoString()
+}
+
+func (x *KubernetesOperatorCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperatorCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tEnabledFeatures\t%v\n", x.EnabledFeatures)
+	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
+	fmt.Fprintf(tw, "\tDeployment\t%v\n", x.Deployment)
+	fmt.Fprintf(tw, "\tBinding\t%v\n", x.Binding)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type KubernetesOperatorBindingCreate struct {
+	// the name by which endpoints can be bound to this Kubernetes Operator. starts
+	// with "k8s/"
+	Name string `json:"name,omitempty"`
+	// the regexes for urls allowed to be bound to this operator
+	AllowedURLs []string `json:"allowed_urls,omitempty"`
+	// CSR is supplied during initial creation to enable creating a mutual TLS secured
+	// connection between ngrok and the operator. This is an internal implementation
+	// detail and subject to change.
+	CSR string `json:"csr,omitempty"`
+	// the public ingress endpoint for this Kubernetes Operator
+	IngressEndpoint *string `json:"ingress_endpoint,omitempty"`
+}
+
+func (x *KubernetesOperatorBindingCreate) String() string {
+	return x.GoString()
+}
+
+func (x *KubernetesOperatorBindingCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperatorBindingCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tAllowedURLs\t%v\n", x.AllowedURLs)
+	fmt.Fprintf(tw, "\tCSR\t%v\n", x.CSR)
+	fmt.Fprintf(tw, "\tIngressEndpoint\t%v\n", x.IngressEndpoint)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type KubernetesOperatorUpdate struct {
+	// unique identifier for this Kubernetes Operator
+	ID string `json:"id,omitempty"`
+	// human-readable description of this Kubernetes Operator. optional, max 255 bytes.
+	Description *string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this Kubernetes Operator.
+	// optional, max 4096 bytes.
+	Metadata *string `json:"metadata,omitempty"`
+	// features enabled for this Kubernetes Operator. a subset of {"bindings",
+	// "ingress", and "gateway"}
+	EnabledFeatures []string `json:"enabled_features,omitempty"`
+	// the ngrok region in which the ingress for this operator is served. defaults to
+	// "global"
+	Region *string `json:"region,omitempty"`
+	// configuration for the Bindings feature of this Kubernetes Operator. set only if
+	// enabling the "bindings" feature
+	Binding *KubernetesOperatorBindingUpdate `json:"binding,omitempty"`
+}
+
+func (x *KubernetesOperatorUpdate) String() string {
+	return fmt.Sprintf("KubernetesOperatorUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *KubernetesOperatorUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperatorUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tEnabledFeatures\t%v\n", x.EnabledFeatures)
+	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
+	fmt.Fprintf(tw, "\tBinding\t%v\n", x.Binding)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type KubernetesOperatorBindingUpdate struct {
+	// the name by which endpoints can be bound to this Kubernetes Operator. starts
+	// with "k8s/"
+	Name *string `json:"name,omitempty"`
+	// the regexes for urls allowed to be bound to this operator
+	AllowedURLs []string `json:"allowed_urls,omitempty"`
+	// CSR is supplied during initial creation to enable creating a mutual TLS secured
+	// connection between ngrok and the operator. This is an internal implementation
+	// detail and subject to change.
+	CSR *string `json:"csr,omitempty"`
+	// the public ingress endpoint for this Kubernetes Operator
+	IngressEndpoint *string `json:"ingress_endpoint,omitempty"`
+}
+
+func (x *KubernetesOperatorBindingUpdate) String() string {
+	return x.GoString()
+}
+
+func (x *KubernetesOperatorBindingUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperatorBindingUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tAllowedURLs\t%v\n", x.AllowedURLs)
+	fmt.Fprintf(tw, "\tCSR\t%v\n", x.CSR)
+	fmt.Fprintf(tw, "\tIngressEndpoint\t%v\n", x.IngressEndpoint)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type KubernetesOperator struct {
+	// unique identifier for this Kubernetes Operator
+	ID string `json:"id,omitempty"`
+	// URI of this Kubernetes Operator API resource
+	URI string `json:"uri,omitempty"`
+	// timestamp when the Kubernetes Operator was created. RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// timestamp when the Kubernetes Operator was last updated. RFC 3339 format
+	UpdatedAt string `json:"updated_at,omitempty"`
+	// human-readable description of this Kubernetes Operator. optional, max 255 bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this Kubernetes Operator.
+	// optional, max 4096 bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// the principal who created this Kubernetes Operator
+	Principal Ref `json:"principal,omitempty"`
+	// features enabled for this Kubernetes Operator. a subset of {"bindings",
+	// "ingress", and "gateway"}
+	EnabledFeatures []string `json:"enabled_features,omitempty"`
+	// the ngrok region in which the ingress for this operator is served. defaults to
+	// "global"
+	Region string `json:"region,omitempty"`
+	// information about the deployment of this Kubernetes Operator
+	Deployment KubernetesOperatorDeployment `json:"deployment,omitempty"`
+	// information about the Bindings feature of this Kubernetes Operator, if enabled
+	Binding *KubernetesOperatorBinding `json:"binding,omitempty"`
+}
+
+func (x *KubernetesOperator) String() string {
+	return fmt.Sprintf("KubernetesOperator{ID: %v}", x.ID)
+
+}
+
+func (x *KubernetesOperator) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperator {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tUpdatedAt\t%v\n", x.UpdatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tPrincipal\t%v\n", x.Principal)
+	fmt.Fprintf(tw, "\tEnabledFeatures\t%v\n", x.EnabledFeatures)
+	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
+	fmt.Fprintf(tw, "\tDeployment\t%v\n", x.Deployment)
+	fmt.Fprintf(tw, "\tBinding\t%v\n", x.Binding)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type KubernetesOperatorDeployment struct {
+	// the deployment name
+	Name string `json:"name,omitempty"`
+	// the namespace this Kubernetes Operator is deployed to
+	Namespace string `json:"namespace,omitempty"`
+	// the version of this Kubernetes Operator
+	Version string `json:"version,omitempty"`
+}
+
+func (x *KubernetesOperatorDeployment) String() string {
+	return x.GoString()
+}
+
+func (x *KubernetesOperatorDeployment) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperatorDeployment {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tNamespace\t%v\n", x.Namespace)
+	fmt.Fprintf(tw, "\tVersion\t%v\n", x.Version)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type KubernetesOperatorCert struct {
+	// the public client certificate generated for this Kubernetes Operator from the
+	// CSR supplied when enabling the Bindings feature
+	Cert string `json:"cert,omitempty"`
+	// timestamp when the certificate becomes valid. RFC 3339 format
+	NotBefore string `json:"not_before,omitempty"`
+	// timestamp when the certificate becomes invalid. RFC 3339 format
+	NotAfter string `json:"not_after,omitempty"`
+}
+
+func (x *KubernetesOperatorCert) String() string {
+	return x.GoString()
+}
+
+func (x *KubernetesOperatorCert) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperatorCert {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tCert\t%v\n", x.Cert)
+	fmt.Fprintf(tw, "\tNotBefore\t%v\n", x.NotBefore)
+	fmt.Fprintf(tw, "\tNotAfter\t%v\n", x.NotAfter)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type KubernetesOperatorBinding struct {
+	// the name by which endpoints can be bound to this Kubernetes Operator. starts
+	// with "k8s/"
+	Name string `json:"name,omitempty"`
+	// the regexes for urls allowed to be bound to this operator
+	AllowedURLs []string `json:"allowed_urls,omitempty"`
+	// the binding certificate information
+	Cert KubernetesOperatorCert `json:"cert,omitempty"`
+	// the public ingress endpoint for this Kubernetes Operator
+	IngressEndpoint string `json:"ingress_endpoint,omitempty"`
+}
+
+func (x *KubernetesOperatorBinding) String() string {
+	return x.GoString()
+}
+
+func (x *KubernetesOperatorBinding) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperatorBinding {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tAllowedURLs\t%v\n", x.AllowedURLs)
+	fmt.Fprintf(tw, "\tCert\t%v\n", x.Cert)
+	fmt.Fprintf(tw, "\tIngressEndpoint\t%v\n", x.IngressEndpoint)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type KubernetesOperatorList struct {
+	// the list of Kubernetes Operators for this account
+	Operators []KubernetesOperator `json:"operators,omitempty"`
+	URI       string               `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *KubernetesOperatorList) String() string {
+	return x.GoString()
+}
+
+func (x *KubernetesOperatorList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperatorList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tOperators\t%v\n", x.Operators)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type ReservedAddrCreate struct {
 	// human-readable description of what this reserved address will be used for
 	Description string `json:"description,omitempty"`
