@@ -1,4 +1,7 @@
 <!-- Code generated for API Clients. DO NOT EDIT. -->
+## v7.0.0
+### Breaking Change
+Renamed `principal_id` to `principal` for `endpoint` resources
 
 ## v6.0.0
 ### Breaking Changes

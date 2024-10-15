@@ -3999,14 +3999,19 @@ type Endpoint struct {
 	// URL of the hostport served by this endpoint
 	PublicURL string `json:"public_url,omitempty"`
 	// protocol served by this endpoint. one of http, https, tcp, or tls
-	Proto string `json:"proto,omitempty"`
-	// hostport served by this endpoint (hostname:port)
+	Proto  string `json:"proto,omitempty"`
+	Scheme string `json:"scheme,omitempty"`
+	// hostport served by this endpoint (hostname:port) -> soon to be deprecated
 	Hostport string `json:"hostport,omitempty"`
+	Host     string `json:"host,omitempty"`
+	Port     int64  `json:"port,omitempty"`
 	// whether the endpoint is ephemeral (served directly by an agent-initiated tunnel)
-	// or edge (served by an edge)
+	// or edge (served by an edge) or cloud (represents a cloud endpoint)
 	Type string `json:"type,omitempty"`
 	// user-supplied metadata of the associated tunnel or edge object
 	Metadata string `json:"metadata,omitempty"`
+	// user-supplied description of the associated tunnel
+	Description string `json:"description,omitempty"`
 	// the domain reserved for this endpoint
 	Domain *Ref `json:"domain,omitempty"`
 	// the address reserved for this endpoint
@@ -4015,6 +4020,22 @@ type Endpoint struct {
 	Tunnel *Ref `json:"tunnel,omitempty"`
 	// the edge serving requests to this endpoint, if this is an edge endpoint
 	Edge *Ref `json:"edge,omitempty"`
+	// the local address the tunnel forwards to
+	UpstreamURL string `json:"upstream_url,omitempty"`
+	// the protocol the agent uses to forward with
+	UpstreamProto string `json:"upstream_proto,omitempty"`
+	// the url of the endpoint
+	URL string `json:"url,omitempty"`
+	// The ID of the owner (bot or user) that owns this endpoint
+	Principal *Ref `json:"principal,omitempty"`
+	// The traffic policy attached to this endpoint
+	TrafficPolicy string `json:"traffic_policy,omitempty"`
+	// the bindings associated with this endpoint
+	Bindings []string `json:"bindings,omitempty"`
+	// The tunnel session of the agent for this endpoint
+	TunnelSession *Ref `json:"tunnel_session,omitempty"`
+	// URI of the clep API resource
+	URI string `json:"uri,omitempty"`
 }
 
 func (x *Endpoint) String() string {
@@ -4032,13 +4053,25 @@ func (x *Endpoint) GoString() string {
 	fmt.Fprintf(tw, "\tUpdatedAt\t%v\n", x.UpdatedAt)
 	fmt.Fprintf(tw, "\tPublicURL\t%v\n", x.PublicURL)
 	fmt.Fprintf(tw, "\tProto\t%v\n", x.Proto)
+	fmt.Fprintf(tw, "\tScheme\t%v\n", x.Scheme)
 	fmt.Fprintf(tw, "\tHostport\t%v\n", x.Hostport)
+	fmt.Fprintf(tw, "\tHost\t%v\n", x.Host)
+	fmt.Fprintf(tw, "\tPort\t%v\n", x.Port)
 	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
 	fmt.Fprintf(tw, "\tDomain\t%v\n", x.Domain)
 	fmt.Fprintf(tw, "\tTCPAddr\t%v\n", x.TCPAddr)
 	fmt.Fprintf(tw, "\tTunnel\t%v\n", x.Tunnel)
 	fmt.Fprintf(tw, "\tEdge\t%v\n", x.Edge)
+	fmt.Fprintf(tw, "\tUpstreamURL\t%v\n", x.UpstreamURL)
+	fmt.Fprintf(tw, "\tUpstreamProto\t%v\n", x.UpstreamProto)
+	fmt.Fprintf(tw, "\tURL\t%v\n", x.URL)
+	fmt.Fprintf(tw, "\tPrincipal\t%v\n", x.Principal)
+	fmt.Fprintf(tw, "\tTrafficPolicy\t%v\n", x.TrafficPolicy)
+	fmt.Fprintf(tw, "\tBindings\t%v\n", x.Bindings)
+	fmt.Fprintf(tw, "\tTunnelSession\t%v\n", x.TunnelSession)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -4064,6 +4097,76 @@ func (x *EndpointList) GoString() string {
 	fmt.Fprintf(tw, "\tEndpoints\t%v\n", x.Endpoints)
 	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
 	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointCreate struct {
+	// the url of the endpoint
+	URL string `json:"url,omitempty"`
+	// whether the endpoint is ephemeral (served directly by an agent-initiated tunnel)
+	// or edge (served by an edge) or cloud (represents a cloud endpoint)
+	Type string `json:"type,omitempty"`
+	// The traffic policy attached to this endpoint
+	TrafficPolicy string `json:"traffic_policy,omitempty"`
+	// user-supplied description of the associated tunnel
+	Description *string `json:"description,omitempty"`
+	// user-supplied metadata of the associated tunnel or edge object
+	Metadata *string `json:"metadata,omitempty"`
+	// the bindings associated with this endpoint
+	Bindings []string `json:"bindings,omitempty"`
+}
+
+func (x *EndpointCreate) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tURL\t%v\n", x.URL)
+	fmt.Fprintf(tw, "\tType\t%v\n", x.Type)
+	fmt.Fprintf(tw, "\tTrafficPolicy\t%v\n", x.TrafficPolicy)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tBindings\t%v\n", x.Bindings)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointUpdate struct {
+	// unique endpoint resource identifier
+	ID string `json:"id,omitempty"`
+	// the url of the endpoint
+	Url *string `json:"url,omitempty"`
+	// The traffic policy attached to this endpoint
+	TrafficPolicy *string `json:"traffic_policy,omitempty"`
+	// user-supplied description of the associated tunnel
+	Description *string `json:"description,omitempty"`
+	// user-supplied metadata of the associated tunnel or edge object
+	Metadata *string `json:"metadata,omitempty"`
+	// the bindings associated with this endpoint
+	Bindings []string `json:"bindings,omitempty"`
+}
+
+func (x *EndpointUpdate) String() string {
+	return fmt.Sprintf("EndpointUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *EndpointUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tUrl\t%v\n", x.Url)
+	fmt.Fprintf(tw, "\tTrafficPolicy\t%v\n", x.TrafficPolicy)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tBindings\t%v\n", x.Bindings)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -4344,7 +4447,7 @@ type EventTargetAzureLogsIngestion struct {
 	LogsIngestionURI string `json:"logs_ingestion_uri,omitempty"`
 	// Data collection rule immutable ID
 	DataCollectionRuleId string `json:"data_collection_rule_id,omitempty"`
-	// Data collection stream name to use as destination, located instide the DCR
+	// Data collection stream name to use as destination, located inside the DCR
 	DataCollectionStreamName string `json:"data_collection_stream_name,omitempty"`
 }
 
@@ -5097,6 +5200,302 @@ func (x *IPRestrictionList) GoString() string {
 	return b.String()
 }
 
+type KubernetesOperatorCreate struct {
+	// human-readable description of this Kubernetes Operator. optional, max 255 bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this Kubernetes Operator.
+	// optional, max 4096 bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// features enabled for this Kubernetes Operator. a subset of {"bindings",
+	// "ingress", and "gateway"}
+	EnabledFeatures []string `json:"enabled_features,omitempty"`
+	// the ngrok region in which the ingress for this operator is served. defaults to
+	// "global"
+	Region string `json:"region,omitempty"`
+	// information about the deployment of this Kubernetes Operator
+	Deployment KubernetesOperatorDeployment `json:"deployment,omitempty"`
+	// configuration for the Bindings feature of this Kubernetes Operator. set only if
+	// enabling the "bindings" feature
+	Binding *KubernetesOperatorBindingCreate `json:"binding,omitempty"`
+}
+
+func (x *KubernetesOperatorCreate) String() string {
+	return x.GoString()
+}
+
+func (x *KubernetesOperatorCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperatorCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tEnabledFeatures\t%v\n", x.EnabledFeatures)
+	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
+	fmt.Fprintf(tw, "\tDeployment\t%v\n", x.Deployment)
+	fmt.Fprintf(tw, "\tBinding\t%v\n", x.Binding)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type KubernetesOperatorBindingCreate struct {
+	// the name by which endpoints can be bound to this Kubernetes Operator. starts
+	// with "k8s/"
+	Name string `json:"name,omitempty"`
+	// the regexes for urls allowed to be bound to this operator
+	AllowedURLs []string `json:"allowed_urls,omitempty"`
+	// CSR is supplied during initial creation to enable creating a mutual TLS secured
+	// connection between ngrok and the operator. This is an internal implementation
+	// detail and subject to change.
+	CSR string `json:"csr,omitempty"`
+	// the public ingress endpoint for this Kubernetes Operator
+	IngressEndpoint *string `json:"ingress_endpoint,omitempty"`
+}
+
+func (x *KubernetesOperatorBindingCreate) String() string {
+	return x.GoString()
+}
+
+func (x *KubernetesOperatorBindingCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperatorBindingCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tAllowedURLs\t%v\n", x.AllowedURLs)
+	fmt.Fprintf(tw, "\tCSR\t%v\n", x.CSR)
+	fmt.Fprintf(tw, "\tIngressEndpoint\t%v\n", x.IngressEndpoint)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type KubernetesOperatorUpdate struct {
+	// unique identifier for this Kubernetes Operator
+	ID string `json:"id,omitempty"`
+	// human-readable description of this Kubernetes Operator. optional, max 255 bytes.
+	Description *string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this Kubernetes Operator.
+	// optional, max 4096 bytes.
+	Metadata *string `json:"metadata,omitempty"`
+	// features enabled for this Kubernetes Operator. a subset of {"bindings",
+	// "ingress", and "gateway"}
+	EnabledFeatures []string `json:"enabled_features,omitempty"`
+	// the ngrok region in which the ingress for this operator is served. defaults to
+	// "global"
+	Region *string `json:"region,omitempty"`
+	// configuration for the Bindings feature of this Kubernetes Operator. set only if
+	// enabling the "bindings" feature
+	Binding *KubernetesOperatorBindingUpdate `json:"binding,omitempty"`
+}
+
+func (x *KubernetesOperatorUpdate) String() string {
+	return fmt.Sprintf("KubernetesOperatorUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *KubernetesOperatorUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperatorUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tEnabledFeatures\t%v\n", x.EnabledFeatures)
+	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
+	fmt.Fprintf(tw, "\tBinding\t%v\n", x.Binding)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type KubernetesOperatorBindingUpdate struct {
+	// the name by which endpoints can be bound to this Kubernetes Operator. starts
+	// with "k8s/"
+	Name *string `json:"name,omitempty"`
+	// the regexes for urls allowed to be bound to this operator
+	AllowedURLs []string `json:"allowed_urls,omitempty"`
+	// CSR is supplied during initial creation to enable creating a mutual TLS secured
+	// connection between ngrok and the operator. This is an internal implementation
+	// detail and subject to change.
+	CSR *string `json:"csr,omitempty"`
+	// the public ingress endpoint for this Kubernetes Operator
+	IngressEndpoint *string `json:"ingress_endpoint,omitempty"`
+}
+
+func (x *KubernetesOperatorBindingUpdate) String() string {
+	return x.GoString()
+}
+
+func (x *KubernetesOperatorBindingUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperatorBindingUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tAllowedURLs\t%v\n", x.AllowedURLs)
+	fmt.Fprintf(tw, "\tCSR\t%v\n", x.CSR)
+	fmt.Fprintf(tw, "\tIngressEndpoint\t%v\n", x.IngressEndpoint)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type KubernetesOperator struct {
+	// unique identifier for this Kubernetes Operator
+	ID string `json:"id,omitempty"`
+	// URI of this Kubernetes Operator API resource
+	URI string `json:"uri,omitempty"`
+	// timestamp when the Kubernetes Operator was created. RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+	// timestamp when the Kubernetes Operator was last updated. RFC 3339 format
+	UpdatedAt string `json:"updated_at,omitempty"`
+	// human-readable description of this Kubernetes Operator. optional, max 255 bytes.
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined machine-readable data of this Kubernetes Operator.
+	// optional, max 4096 bytes.
+	Metadata string `json:"metadata,omitempty"`
+	// the principal who created this Kubernetes Operator
+	Principal Ref `json:"principal,omitempty"`
+	// features enabled for this Kubernetes Operator. a subset of {"bindings",
+	// "ingress", and "gateway"}
+	EnabledFeatures []string `json:"enabled_features,omitempty"`
+	// the ngrok region in which the ingress for this operator is served. defaults to
+	// "global"
+	Region string `json:"region,omitempty"`
+	// information about the deployment of this Kubernetes Operator
+	Deployment KubernetesOperatorDeployment `json:"deployment,omitempty"`
+	// information about the Bindings feature of this Kubernetes Operator, if enabled
+	Binding *KubernetesOperatorBinding `json:"binding,omitempty"`
+}
+
+func (x *KubernetesOperator) String() string {
+	return fmt.Sprintf("KubernetesOperator{ID: %v}", x.ID)
+
+}
+
+func (x *KubernetesOperator) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperator {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tUpdatedAt\t%v\n", x.UpdatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tPrincipal\t%v\n", x.Principal)
+	fmt.Fprintf(tw, "\tEnabledFeatures\t%v\n", x.EnabledFeatures)
+	fmt.Fprintf(tw, "\tRegion\t%v\n", x.Region)
+	fmt.Fprintf(tw, "\tDeployment\t%v\n", x.Deployment)
+	fmt.Fprintf(tw, "\tBinding\t%v\n", x.Binding)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type KubernetesOperatorDeployment struct {
+	// the deployment name
+	Name string `json:"name,omitempty"`
+	// the namespace this Kubernetes Operator is deployed to
+	Namespace string `json:"namespace,omitempty"`
+	// the version of this Kubernetes Operator
+	Version string `json:"version,omitempty"`
+}
+
+func (x *KubernetesOperatorDeployment) String() string {
+	return x.GoString()
+}
+
+func (x *KubernetesOperatorDeployment) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperatorDeployment {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tNamespace\t%v\n", x.Namespace)
+	fmt.Fprintf(tw, "\tVersion\t%v\n", x.Version)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type KubernetesOperatorCert struct {
+	// the public client certificate generated for this Kubernetes Operator from the
+	// CSR supplied when enabling the Bindings feature
+	Cert string `json:"cert,omitempty"`
+	// timestamp when the certificate becomes valid. RFC 3339 format
+	NotBefore string `json:"not_before,omitempty"`
+	// timestamp when the certificate becomes invalid. RFC 3339 format
+	NotAfter string `json:"not_after,omitempty"`
+}
+
+func (x *KubernetesOperatorCert) String() string {
+	return x.GoString()
+}
+
+func (x *KubernetesOperatorCert) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperatorCert {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tCert\t%v\n", x.Cert)
+	fmt.Fprintf(tw, "\tNotBefore\t%v\n", x.NotBefore)
+	fmt.Fprintf(tw, "\tNotAfter\t%v\n", x.NotAfter)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type KubernetesOperatorBinding struct {
+	// the name by which endpoints can be bound to this Kubernetes Operator. starts
+	// with "k8s/"
+	Name string `json:"name,omitempty"`
+	// the regexes for urls allowed to be bound to this operator
+	AllowedURLs []string `json:"allowed_urls,omitempty"`
+	// the binding certificate information
+	Cert KubernetesOperatorCert `json:"cert,omitempty"`
+	// the public ingress endpoint for this Kubernetes Operator
+	IngressEndpoint string `json:"ingress_endpoint,omitempty"`
+}
+
+func (x *KubernetesOperatorBinding) String() string {
+	return x.GoString()
+}
+
+func (x *KubernetesOperatorBinding) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperatorBinding {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tAllowedURLs\t%v\n", x.AllowedURLs)
+	fmt.Fprintf(tw, "\tCert\t%v\n", x.Cert)
+	fmt.Fprintf(tw, "\tIngressEndpoint\t%v\n", x.IngressEndpoint)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type KubernetesOperatorList struct {
+	// the list of Kubernetes Operators for this account
+	Operators []KubernetesOperator `json:"operators,omitempty"`
+	URI       string               `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *KubernetesOperatorList) String() string {
+	return x.GoString()
+}
+
+func (x *KubernetesOperatorList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "KubernetesOperatorList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tOperators\t%v\n", x.Operators)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type ReservedAddrCreate struct {
 	// human-readable description of what this reserved address will be used for
 	Description string `json:"description,omitempty"`
@@ -5385,8 +5784,8 @@ type ReservedDomainCertPolicy struct {
 	// certificate authority to request certificates from. The only supported value is
 	// letsencrypt.
 	Authority string `json:"authority,omitempty"`
-	// type of private key to use when requesting certificates. Defaults to rsa, can be
-	// either rsa or ecdsa.
+	// type of private key to use when requesting certificates. Defaults to ecdsa, can
+	// be either rsa or ecdsa.
 	PrivateKeyType string `json:"private_key_type,omitempty"`
 }
 
