@@ -1,4 +1,4 @@
-// Code generated for API Clients. DO NOT EDIT.
+	// Code generated for API Clients. DO NOT EDIT.
 
 // Package ngrok makes it easy to work with the ngrok API from Go. The package
 // is fully code generated and should always be up to date with the latest
@@ -23,8 +23,8 @@
 //         "fmt"
 //         "math/rand"
 //
-//         "github.com/ngrok/ngrok-api-go/v5"
-//         "github.com/ngrok/ngrok-api-go/v5/reserved_domains"
+//         "github.com/ngrok/ngrok-api-go/v6"
+//         "github.com/ngrok/ngrok-api-go/v6/reserved_domains"
 //     )
 //
 //     func example(ctx context.Context) error {
@@ -52,9 +52,9 @@
 // initialization time.
 //
 //     import (
-//         "github.com/ngrok/ngrok-api-go/v5"
-//         "github.com/ngrok/ngrok-api-go/v5/ip_policies"
-//         "github.com/ngrok/ngrok-api-go/v5/ip_policy_rules"
+//         "github.com/ngrok/ngrok-api-go/v6"
+//         "github.com/ngrok/ngrok-api-go/v6/ip_policies"
+//         "github.com/ngrok/ngrok-api-go/v6/ip_policy_rules"
 //     )
 //
 //     // Construct the root api Client object
