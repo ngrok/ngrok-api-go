@@ -52,7 +52,7 @@ func (c *Client) Create(ctx context.Context, arg *ngrok.EndpointCreate) (*ngrok.
 // List all active endpoints on the account
 //
 // https://ngrok.com/docs/api#api-endpoints-list
-func (c *Client) List(paging *ngrok.Paging) *Iter {
+func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.Endpoint] {
 	if paging == nil {
 		paging = new(ngrok.Paging)
 	}
@@ -69,16 +69,16 @@ func (c *Client) List(paging *ngrok.Paging) *Iter {
 		queryVals.Set("limit", *paging.Limit)
 	}
 	apiURL.RawQuery = queryVals.Encode()
-	return &Iter{
+	return &iter{
 		client:   c,
 		n:        -1,
 		nextPage: apiURL,
 	}
 }
 
-// Iter allows the caller to iterate through a list of values while
+// iter allows the caller to iterate through a list of values while
 // automatically fetching new pages worth of values from the API.
-type Iter struct {
+type iter struct {
 	client *Client
 	n      int
 	items  []ngrok.Endpoint
@@ -89,7 +89,7 @@ type Iter struct {
 
 // Next returns true if there is another value available in the iterator. If it
 // returs true it also advances the iterator to that next available item.
-func (it *Iter) Next(ctx context.Context) bool {
+func (it *iter) Next(ctx context.Context) bool {
 	// no more if there is an error
 	if it.err != nil {
 		return false
@@ -139,14 +139,14 @@ func (it *Iter) Next(ctx context.Context) bool {
 
 // Item() returns the Endpoint currently
 // pointed to by the iterator.
-func (it *Iter) Item() *ngrok.Endpoint {
+func (it *iter) Item() *ngrok.Endpoint {
 	return &it.items[it.n]
 }
 
 // If Next() returned false because an error was encountered while fetching the
 // next value Err() will return that error. A caller should always check Err()
 // after Next() returns false.
-func (it *Iter) Err() error {
+func (it *iter) Err() error {
 	return it.err
 }
 
