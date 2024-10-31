@@ -64,6 +64,30 @@ func (x *Paging) GoString() string {
 	return b.String()
 }
 
+type ItemPaging struct {
+	// a resource identifier
+	ID       string  `json:"id,omitempty"`
+	BeforeID *string `json:"before_id,omitempty"`
+	Limit    *string `json:"limit,omitempty"`
+}
+
+func (x *ItemPaging) String() string {
+	return fmt.Sprintf("ItemPaging{ID: %v}", x.ID)
+
+}
+
+func (x *ItemPaging) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ItemPaging {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tBeforeID\t%v\n", x.BeforeID)
+	fmt.Fprintf(tw, "\tLimit\t%v\n", x.Limit)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type Error struct {
 	ErrorCode  string            `json:"error_code,omitempty"`
 	StatusCode int32             `json:"status_code,omitempty"`

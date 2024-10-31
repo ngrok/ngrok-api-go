@@ -125,7 +125,7 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.KubernetesOperator,
 // List all Kubernetes Operators owned by this account
 //
 // https://ngrok.com/docs/api#api-kubernetes-operators-list
-func (c *Client) List(paging *ngrok.Paging) *Iter {
+func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.KubernetesOperator] {
 	if paging == nil {
 		paging = new(ngrok.Paging)
 	}
@@ -142,7 +142,7 @@ func (c *Client) List(paging *ngrok.Paging) *Iter {
 		queryVals.Set("limit", *paging.Limit)
 	}
 	apiURL.RawQuery = queryVals.Encode()
-	return &Iter{
+	return &operatorIter{
 		client:   c,
 		n:        -1,
 		nextPage: apiURL,
@@ -151,7 +151,7 @@ func (c *Client) List(paging *ngrok.Paging) *Iter {
 
 // Iter allows the caller to iterate through a list of values while
 // automatically fetching new pages worth of values from the API.
-type Iter struct {
+type operatorIter struct {
 	client *Client
 	n      int
 	items  []ngrok.KubernetesOperator
@@ -162,7 +162,7 @@ type Iter struct {
 
 // Next returns true if there is another value available in the iterator. If it
 // returs true it also advances the iterator to that next available item.
-func (it *Iter) Next(ctx context.Context) bool {
+func (it *operatorIter) Next(ctx context.Context) bool {
 	// no more if there is an error
 	if it.err != nil {
 		return false
@@ -212,13 +212,116 @@ func (it *Iter) Next(ctx context.Context) bool {
 
 // Item() returns the KubernetesOperator currently
 // pointed to by the iterator.
-func (it *Iter) Item() *ngrok.KubernetesOperator {
+func (it *operatorIter) Item() *ngrok.KubernetesOperator {
 	return &it.items[it.n]
 }
 
 // If Next() returned false because an error was encountered while fetching the
 // next value Err() will return that error. A caller should always check Err()
 // after Next() returns false.
-func (it *Iter) Err() error {
+func (it *operatorIter) Err() error {
+	return it.err
+}
+
+// List Endpoints bound to a Kubernetes Operator
+//
+// https://ngrok.com/docs/api#api-kubernetes-operators-get-bound-endpoints
+func (c *Client) GetBoundEndpoints(id string, paging *ngrok.Paging) ngrok.Iter[*ngrok.Endpoint] {
+	arg := &ngrok.Item{ID: id}
+
+	if paging == nil {
+		paging = new(ngrok.Paging)
+	}
+	var path bytes.Buffer
+	if err := template.Must(template.New("get_bound_endpoints_path").Parse("/kubernetes_operators/{{ .ID }}/bound_endpoints")).Execute(&path, arg); err != nil {
+		panic(err)
+	}
+	var apiURL = &url.URL{Path: path.String()}
+	queryVals := make(url.Values)
+	if paging.BeforeID != nil {
+		queryVals.Set("before_id", *paging.BeforeID)
+	}
+	if paging.Limit != nil {
+		queryVals.Set("limit", *paging.Limit)
+	}
+	apiURL.RawQuery = queryVals.Encode()
+	return &endpointIter{
+		client:   c,
+		n:        -1,
+		nextPage: apiURL,
+	}
+}
+
+// Iter allows the caller to iterate through a list of values while
+// automatically fetching new pages worth of values from the API.
+type endpointIter struct {
+	client *Client
+	n      int
+	items  []ngrok.Endpoint
+	err    error
+
+	nextPage *url.URL
+}
+
+// Next returns true if there is another value available in the iterator. If it
+// returs true it also advances the iterator to that next available item.
+func (it *endpointIter) Next(ctx context.Context) bool {
+	// no more if there is an error
+	if it.err != nil {
+		return false
+	}
+
+	// advance the iterator
+	it.n += 1
+
+	// is there an available item?
+	if it.n < len(it.items) {
+		return true
+	}
+
+	// no more items, do we have a next page?
+	if it.nextPage == nil {
+		return false
+	}
+
+	// fetch the next page
+	var resp ngrok.EndpointList
+	err := it.client.apiClient.Do(ctx, "GET", it.nextPage, nil, &resp)
+	if err != nil {
+		it.err = err
+		return false
+	}
+
+	// parse the next page URI as soon as we get it and store it
+	// so we can use it on the next fetch
+	if resp.NextPageURI != nil {
+		it.nextPage, it.err = url.Parse(*resp.NextPageURI)
+		if it.err != nil {
+			return false
+		}
+	} else {
+		it.nextPage = nil
+	}
+
+	// page with zero items means there are no more
+	if len(resp.Endpoints) == 0 {
+		return false
+	}
+
+	it.n = -1
+	it.items = resp.Endpoints
+	return it.Next(ctx)
+}
+
+// Item() returns the Endpoint currently
+// pointed to by the iterator.
+func (it *endpointIter) Item() *ngrok.Endpoint {
+	return &it.items[it.n]
+}
+
+// If Next() returned false because an error was encountered while fetching the
+// next value Err() will return that error. A caller should always check Err()
+// after Next() returns false.
+func (it *endpointIter) Err() error {
 	return it.err
 }
