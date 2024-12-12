@@ -100,7 +100,7 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.FailoverBackend, er
 // List all Failover backends on this account
 //
 // https://ngrok.com/docs/api#api-failover-backends-list
-func (c *Client) List(paging *ngrok.Paging) *Iter {
+func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.FailoverBackend] {
 	if paging == nil {
 		paging = new(ngrok.Paging)
 	}
@@ -117,16 +117,16 @@ func (c *Client) List(paging *ngrok.Paging) *Iter {
 		queryVals.Set("limit", *paging.Limit)
 	}
 	apiURL.RawQuery = queryVals.Encode()
-	return &Iter{
+	return &iterFailoverBackend{
 		client:   c,
 		n:        -1,
 		nextPage: apiURL,
 	}
 }
 
-// Iter allows the caller to iterate through a list of values while
+// iter allows the caller to iterate through a list of values while
 // automatically fetching new pages worth of values from the API.
-type Iter struct {
+type iterFailoverBackend struct {
 	client *Client
 	n      int
 	items  []ngrok.FailoverBackend
@@ -137,7 +137,7 @@ type Iter struct {
 
 // Next returns true if there is another value available in the iterator. If it
 // returs true it also advances the iterator to that next available item.
-func (it *Iter) Next(ctx context.Context) bool {
+func (it *iterFailoverBackend) Next(ctx context.Context) bool {
 	// no more if there is an error
 	if it.err != nil {
 		return false
@@ -187,14 +187,14 @@ func (it *Iter) Next(ctx context.Context) bool {
 
 // Item() returns the FailoverBackend currently
 // pointed to by the iterator.
-func (it *Iter) Item() *ngrok.FailoverBackend {
+func (it *iterFailoverBackend) Item() *ngrok.FailoverBackend {
 	return &it.items[it.n]
 }
 
 // If Next() returned false because an error was encountered while fetching the
 // next value Err() will return that error. A caller should always check Err()
 // after Next() returns false.
-func (it *Iter) Err() error {
+func (it *iterFailoverBackend) Err() error {
 	return it.err
 }
 
