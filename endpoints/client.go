@@ -28,9 +28,6 @@ func NewClient(cfg *ngrok.ClientConfig) *Client {
 //
 // https://ngrok.com/docs/api#api-endpoints-create
 func (c *Client) Create(ctx context.Context, arg *ngrok.EndpointCreate) (*ngrok.Endpoint, error) {
-	if arg == nil {
-		arg = new(ngrok.EndpointCreate)
-	}
 	var res ngrok.Endpoint
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/endpoints")).Execute(&path, arg); err != nil {
