@@ -4023,13 +4023,11 @@ type Endpoint struct {
 	// the local address the tunnel forwards to
 	UpstreamURL string `json:"upstream_url,omitempty"`
 	// the protocol the agent uses to forward with
-	UpstreamProto string `json:"upstream_proto,omitempty"`
+	UpstreamProtocol string `json:"upstream_protocol,omitempty"`
 	// the url of the endpoint
 	URL string `json:"url,omitempty"`
 	// The ID of the owner (bot or user) that owns this endpoint
 	Principal *Ref `json:"principal,omitempty"`
-	// TODO: deprecate me!
-	PrincipalID *Ref `json:"principal_id,omitempty"`
 	// The traffic policy attached to this endpoint
 	TrafficPolicy string `json:"traffic_policy,omitempty"`
 	// the bindings associated with this endpoint
@@ -4069,10 +4067,9 @@ func (x *Endpoint) GoString() string {
 	fmt.Fprintf(tw, "\tTunnel\t%v\n", x.Tunnel)
 	fmt.Fprintf(tw, "\tEdge\t%v\n", x.Edge)
 	fmt.Fprintf(tw, "\tUpstreamURL\t%v\n", x.UpstreamURL)
-	fmt.Fprintf(tw, "\tUpstreamProto\t%v\n", x.UpstreamProto)
+	fmt.Fprintf(tw, "\tUpstreamProtocol\t%v\n", x.UpstreamProtocol)
 	fmt.Fprintf(tw, "\tURL\t%v\n", x.URL)
 	fmt.Fprintf(tw, "\tPrincipal\t%v\n", x.Principal)
-	fmt.Fprintf(tw, "\tPrincipalID\t%v\n", x.PrincipalID)
 	fmt.Fprintf(tw, "\tTrafficPolicy\t%v\n", x.TrafficPolicy)
 	fmt.Fprintf(tw, "\tBindings\t%v\n", x.Bindings)
 	fmt.Fprintf(tw, "\tTunnelSession\t%v\n", x.TunnelSession)
