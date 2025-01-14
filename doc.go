@@ -23,8 +23,8 @@
 //	    "fmt"
 //	    "math/rand"
 //
-//	    "github.com/ngrok/ngrok-api-go/v6"
-//	    "github.com/ngrok/ngrok-api-go/v6/reserved_domains"
+//	    "github.com/ngrok/ngrok-api-go/v7"
+//	    "github.com/ngrok/ngrok-api-go/v7/reserved_domains"
 //	)
 //
 //	func example(ctx context.Context) error {
@@ -51,9 +51,9 @@
 // initialization time.
 //
 //	import (
-//	    "github.com/ngrok/ngrok-api-go/v6"
-//	    "github.com/ngrok/ngrok-api-go/v6/ip_policies"
-//	    "github.com/ngrok/ngrok-api-go/v6/ip_policy_rules"
+//	    "github.com/ngrok/ngrok-api-go/v7"
+//	    "github.com/ngrok/ngrok-api-go/v7/ip_policies"
+//	    "github.com/ngrok/ngrok-api-go/v7/ip_policy_rules"
 //	)
 //
 //	// Construct the root api Client object

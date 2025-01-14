@@ -8,8 +8,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v6"
-	"github.com/ngrok/ngrok-api-go/v6/internal/api"
+	"github.com/ngrok/ngrok-api-go/v7"
+	"github.com/ngrok/ngrok-api-go/v7/internal/api"
 )
 
 // A Tunnel Group Backend balances traffic among all online tunnels that match
@@ -98,7 +98,7 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.TunnelGroupBackend,
 // List all TunnelGroup backends on this account
 //
 // https://ngrok.com/docs/api#api-tunnel-group-backends-list
-func (c *Client) List(paging *ngrok.Paging) *Iter {
+func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.TunnelGroupBackend] {
 	if paging == nil {
 		paging = new(ngrok.Paging)
 	}
@@ -115,16 +115,16 @@ func (c *Client) List(paging *ngrok.Paging) *Iter {
 		queryVals.Set("limit", *paging.Limit)
 	}
 	apiURL.RawQuery = queryVals.Encode()
-	return &Iter{
+	return &iterTunnelGroupBackend{
 		client:   c,
 		n:        -1,
 		nextPage: apiURL,
 	}
 }
 
-// Iter allows the caller to iterate through a list of values while
+// iter allows the caller to iterate through a list of values while
 // automatically fetching new pages worth of values from the API.
-type Iter struct {
+type iterTunnelGroupBackend struct {
 	client *Client
 	n      int
 	items  []ngrok.TunnelGroupBackend
@@ -135,7 +135,7 @@ type Iter struct {
 
 // Next returns true if there is another value available in the iterator. If it
 // returs true it also advances the iterator to that next available item.
-func (it *Iter) Next(ctx context.Context) bool {
+func (it *iterTunnelGroupBackend) Next(ctx context.Context) bool {
 	// no more if there is an error
 	if it.err != nil {
 		return false
@@ -185,14 +185,14 @@ func (it *Iter) Next(ctx context.Context) bool {
 
 // Item() returns the TunnelGroupBackend currently
 // pointed to by the iterator.
-func (it *Iter) Item() *ngrok.TunnelGroupBackend {
+func (it *iterTunnelGroupBackend) Item() *ngrok.TunnelGroupBackend {
 	return &it.items[it.n]
 }
 
 // If Next() returned false because an error was encountered while fetching the
 // next value Err() will return that error. A caller should always check Err()
 // after Next() returns false.
-func (it *Iter) Err() error {
+func (it *iterTunnelGroupBackend) Err() error {
 	return it.err
 }
 

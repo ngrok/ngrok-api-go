@@ -1,7 +1,17 @@
 <!-- Code generated for API Clients. DO NOT EDIT. -->
+## v7.1.0
+* Updates to KubernetesOperators and Bindings (currently in private beta).
+
+## v7.0.0
+### Breaking Changes
+* Renamed `upstream_proto` to `upstream_protocol` for `endpoint` resources
+
+## v6.2.0
+* Added support for KubernetesOperators and Bindings (currently in private beta).
 
 ## v6.1.0
 * Added support for Cloud Endpoints (currently in private beta).
+* Renamed `principal_id` to `principal` for `endpoint` resources
 
 ## v6.0.0
 ### Breaking Changes
@@ -67,5 +77,5 @@ Hostports: []string `json:"hostports,omitempty"`
 
 ### Additions
 
-New clients have been generated for `ApplicationSessions` and `ApplicationUsers`. 
+New clients have been generated for `ApplicationSessions` and `ApplicationUsers`.
 

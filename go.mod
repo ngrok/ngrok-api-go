@@ -1,6 +1,6 @@
 // Code generated for API Clients. DO NOT EDIT.
 
-module github.com/ngrok/ngrok-api-go/v6
+module github.com/ngrok/ngrok-api-go/v7
 
 go 1.18
 

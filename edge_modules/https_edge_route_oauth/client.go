@@ -8,8 +8,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v6"
-	"github.com/ngrok/ngrok-api-go/v6/internal/api"
+	"github.com/ngrok/ngrok-api-go/v7"
+	"github.com/ngrok/ngrok-api-go/v7/internal/api"
 )
 
 type Client struct {

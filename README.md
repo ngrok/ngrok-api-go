@@ -2,7 +2,7 @@
 
 # ngrok API client library for Golang
 [![CI](https://github.com/ngrok/ngrok-api-go/actions/workflows/ci.yml/badge.svg)](https://github.com/ngrok/ngrok-api-go/actions/workflows/ci.yml)
-[![Go Reference](https://pkg.go.dev/badge/github.com/ngrok/ngrok-api-go.svg)](https://pkg.go.dev/github.com/ngrok/ngrok-api-go/v6)
+[![Go Reference](https://pkg.go.dev/badge/github.com/ngrok/ngrok-api-go.svg)](https://pkg.go.dev/github.com/ngrok/ngrok-api-go/v7)
 
 This library wraps the [ngrok HTTP API](https://ngrok.com/docs/api) to make it
 easier to consume in Go.
@@ -13,7 +13,7 @@ For creating ngrok tunnels directly from your Go application, check out the [ngr
 
 Installation is as simple as using `go get`.
 
-    go get github.com/ngrok/ngrok-api-go/v6
+    go get github.com/ngrok/ngrok-api-go/v7
 
 ## Support
 
@@ -37,9 +37,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ngrok/ngrok-api-go/v6"
-	"github.com/ngrok/ngrok-api-go/v6/ip_policies"
-	"github.com/ngrok/ngrok-api-go/v6/ip_policy_rules"
+	"github.com/ngrok/ngrok-api-go/v7"
+	"github.com/ngrok/ngrok-api-go/v7/ip_policies"
+	"github.com/ngrok/ngrok-api-go/v7/ip_policy_rules"
 )
 
 func main() {
@@ -85,8 +85,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/ngrok/ngrok-api-go/v6"
-	"github.com/ngrok/ngrok-api-go/v6/tunnels"
+	"github.com/ngrok/ngrok-api-go/v7"
+	"github.com/ngrok/ngrok-api-go/v7/tunnels"
 )
 
 func main() {
