@@ -1,4 +1,8 @@
 <!-- Code generated for API Clients. DO NOT EDIT. -->
+
+## v7.2.0
+* Add support for `pooling_enabled` on Endpoints.
+
 ## v7.1.0
 * Updates to KubernetesOperators and Bindings (currently in private beta).
 

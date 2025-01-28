@@ -4062,6 +4062,8 @@ type Endpoint struct {
 	URI string `json:"uri,omitempty"`
 	// user supplied name for the endpoint
 	Name string `json:"name,omitempty"`
+	// whether the endpoint allows pooling
+	PoolingEnabled bool `json:"pooling_enabled,omitempty"`
 }
 
 func (x *Endpoint) String() string {
@@ -4099,6 +4101,7 @@ func (x *Endpoint) GoString() string {
 	fmt.Fprintf(tw, "\tTunnelSession\t%v\n", x.TunnelSession)
 	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
 	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tPoolingEnabled\t%v\n", x.PoolingEnabled)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -4142,7 +4145,8 @@ type EndpointCreate struct {
 	// user-supplied metadata of the associated tunnel or edge object
 	Metadata *string `json:"metadata,omitempty"`
 	// the bindings associated with this endpoint
-	Bindings []string `json:"bindings,omitempty"`
+	Bindings       []string `json:"bindings,omitempty"`
+	PoolingEnabled bool     `json:"pooling_enabled,omitempty"`
 }
 
 func (x *EndpointCreate) String() string {
@@ -4159,6 +4163,7 @@ func (x *EndpointCreate) GoString() string {
 	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tBindings\t%v\n", x.Bindings)
+	fmt.Fprintf(tw, "\tPoolingEnabled\t%v\n", x.PoolingEnabled)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -4176,7 +4181,8 @@ type EndpointUpdate struct {
 	// user-supplied metadata of the associated tunnel or edge object
 	Metadata *string `json:"metadata,omitempty"`
 	// the bindings associated with this endpoint
-	Bindings []string `json:"bindings,omitempty"`
+	Bindings       []string `json:"bindings,omitempty"`
+	PoolingEnabled bool     `json:"pooling_enabled,omitempty"`
 }
 
 func (x *EndpointUpdate) String() string {
@@ -4194,6 +4200,7 @@ func (x *EndpointUpdate) GoString() string {
 	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tBindings\t%v\n", x.Bindings)
+	fmt.Fprintf(tw, "\tPoolingEnabled\t%v\n", x.PoolingEnabled)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -5233,8 +5240,8 @@ type KubernetesOperatorCreate struct {
 	// arbitrary user-defined machine-readable data of this Kubernetes Operator.
 	// optional, max 4096 bytes.
 	Metadata string `json:"metadata,omitempty"`
-	// features enabled for this Kubernetes Operator. a subset of {"bindings",
-	// "ingress", and "gateway"}
+	// features enabled for this Kubernetes Operator. a subset of "bindings",
+	// "ingress", and "gateway"
 	EnabledFeatures []string `json:"enabled_features,omitempty"`
 	// the ngrok region in which the ingress for this operator is served. defaults to
 	// "global"
@@ -5301,8 +5308,8 @@ type KubernetesOperatorUpdate struct {
 	// arbitrary user-defined machine-readable data of this Kubernetes Operator.
 	// optional, max 4096 bytes.
 	Metadata *string `json:"metadata,omitempty"`
-	// features enabled for this Kubernetes Operator. a subset of {"bindings",
-	// "ingress", and "gateway"}
+	// features enabled for this Kubernetes Operator. a subset of "bindings",
+	// "ingress", and "gateway"
 	EnabledFeatures []string `json:"enabled_features,omitempty"`
 	// the ngrok region in which the ingress for this operator is served. defaults to
 	// "global"
@@ -5398,8 +5405,8 @@ type KubernetesOperator struct {
 	Metadata string `json:"metadata,omitempty"`
 	// the principal who created this Kubernetes Operator
 	Principal Ref `json:"principal,omitempty"`
-	// features enabled for this Kubernetes Operator. a subset of {"bindings",
-	// "ingress", and "gateway"}
+	// features enabled for this Kubernetes Operator. a subset of "bindings",
+	// "ingress", and "gateway"
 	EnabledFeatures []string `json:"enabled_features,omitempty"`
 	// the ngrok region in which the ingress for this operator is served. defaults to
 	// "global"
