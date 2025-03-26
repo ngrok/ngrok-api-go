@@ -5373,6 +5373,8 @@ func (x *KubernetesOperatorBindingUpdate) GoString() string {
 type KubernetesOperatorDeploymentUpdate struct {
 	// the deployment name
 	Name *string `json:"name,omitempty"`
+	// the version of this Kubernetes Operator
+	Version *string `json:"version,omitempty"`
 }
 
 func (x *KubernetesOperatorDeploymentUpdate) String() string {
@@ -5384,6 +5386,7 @@ func (x *KubernetesOperatorDeploymentUpdate) GoString() string {
 	fmt.Fprintf(&b, "KubernetesOperatorDeploymentUpdate {\n")
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
 	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tVersion\t%v\n", x.Version)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()

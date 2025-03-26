@@ -1,4 +1,6 @@
 <!-- Code generated for API Clients. DO NOT EDIT. -->
+## v7.3.0
+* Add `version` to KubernetesOperatorDeploymentUpdate.
 
 ## v7.2.0
 * Add support for `pooling_enabled` on Endpoints.
