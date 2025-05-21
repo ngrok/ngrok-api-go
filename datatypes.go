@@ -4135,8 +4135,8 @@ func (x *EndpointList) GoString() string {
 type EndpointCreate struct {
 	// the url of the endpoint
 	URL string `json:"url,omitempty"`
-	// whether the endpoint is ephemeral (served directly by an agent-initiated tunnel)
-	// or edge (served by an edge) or cloud (represents a cloud endpoint)
+	// Type of endpoint. Only 'cloud' is currently supported (represents a cloud
+	// endpoint). Defaults to 'cloud' if not specified.
 	Type string `json:"type,omitempty"`
 	// The traffic policy attached to this endpoint
 	TrafficPolicy string `json:"traffic_policy,omitempty"`
