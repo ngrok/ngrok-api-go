@@ -5910,6 +5910,140 @@ func (x *ReservedDomainCertJob) GoString() string {
 	return b.String()
 }
 
+type SecretCreate struct {
+	// Name of secret
+	Name string `json:"name,omitempty"`
+	// Value of secret
+	Value string `json:"value,omitempty"`
+	// Arbitrary user-defined metadata for this Secret
+	Metadata string `json:"metadata,omitempty"`
+	// description of Secret
+	Description string `json:"description,omitempty"`
+	// unique identifier of the referenced vault
+	VaultID string `json:"vault_id,omitempty"`
+}
+
+func (x *SecretCreate) String() string {
+	return x.GoString()
+}
+
+func (x *SecretCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SecretCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tValue\t%v\n", x.Value)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tVaultID\t%v\n", x.VaultID)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type SecretUpdate struct {
+	// identifier for Secret
+	ID string `json:"id,omitempty"`
+	// Name of secret
+	Name *string `json:"name,omitempty"`
+	// Value of secret
+	Value *string `json:"value,omitempty"`
+	// Arbitrary user-defined metadata for this Secret
+	Metadata *string `json:"metadata,omitempty"`
+	// description of Secret
+	Description *string `json:"description,omitempty"`
+}
+
+func (x *SecretUpdate) String() string {
+	return fmt.Sprintf("SecretUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *SecretUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SecretUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tValue\t%v\n", x.Value)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type Secret struct {
+	// identifier for Secret
+	ID string `json:"id,omitempty"`
+	// URI of this Secret API resource
+	URI string `json:"uri,omitempty"`
+	// Timestamp when the Secret was created (RFC 3339 format)
+	CreatedAt string `json:"created_at,omitempty"`
+	// Timestamp when the Secret was last updated (RFC 3339 format)
+	UpdatedAt string `json:"updated_at,omitempty"`
+	// Name of secret
+	Name string `json:"name,omitempty"`
+	// description of Secret
+	Description string `json:"description,omitempty"`
+	// Arbitrary user-defined metadata for this Secret
+	Metadata string `json:"metadata,omitempty"`
+	// Reference to who created this Secret
+	CreatedBy Ref `json:"created_by,omitempty"`
+	// Reference to who created this Secret
+	LastUpdatedBy Ref `json:"last_updated_by,omitempty"`
+	// Reference to the vault the secret is stored in
+	Vault Ref `json:"vault,omitempty"`
+}
+
+func (x *Secret) String() string {
+	return fmt.Sprintf("Secret{ID: %v}", x.ID)
+
+}
+
+func (x *Secret) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "Secret {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tUpdatedAt\t%v\n", x.UpdatedAt)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCreatedBy\t%v\n", x.CreatedBy)
+	fmt.Fprintf(tw, "\tLastUpdatedBy\t%v\n", x.LastUpdatedBy)
+	fmt.Fprintf(tw, "\tVault\t%v\n", x.Vault)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type SecretList struct {
+	// The list of Secrets for this account
+	Secrets []Secret `json:"secrets,omitempty"`
+	URI     string   `json:"uri,omitempty"`
+	// URI of the next page of results, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *SecretList) String() string {
+	return x.GoString()
+}
+
+func (x *SecretList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "SecretList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tSecrets\t%v\n", x.Secrets)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type SSHCertificateAuthorityCreate struct {
 	// human-readable description of this SSH Certificate Authority. optional, max 255
 	// bytes.
@@ -6822,6 +6956,128 @@ func (x *TunnelList) GoString() string {
 	fmt.Fprintf(&b, "TunnelList {\n")
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
 	fmt.Fprintf(tw, "\tTunnels\t%v\n", x.Tunnels)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type VaultCreate struct {
+	// Name of vault
+	Name string `json:"name,omitempty"`
+	// Arbitrary user-defined metadata for this Vault
+	Metadata string `json:"metadata,omitempty"`
+	// description of Vault
+	Description string `json:"description,omitempty"`
+}
+
+func (x *VaultCreate) String() string {
+	return x.GoString()
+}
+
+func (x *VaultCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "VaultCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type VaultUpdate struct {
+	// identifier for Vault
+	ID string `json:"id,omitempty"`
+	// Name of vault
+	Name *string `json:"name,omitempty"`
+	// Arbitrary user-defined metadata for this Vault
+	Metadata *string `json:"metadata,omitempty"`
+	// description of Vault
+	Description *string `json:"description,omitempty"`
+}
+
+func (x *VaultUpdate) String() string {
+	return fmt.Sprintf("VaultUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *VaultUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "VaultUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type Vault struct {
+	// identifier for Vault
+	ID string `json:"id,omitempty"`
+	// URI of this Vault API resource
+	URI string `json:"uri,omitempty"`
+	// Timestamp when the Vault was created (RFC 3339 format)
+	CreatedAt string `json:"created_at,omitempty"`
+	// Timestamp when the Vault was last updated (RFC 3339 format)
+	UpdatedAt string `json:"updated_at,omitempty"`
+	// Name of vault
+	Name string `json:"name,omitempty"`
+	// description of Vault
+	Description string `json:"description,omitempty"`
+	// Arbitrary user-defined metadata for this Vault
+	Metadata string `json:"metadata,omitempty"`
+	// Reference to who created this Vault
+	CreatedBy string `json:"created_by,omitempty"`
+	// Reference to who created this Vault
+	LastUpdatedBy string `json:"last_updated_by,omitempty"`
+}
+
+func (x *Vault) String() string {
+	return fmt.Sprintf("Vault{ID: %v}", x.ID)
+
+}
+
+func (x *Vault) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "Vault {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tUpdatedAt\t%v\n", x.UpdatedAt)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCreatedBy\t%v\n", x.CreatedBy)
+	fmt.Fprintf(tw, "\tLastUpdatedBy\t%v\n", x.LastUpdatedBy)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type VaultList struct {
+	// The list of Vaults for this account
+	Vaults []Vault `json:"vaults,omitempty"`
+	URI    string  `json:"uri,omitempty"`
+	// URI of the next page of results, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *VaultList) String() string {
+	return x.GoString()
+}
+
+func (x *VaultList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "VaultList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tVaults\t%v\n", x.Vaults)
 	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
 	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
 	tw.Flush()
