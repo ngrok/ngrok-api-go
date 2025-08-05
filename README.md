@@ -21,11 +21,11 @@ The best place to get support using this library is through the [ngrok Slack Com
 
 ## Documentation
 
-A quickstart guide and a full API reference are included in the [ngrok go API documentation on pkg.go.dev](https://pkg.go.dev/github.com/ngrok/ngrok-api-go/v6)
+A quickstart guide and a full API reference are included in the [ngrok go API documentation on pkg.go.dev](https://pkg.go.dev/github.com/ngrok/ngrok-api-go/v7)
 
 ## Quickstart
 
-Please consult the [documentation](https://pkg.go.dev/github.com/ngrok/ngrok-api-go/v6) for additional examples.
+Please consult the [documentation](https://pkg.go.dev/github.com/ngrok/ngrok-api-go/v7) for additional examples.
 
 ### Create an IP Policy that allows traffic from some subnets
 
