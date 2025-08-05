@@ -1,4 +1,8 @@
 <!-- Code generated for API Clients. DO NOT EDIT. -->
+## v7.4.0
+* Add support for `vaults`
+* Add support for `secrets`
+
 ## v7.3.0
 * Add `version` to KubernetesOperatorDeploymentUpdate.
 
