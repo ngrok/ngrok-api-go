@@ -4058,7 +4058,7 @@ type Endpoint struct {
 	Bindings []string `json:"bindings,omitempty"`
 	// The tunnel session of the agent for this endpoint
 	TunnelSession *Ref `json:"tunnel_session,omitempty"`
-	// URI of the clep API resource
+	// URI of the Cloud Endpoint API resource
 	URI string `json:"uri,omitempty"`
 	// user supplied name for the endpoint
 	Name string `json:"name,omitempty"`
@@ -4164,6 +4164,30 @@ func (x *EndpointCreate) GoString() string {
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tBindings\t%v\n", x.Bindings)
 	fmt.Fprintf(tw, "\tPoolingEnabled\t%v\n", x.PoolingEnabled)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type EndpointListArgs struct {
+	BeforeID *string  `json:"before_id,omitempty"`
+	Limit    *string  `json:"limit,omitempty"`
+	IDs      []string `json:"ids,omitempty"`
+	URLs     []string `json:"urls,omitempty"`
+}
+
+func (x *EndpointListArgs) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointListArgs) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointListArgs {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tBeforeID\t%v\n", x.BeforeID)
+	fmt.Fprintf(tw, "\tLimit\t%v\n", x.Limit)
+	fmt.Fprintf(tw, "\tIDs\t%v\n", x.IDs)
+	fmt.Fprintf(tw, "\tURLs\t%v\n", x.URLs)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
