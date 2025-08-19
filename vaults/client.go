@@ -121,6 +121,108 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.Vault, error) {
 	return &res, nil
 }
 
+// Get Secrets by Vault ID
+//
+// https://ngrok.com/docs/api#api-vaults-get-secrets-by-vault
+func (c *Client) GetSecretsByVault(id string, paging *ngrok.Paging) ngrok.Iter[*ngrok.Secret] {
+	arg := &ngrok.ItemPaging{ID: id}
+	if paging == nil {
+		paging = new(ngrok.Paging)
+	}
+	var path bytes.Buffer
+	if err := template.Must(template.New("get_secrets_by_vault_path").Parse("/vaults/{{ .ID }}/secrets")).Execute(&path, arg); err != nil {
+		panic(err)
+	}
+	var apiURL = &url.URL{Path: path.String()}
+	queryVals := make(url.Values)
+	if paging.BeforeID != nil {
+		queryVals.Set("before_id", *paging.BeforeID)
+	}
+	if paging.Limit != nil {
+		queryVals.Set("limit", *paging.Limit)
+	}
+	apiURL.RawQuery = queryVals.Encode()
+	return &iterGetSecretsByVault{
+		client:   c,
+		n:        -1,
+		nextPage: apiURL,
+	}
+}
+
+// iter allows the caller to iterate through a list of values while
+// automatically fetching new pages worth of values from the API.
+type iterGetSecretsByVault struct {
+	client *Client
+	n      int
+	items  []ngrok.Secret
+	err    error
+
+	nextPage *url.URL
+}
+
+// Next returns true if there is another value available in the iterator. If it
+// returs true it also advances the iterator to that next available item.
+func (it *iterGetSecretsByVault) Next(ctx context.Context) bool {
+	// no more if there is an error
+	if it.err != nil {
+		return false
+	}
+
+	// advance the iterator
+	it.n += 1
+
+	// is there an available item?
+	if it.n < len(it.items) {
+		return true
+	}
+
+	// no more items, do we have a next page?
+	if it.nextPage == nil {
+		return false
+	}
+
+	// fetch the next page
+	var resp ngrok.SecretList
+	err := it.client.apiClient.Do(ctx, "GET", it.nextPage, nil, &resp)
+	if err != nil {
+		it.err = err
+		return false
+	}
+
+	// parse the next page URI as soon as we get it and store it
+	// so we can use it on the next fetch
+	if resp.NextPageURI != nil {
+		it.nextPage, it.err = url.Parse(*resp.NextPageURI)
+		if it.err != nil {
+			return false
+		}
+	} else {
+		it.nextPage = nil
+	}
+
+	// page with zero items means there are no more
+	if len(resp.Secrets) == 0 {
+		return false
+	}
+
+	it.n = -1
+	it.items = resp.Secrets
+	return it.Next(ctx)
+}
+
+// Item() returns the Secret currently
+// pointed to by the iterator.
+func (it *iterGetSecretsByVault) Item() *ngrok.Secret {
+	return &it.items[it.n]
+}
+
+// If Next() returned false because an error was encountered while fetching the
+// next value Err() will return that error. A caller should always check Err()
+// after Next() returns false.
+func (it *iterGetSecretsByVault) Err() error {
+	return it.err
+}
+
 // List all Vaults owned by account
 //
 // https://ngrok.com/docs/api#api-vaults-list
@@ -141,7 +243,7 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.Vault] {
 		queryVals.Set("limit", *paging.Limit)
 	}
 	apiURL.RawQuery = queryVals.Encode()
-	return &iterVault{
+	return &iterList{
 		client:   c,
 		n:        -1,
 		nextPage: apiURL,
@@ -150,7 +252,7 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.Vault] {
 
 // iter allows the caller to iterate through a list of values while
 // automatically fetching new pages worth of values from the API.
-type iterVault struct {
+type iterList struct {
 	client *Client
 	n      int
 	items  []ngrok.Vault
@@ -161,7 +263,7 @@ type iterVault struct {
 
 // Next returns true if there is another value available in the iterator. If it
 // returs true it also advances the iterator to that next available item.
-func (it *iterVault) Next(ctx context.Context) bool {
+func (it *iterList) Next(ctx context.Context) bool {
 	// no more if there is an error
 	if it.err != nil {
 		return false
@@ -211,13 +313,13 @@ func (it *iterVault) Next(ctx context.Context) bool {
 
 // Item() returns the Vault currently
 // pointed to by the iterator.
-func (it *iterVault) Item() *ngrok.Vault {
+func (it *iterList) Item() *ngrok.Vault {
 	return &it.items[it.n]
 }
 
 // If Next() returned false because an error was encountered while fetching the
 // next value Err() will return that error. A caller should always check Err()
 // after Next() returns false.
-func (it *iterVault) Err() error {
+func (it *iterList) Err() error {
 	return it.err
 }

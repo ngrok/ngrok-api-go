@@ -100,7 +100,7 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.HTTPResponseBacken
 		queryVals.Set("limit", *paging.Limit)
 	}
 	apiURL.RawQuery = queryVals.Encode()
-	return &iterHTTPResponseBackend{
+	return &iterList{
 		client:   c,
 		n:        -1,
 		nextPage: apiURL,
@@ -109,7 +109,7 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.HTTPResponseBacken
 
 // iter allows the caller to iterate through a list of values while
 // automatically fetching new pages worth of values from the API.
-type iterHTTPResponseBackend struct {
+type iterList struct {
 	client *Client
 	n      int
 	items  []ngrok.HTTPResponseBackend
@@ -120,7 +120,7 @@ type iterHTTPResponseBackend struct {
 
 // Next returns true if there is another value available in the iterator. If it
 // returs true it also advances the iterator to that next available item.
-func (it *iterHTTPResponseBackend) Next(ctx context.Context) bool {
+func (it *iterList) Next(ctx context.Context) bool {
 	// no more if there is an error
 	if it.err != nil {
 		return false
@@ -170,14 +170,14 @@ func (it *iterHTTPResponseBackend) Next(ctx context.Context) bool {
 
 // Item() returns the HTTPResponseBackend currently
 // pointed to by the iterator.
-func (it *iterHTTPResponseBackend) Item() *ngrok.HTTPResponseBackend {
+func (it *iterList) Item() *ngrok.HTTPResponseBackend {
 	return &it.items[it.n]
 }
 
 // If Next() returned false because an error was encountered while fetching the
 // next value Err() will return that error. A caller should always check Err()
 // after Next() returns false.
-func (it *iterHTTPResponseBackend) Err() error {
+func (it *iterList) Err() error {
 	return it.err
 }
 
