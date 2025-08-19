@@ -1,4 +1,8 @@
 <!-- Code generated for API Clients. DO NOT EDIT. -->
+## v7.6.0 
+* Change endpoint filtering query parameters to `id` and `url`.
+* Add support for getting secrets by vault.
+
 ## v7.5.0
 * Add support for `ids` and `urls` query parameters when listing endpoint resources. 
 

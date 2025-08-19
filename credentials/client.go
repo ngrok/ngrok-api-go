@@ -120,7 +120,7 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.Credential] {
 		queryVals.Set("limit", *paging.Limit)
 	}
 	apiURL.RawQuery = queryVals.Encode()
-	return &iterCredential{
+	return &iterList{
 		client:   c,
 		n:        -1,
 		nextPage: apiURL,
@@ -129,7 +129,7 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.Credential] {
 
 // iter allows the caller to iterate through a list of values while
 // automatically fetching new pages worth of values from the API.
-type iterCredential struct {
+type iterList struct {
 	client *Client
 	n      int
 	items  []ngrok.Credential
@@ -140,7 +140,7 @@ type iterCredential struct {
 
 // Next returns true if there is another value available in the iterator. If it
 // returs true it also advances the iterator to that next available item.
-func (it *iterCredential) Next(ctx context.Context) bool {
+func (it *iterList) Next(ctx context.Context) bool {
 	// no more if there is an error
 	if it.err != nil {
 		return false
@@ -190,14 +190,14 @@ func (it *iterCredential) Next(ctx context.Context) bool {
 
 // Item() returns the Credential currently
 // pointed to by the iterator.
-func (it *iterCredential) Item() *ngrok.Credential {
+func (it *iterList) Item() *ngrok.Credential {
 	return &it.items[it.n]
 }
 
 // If Next() returned false because an error was encountered while fetching the
 // next value Err() will return that error. A caller should always check Err()
 // after Next() returns false.
-func (it *iterCredential) Err() error {
+func (it *iterList) Err() error {
 	return it.err
 }
 
