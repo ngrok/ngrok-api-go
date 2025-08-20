@@ -4172,8 +4172,8 @@ func (x *EndpointCreate) GoString() string {
 type EndpointListArgs struct {
 	BeforeID *string  `json:"before_id,omitempty"`
 	Limit    *string  `json:"limit,omitempty"`
-	IDs      []string `json:"ids,omitempty"`
-	URLs     []string `json:"urls,omitempty"`
+	ID       []string `json:"id,omitempty"`
+	URL      []string `json:"url,omitempty"`
 }
 
 func (x *EndpointListArgs) String() string {
@@ -4186,8 +4186,8 @@ func (x *EndpointListArgs) GoString() string {
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
 	fmt.Fprintf(tw, "\tBeforeID\t%v\n", x.BeforeID)
 	fmt.Fprintf(tw, "\tLimit\t%v\n", x.Limit)
-	fmt.Fprintf(tw, "\tIDs\t%v\n", x.IDs)
-	fmt.Fprintf(tw, "\tURLs\t%v\n", x.URLs)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURL\t%v\n", x.URL)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
