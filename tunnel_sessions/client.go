@@ -5,6 +5,7 @@ package tunnel_sessions
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"net/url"
 	"text/template"
 
@@ -33,7 +34,7 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.TunnelSession] {
 	}
 	var path bytes.Buffer
 	if err := template.Must(template.New("list_path").Parse("/tunnel_sessions")).Execute(&path, paging); err != nil {
-		panic(err)
+		return &iterList{err: fmt.Errorf("error building path for list: %w", err)}
 	}
 	var apiURL = &url.URL{Path: path.String()}
 	queryVals := make(url.Values)
@@ -134,7 +135,7 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.TunnelSession, erro
 	var res ngrok.TunnelSession
 	var path bytes.Buffer
 	if err := template.Must(template.New("get_path").Parse("/tunnel_sessions/{{ .ID }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for get: %w", err)
 	}
 	arg.ID = ""
 	var (
@@ -160,7 +161,7 @@ func (c *Client) Restart(ctx context.Context, id string) error {
 
 	var path bytes.Buffer
 	if err := template.Must(template.New("restart_path").Parse("/tunnel_sessions/{{ .ID }}/restart")).Execute(&path, arg); err != nil {
-		panic(err)
+		return fmt.Errorf("error building path for restart: %w", err)
 	}
 	arg.ID = ""
 	var (
@@ -185,7 +186,7 @@ func (c *Client) Stop(ctx context.Context, id string) error {
 
 	var path bytes.Buffer
 	if err := template.Must(template.New("stop_path").Parse("/tunnel_sessions/{{ .ID }}/stop")).Execute(&path, arg); err != nil {
-		panic(err)
+		return fmt.Errorf("error building path for stop: %w", err)
 	}
 	arg.ID = ""
 	var (
@@ -220,7 +221,7 @@ func (c *Client) Update(ctx context.Context, id string) error {
 
 	var path bytes.Buffer
 	if err := template.Must(template.New("update_path").Parse("/tunnel_sessions/{{ .ID }}/update")).Execute(&path, arg); err != nil {
-		panic(err)
+		return fmt.Errorf("error building path for update: %w", err)
 	}
 	arg.ID = ""
 	var (

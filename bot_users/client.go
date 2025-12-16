@@ -5,6 +5,7 @@ package bot_users
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"net/url"
 	"text/template"
 
@@ -30,7 +31,7 @@ func (c *Client) Create(ctx context.Context, arg *ngrok.BotUserCreate) (*ngrok.B
 	var res ngrok.BotUser
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/bot_users")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for create: %w", err)
 	}
 	var (
 		apiURL  = &url.URL{Path: path.String()}
@@ -53,7 +54,7 @@ func (c *Client) Delete(ctx context.Context, id string) error {
 
 	var path bytes.Buffer
 	if err := template.Must(template.New("delete_path").Parse("/bot_users/{{ .ID }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return fmt.Errorf("error building path for delete: %w", err)
 	}
 	arg.ID = ""
 	var (
@@ -77,7 +78,7 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.BotUser, error) {
 	var res ngrok.BotUser
 	var path bytes.Buffer
 	if err := template.Must(template.New("get_path").Parse("/bot_users/{{ .ID }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for get: %w", err)
 	}
 	arg.ID = ""
 	var (
@@ -101,7 +102,7 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.BotUser] {
 	}
 	var path bytes.Buffer
 	if err := template.Must(template.New("list_path").Parse("/bot_users")).Execute(&path, paging); err != nil {
-		panic(err)
+		return &iterList{err: fmt.Errorf("error building path for list: %w", err)}
 	}
 	var apiURL = &url.URL{Path: path.String()}
 	queryVals := make(url.Values)
@@ -203,7 +204,7 @@ func (c *Client) Update(ctx context.Context, arg *ngrok.BotUserUpdate) (*ngrok.B
 	var res ngrok.BotUser
 	var path bytes.Buffer
 	if err := template.Must(template.New("update_path").Parse("/bot_users/{{ .ID }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for update: %w", err)
 	}
 	arg.ID = ""
 	var (

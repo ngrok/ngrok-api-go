@@ -1,6 +1,6 @@
 // Code generated for API Clients. DO NOT EDIT.
 
-package http_response
+package service_users
 
 import (
 	"bytes"
@@ -21,13 +21,16 @@ func NewClient(cfg *ngrok.ClientConfig) *Client {
 	return &Client{apiClient: api.NewClient(cfg)}
 }
 
-func (c *Client) Create(ctx context.Context, arg *ngrok.HTTPResponseBackendCreate) (*ngrok.HTTPResponseBackend, error) {
+// Create a new service user
+//
+// https://ngrok.com/docs/api#api-service-users-create
+func (c *Client) Create(ctx context.Context, arg *ngrok.ServiceUserCreate) (*ngrok.ServiceUser, error) {
 	if arg == nil {
-		arg = new(ngrok.HTTPResponseBackendCreate)
+		arg = new(ngrok.ServiceUserCreate)
 	}
-	var res ngrok.HTTPResponseBackend
+	var res ngrok.ServiceUser
 	var path bytes.Buffer
-	if err := template.Must(template.New("create_path").Parse("/backends/http_response")).Execute(&path, arg); err != nil {
+	if err := template.Must(template.New("create_path").Parse("/service_users")).Execute(&path, arg); err != nil {
 		return nil, fmt.Errorf("error building path for create: %w", err)
 	}
 	var (
@@ -43,11 +46,14 @@ func (c *Client) Create(ctx context.Context, arg *ngrok.HTTPResponseBackendCreat
 	return &res, nil
 }
 
+// Delete a service user by ID
+//
+// https://ngrok.com/docs/api#api-service-users-delete
 func (c *Client) Delete(ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
-	if err := template.Must(template.New("delete_path").Parse("/backends/http_response/{{ .ID }}")).Execute(&path, arg); err != nil {
+	if err := template.Must(template.New("delete_path").Parse("/service_users/{{ .ID }}")).Execute(&path, arg); err != nil {
 		return fmt.Errorf("error building path for delete: %w", err)
 	}
 	arg.ID = ""
@@ -63,12 +69,15 @@ func (c *Client) Delete(ctx context.Context, id string) error {
 	return nil
 }
 
-func (c *Client) Get(ctx context.Context, id string) (*ngrok.HTTPResponseBackend, error) {
+// Get the details of a Bot User by ID.
+//
+// https://ngrok.com/docs/api#api-service-users-get
+func (c *Client) Get(ctx context.Context, id string) (*ngrok.ServiceUser, error) {
 	arg := &ngrok.Item{ID: id}
 
-	var res ngrok.HTTPResponseBackend
+	var res ngrok.ServiceUser
 	var path bytes.Buffer
-	if err := template.Must(template.New("get_path").Parse("/backends/http_response/{{ .ID }}")).Execute(&path, arg); err != nil {
+	if err := template.Must(template.New("get_path").Parse("/service_users/{{ .ID }}")).Execute(&path, arg); err != nil {
 		return nil, fmt.Errorf("error building path for get: %w", err)
 	}
 	arg.ID = ""
@@ -84,12 +93,15 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.HTTPResponseBackend
 	return &res, nil
 }
 
-func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.HTTPResponseBackend] {
+// List all service users in this account.
+//
+// https://ngrok.com/docs/api#api-service-users-list
+func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.ServiceUser] {
 	if paging == nil {
 		paging = new(ngrok.Paging)
 	}
 	var path bytes.Buffer
-	if err := template.Must(template.New("list_path").Parse("/backends/http_response")).Execute(&path, paging); err != nil {
+	if err := template.Must(template.New("list_path").Parse("/service_users")).Execute(&path, paging); err != nil {
 		return &iterList{err: fmt.Errorf("error building path for list: %w", err)}
 	}
 	var apiURL = &url.URL{Path: path.String()}
@@ -113,7 +125,7 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.HTTPResponseBacken
 type iterList struct {
 	client *Client
 	n      int
-	items  []ngrok.HTTPResponseBackend
+	items  []ngrok.ServiceUser
 	err    error
 
 	nextPage *url.URL
@@ -141,7 +153,7 @@ func (it *iterList) Next(ctx context.Context) bool {
 	}
 
 	// fetch the next page
-	var resp ngrok.HTTPResponseBackendList
+	var resp ngrok.ServiceUserList
 	err := it.client.apiClient.Do(ctx, "GET", it.nextPage, nil, &resp)
 	if err != nil {
 		it.err = err
@@ -160,18 +172,18 @@ func (it *iterList) Next(ctx context.Context) bool {
 	}
 
 	// page with zero items means there are no more
-	if len(resp.Backends) == 0 {
+	if len(resp.ServiceUsers) == 0 {
 		return false
 	}
 
 	it.n = -1
-	it.items = resp.Backends
+	it.items = resp.ServiceUsers
 	return it.Next(ctx)
 }
 
-// Item() returns the HTTPResponseBackend currently
+// Item() returns the ServiceUser currently
 // pointed to by the iterator.
-func (it *iterList) Item() *ngrok.HTTPResponseBackend {
+func (it *iterList) Item() *ngrok.ServiceUser {
 	return &it.items[it.n]
 }
 
@@ -182,13 +194,16 @@ func (it *iterList) Err() error {
 	return it.err
 }
 
-func (c *Client) Update(ctx context.Context, arg *ngrok.HTTPResponseBackendUpdate) (*ngrok.HTTPResponseBackend, error) {
+// Update attributes of a service user by ID.
+//
+// https://ngrok.com/docs/api#api-service-users-update
+func (c *Client) Update(ctx context.Context, arg *ngrok.ServiceUserUpdate) (*ngrok.ServiceUser, error) {
 	if arg == nil {
-		arg = new(ngrok.HTTPResponseBackendUpdate)
+		arg = new(ngrok.ServiceUserUpdate)
 	}
-	var res ngrok.HTTPResponseBackend
+	var res ngrok.ServiceUser
 	var path bytes.Buffer
-	if err := template.Must(template.New("update_path").Parse("/backends/http_response/{{ .ID }}")).Execute(&path, arg); err != nil {
+	if err := template.Must(template.New("update_path").Parse("/service_users/{{ .ID }}")).Execute(&path, arg); err != nil {
 		return nil, fmt.Errorf("error building path for update: %w", err)
 	}
 	arg.ID = ""

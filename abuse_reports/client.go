@@ -5,6 +5,7 @@ package abuse_reports
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"net/url"
 	"text/template"
 
@@ -32,7 +33,7 @@ func (c *Client) Create(ctx context.Context, arg *ngrok.AbuseReportCreate) (*ngr
 	var res ngrok.AbuseReport
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/abuse_reports")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for create: %w", err)
 	}
 	var (
 		apiURL  = &url.URL{Path: path.String()}
@@ -56,7 +57,7 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.AbuseReport, error)
 	var res ngrok.AbuseReport
 	var path bytes.Buffer
 	if err := template.Must(template.New("get_path").Parse("/abuse_reports/{{ .ID }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for get: %w", err)
 	}
 	arg.ID = ""
 	var (

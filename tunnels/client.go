@@ -5,6 +5,7 @@ package tunnels
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"net/url"
 	"text/template"
 
@@ -32,7 +33,7 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.Tunnel] {
 	}
 	var path bytes.Buffer
 	if err := template.Must(template.New("list_path").Parse("/tunnels")).Execute(&path, paging); err != nil {
-		panic(err)
+		return &iterList{err: fmt.Errorf("error building path for list: %w", err)}
 	}
 	var apiURL = &url.URL{Path: path.String()}
 	queryVals := make(url.Values)
@@ -133,7 +134,7 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.Tunnel, error) {
 	var res ngrok.Tunnel
 	var path bytes.Buffer
 	if err := template.Must(template.New("get_path").Parse("/tunnels/{{ .ID }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for get: %w", err)
 	}
 	arg.ID = ""
 	var (

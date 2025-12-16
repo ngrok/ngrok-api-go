@@ -5,6 +5,7 @@ package https_edge_route_saml
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"net/url"
 	"text/template"
 
@@ -27,7 +28,7 @@ func (c *Client) Replace(ctx context.Context, arg *ngrok.EdgeRouteSAMLReplace) (
 	var res ngrok.EndpointSAML
 	var path bytes.Buffer
 	if err := template.Must(template.New("replace_path").Parse("/edges/https/{{ .EdgeID }}/routes/{{ .ID }}/saml")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for replace: %w", err)
 	}
 	arg.EdgeID = ""
 	arg.ID = ""
@@ -51,7 +52,7 @@ func (c *Client) Get(ctx context.Context, arg *ngrok.EdgeRouteItem) (*ngrok.Endp
 	var res ngrok.EndpointSAML
 	var path bytes.Buffer
 	if err := template.Must(template.New("get_path").Parse("/edges/https/{{ .EdgeID }}/routes/{{ .ID }}/saml")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for get: %w", err)
 	}
 	arg.EdgeID = ""
 	arg.ID = ""
@@ -73,7 +74,7 @@ func (c *Client) Delete(ctx context.Context, arg *ngrok.EdgeRouteItem) error {
 	}
 	var path bytes.Buffer
 	if err := template.Must(template.New("delete_path").Parse("/edges/https/{{ .EdgeID }}/routes/{{ .ID }}/saml")).Execute(&path, arg); err != nil {
-		panic(err)
+		return fmt.Errorf("error building path for delete: %w", err)
 	}
 	arg.EdgeID = ""
 	arg.ID = ""

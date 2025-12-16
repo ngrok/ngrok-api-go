@@ -5,6 +5,7 @@ package ssh_certificate_authorities
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"net/url"
 	"text/template"
 
@@ -33,7 +34,7 @@ func (c *Client) Create(ctx context.Context, arg *ngrok.SSHCertificateAuthorityC
 	var res ngrok.SSHCertificateAuthority
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/ssh_certificate_authorities")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for create: %w", err)
 	}
 	var (
 		apiURL  = &url.URL{Path: path.String()}
@@ -56,7 +57,7 @@ func (c *Client) Delete(ctx context.Context, id string) error {
 
 	var path bytes.Buffer
 	if err := template.Must(template.New("delete_path").Parse("/ssh_certificate_authorities/{{ .ID }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return fmt.Errorf("error building path for delete: %w", err)
 	}
 	arg.ID = ""
 	var (
@@ -71,7 +72,7 @@ func (c *Client) Delete(ctx context.Context, id string) error {
 	return nil
 }
 
-// Get detailed information about an SSH Certficate Authority
+// Get detailed information about an SSH Certificate Authority
 //
 // https://ngrok.com/docs/api#api-ssh-certificate-authorities-get
 func (c *Client) Get(ctx context.Context, id string) (*ngrok.SSHCertificateAuthority, error) {
@@ -80,7 +81,7 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.SSHCertificateAutho
 	var res ngrok.SSHCertificateAuthority
 	var path bytes.Buffer
 	if err := template.Must(template.New("get_path").Parse("/ssh_certificate_authorities/{{ .ID }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for get: %w", err)
 	}
 	arg.ID = ""
 	var (
@@ -104,7 +105,7 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.SSHCertificateAuth
 	}
 	var path bytes.Buffer
 	if err := template.Must(template.New("list_path").Parse("/ssh_certificate_authorities")).Execute(&path, paging); err != nil {
-		panic(err)
+		return &iterList{err: fmt.Errorf("error building path for list: %w", err)}
 	}
 	var apiURL = &url.URL{Path: path.String()}
 	queryVals := make(url.Values)
@@ -206,7 +207,7 @@ func (c *Client) Update(ctx context.Context, arg *ngrok.SSHCertificateAuthorityU
 	var res ngrok.SSHCertificateAuthority
 	var path bytes.Buffer
 	if err := template.Must(template.New("update_path").Parse("/ssh_certificate_authorities/{{ .ID }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for update: %w", err)
 	}
 	arg.ID = ""
 	var (

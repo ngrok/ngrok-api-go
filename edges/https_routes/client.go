@@ -5,6 +5,7 @@ package https_routes
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"net/url"
 	"text/template"
 
@@ -27,7 +28,7 @@ func (c *Client) Create(ctx context.Context, arg *ngrok.HTTPSEdgeRouteCreate) (*
 	var res ngrok.HTTPSEdgeRoute
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/edges/https/{{ .EdgeID }}/routes")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for create: %w", err)
 	}
 	arg.EdgeID = ""
 	var (
@@ -53,7 +54,7 @@ func (c *Client) Get(ctx context.Context, arg *ngrok.EdgeRouteItem) (*ngrok.HTTP
 	var res ngrok.HTTPSEdgeRoute
 	var path bytes.Buffer
 	if err := template.Must(template.New("get_path").Parse("/edges/https/{{ .EdgeID }}/routes/{{ .ID }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for get: %w", err)
 	}
 	arg.EdgeID = ""
 	arg.ID = ""
@@ -82,7 +83,7 @@ func (c *Client) Update(ctx context.Context, arg *ngrok.HTTPSEdgeRouteUpdate) (*
 	var res ngrok.HTTPSEdgeRoute
 	var path bytes.Buffer
 	if err := template.Must(template.New("update_path").Parse("/edges/https/{{ .EdgeID }}/routes/{{ .ID }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for update: %w", err)
 	}
 	arg.EdgeID = ""
 	arg.ID = ""
@@ -108,7 +109,7 @@ func (c *Client) Delete(ctx context.Context, arg *ngrok.EdgeRouteItem) error {
 	}
 	var path bytes.Buffer
 	if err := template.Must(template.New("delete_path").Parse("/edges/https/{{ .EdgeID }}/routes/{{ .ID }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return fmt.Errorf("error building path for delete: %w", err)
 	}
 	arg.EdgeID = ""
 	arg.ID = ""
