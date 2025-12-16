@@ -1,6 +1,9 @@
 <!-- Code generated for API Clients. DO NOT EDIT. -->
 ## v7.7.0
 * Add support for CEL filtering when listing resources.
+* Add support for service users
+* Add support for `vault_name` on Secrets
+* Make `pooling_enabled` on Endpoints optional
 
 ## v7.6.0 
 * Change endpoint filtering query parameters to `id` and `url`.
