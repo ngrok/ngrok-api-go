@@ -64,6 +64,28 @@ func (x *Paging) GoString() string {
 	return b.String()
 }
 
+type FilteredPaging struct {
+	BeforeID *string `json:"before_id,omitempty"`
+	Limit    *string `json:"limit,omitempty"`
+	Filter   *string `json:"filter,omitempty"`
+}
+
+func (x *FilteredPaging) String() string {
+	return x.GoString()
+}
+
+func (x *FilteredPaging) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "FilteredPaging {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tBeforeID\t%v\n", x.BeforeID)
+	fmt.Fprintf(tw, "\tLimit\t%v\n", x.Limit)
+	fmt.Fprintf(tw, "\tFilter\t%v\n", x.Filter)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type ItemPaging struct {
 	// a resource identifier
 	ID       string  `json:"id,omitempty"`
@@ -4020,7 +4042,7 @@ type Endpoint struct {
 	CreatedAt string `json:"created_at,omitempty"`
 	// timestamp when the endpoint was updated in RFC 3339 format
 	UpdatedAt string `json:"updated_at,omitempty"`
-	// URL of the hostport served by this endpoint
+	// deprecated [replaced by URL]: URL of the hostport served by this endpoint
 	PublicURL string `json:"public_url,omitempty"`
 	// protocol served by this endpoint. one of http, https, tcp, or tls
 	Proto  string `json:"proto,omitempty"`
@@ -4146,7 +4168,7 @@ type EndpointCreate struct {
 	Metadata *string `json:"metadata,omitempty"`
 	// the bindings associated with this endpoint
 	Bindings       []string `json:"bindings,omitempty"`
-	PoolingEnabled bool     `json:"pooling_enabled,omitempty"`
+	PoolingEnabled *bool    `json:"pooling_enabled,omitempty"`
 }
 
 func (x *EndpointCreate) String() string {
@@ -4174,6 +4196,7 @@ type EndpointListArgs struct {
 	Limit    *string  `json:"limit,omitempty"`
 	ID       []string `json:"id,omitempty"`
 	URL      []string `json:"url,omitempty"`
+	Filter   *string  `json:"filter,omitempty"`
 }
 
 func (x *EndpointListArgs) String() string {
@@ -4188,6 +4211,7 @@ func (x *EndpointListArgs) GoString() string {
 	fmt.Fprintf(tw, "\tLimit\t%v\n", x.Limit)
 	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
 	fmt.Fprintf(tw, "\tURL\t%v\n", x.URL)
+	fmt.Fprintf(tw, "\tFilter\t%v\n", x.Filter)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -4206,7 +4230,7 @@ type EndpointUpdate struct {
 	Metadata *string `json:"metadata,omitempty"`
 	// the bindings associated with this endpoint
 	Bindings       []string `json:"bindings,omitempty"`
-	PoolingEnabled bool     `json:"pooling_enabled,omitempty"`
+	PoolingEnabled *bool    `json:"pooling_enabled,omitempty"`
 }
 
 func (x *EndpointUpdate) String() string {
@@ -5945,6 +5969,8 @@ type SecretCreate struct {
 	Description string `json:"description,omitempty"`
 	// unique identifier of the referenced vault
 	VaultID string `json:"vault_id,omitempty"`
+	// name of the referenced vault
+	VaultName string `json:"vault_name,omitempty"`
 }
 
 func (x *SecretCreate) String() string {
@@ -5960,6 +5986,7 @@ func (x *SecretCreate) GoString() string {
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
 	fmt.Fprintf(tw, "\tVaultID\t%v\n", x.VaultID)
+	fmt.Fprintf(tw, "\tVaultName\t%v\n", x.VaultName)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -6018,6 +6045,8 @@ type Secret struct {
 	LastUpdatedBy Ref `json:"last_updated_by,omitempty"`
 	// Reference to the vault the secret is stored in
 	Vault Ref `json:"vault,omitempty"`
+	// Name of the vault the secret is stored in
+	VaultName string `json:"vault_name,omitempty"`
 }
 
 func (x *Secret) String() string {
@@ -6039,6 +6068,7 @@ func (x *Secret) GoString() string {
 	fmt.Fprintf(tw, "\tCreatedBy\t%v\n", x.CreatedBy)
 	fmt.Fprintf(tw, "\tLastUpdatedBy\t%v\n", x.LastUpdatedBy)
 	fmt.Fprintf(tw, "\tVault\t%v\n", x.Vault)
+	fmt.Fprintf(tw, "\tVaultName\t%v\n", x.VaultName)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -6061,6 +6091,110 @@ func (x *SecretList) GoString() string {
 	fmt.Fprintf(&b, "SecretList {\n")
 	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
 	fmt.Fprintf(tw, "\tSecrets\t%v\n", x.Secrets)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type ServiceUser struct {
+	// unique API key resource identifier
+	ID string `json:"id,omitempty"`
+	// URI to the API resource of this service user
+	URI string `json:"uri,omitempty"`
+	// human-readable name used to identify the service
+	Name string `json:"name,omitempty"`
+	// whether or not the service is active
+	Active bool `json:"active,omitempty"`
+	// timestamp when the api key was created, RFC 3339 format
+	CreatedAt string `json:"created_at,omitempty"`
+}
+
+func (x *ServiceUser) String() string {
+	return fmt.Sprintf("ServiceUser{ID: %v}", x.ID)
+
+}
+
+func (x *ServiceUser) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ServiceUser {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tActive\t%v\n", x.Active)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type ServiceUserCreate struct {
+	// human-readable name used to identify the service
+	Name string `json:"name,omitempty"`
+	// whether or not the service is active
+	Active *bool `json:"active,omitempty"`
+}
+
+func (x *ServiceUserCreate) String() string {
+	return x.GoString()
+}
+
+func (x *ServiceUserCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ServiceUserCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tActive\t%v\n", x.Active)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type ServiceUserUpdate struct {
+	ID string `json:"id,omitempty"`
+	// human-readable name used to identify the service
+	Name *string `json:"name,omitempty"`
+	// whether or not the service is active
+	Active *bool `json:"active,omitempty"`
+}
+
+func (x *ServiceUserUpdate) String() string {
+	return fmt.Sprintf("ServiceUserUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *ServiceUserUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ServiceUserUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
+	fmt.Fprintf(tw, "\tActive\t%v\n", x.Active)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type ServiceUserList struct {
+	// the list of all service users on this account
+	ServiceUsers []ServiceUser `json:"service_users,omitempty"`
+	// URI of the service users list API resource
+	URI string `json:"uri,omitempty"`
+	// URI of the next page, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *ServiceUserList) String() string {
+	return x.GoString()
+}
+
+func (x *ServiceUserList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ServiceUserList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tServiceUsers\t%v\n", x.ServiceUsers)
 	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
 	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
 	tw.Flush()

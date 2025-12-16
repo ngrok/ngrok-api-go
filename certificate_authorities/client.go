@@ -5,6 +5,7 @@ package certificate_authorities
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"net/url"
 	"text/template"
 
@@ -33,7 +34,7 @@ func (c *Client) Create(ctx context.Context, arg *ngrok.CertificateAuthorityCrea
 	var res ngrok.CertificateAuthority
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/certificate_authorities")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for create: %w", err)
 	}
 	var (
 		apiURL  = &url.URL{Path: path.String()}
@@ -56,7 +57,7 @@ func (c *Client) Delete(ctx context.Context, id string) error {
 
 	var path bytes.Buffer
 	if err := template.Must(template.New("delete_path").Parse("/certificate_authorities/{{ .ID }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return fmt.Errorf("error building path for delete: %w", err)
 	}
 	arg.ID = ""
 	var (
@@ -71,7 +72,7 @@ func (c *Client) Delete(ctx context.Context, id string) error {
 	return nil
 }
 
-// Get detailed information about a certficate authority
+// Get detailed information about a certificate authority
 //
 // https://ngrok.com/docs/api#api-certificate-authorities-get
 func (c *Client) Get(ctx context.Context, id string) (*ngrok.CertificateAuthority, error) {
@@ -80,7 +81,7 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.CertificateAuthorit
 	var res ngrok.CertificateAuthority
 	var path bytes.Buffer
 	if err := template.Must(template.New("get_path").Parse("/certificate_authorities/{{ .ID }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for get: %w", err)
 	}
 	arg.ID = ""
 	var (
@@ -104,7 +105,7 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.CertificateAuthori
 	}
 	var path bytes.Buffer
 	if err := template.Must(template.New("list_path").Parse("/certificate_authorities")).Execute(&path, paging); err != nil {
-		panic(err)
+		return &iterList{err: fmt.Errorf("error building path for list: %w", err)}
 	}
 	var apiURL = &url.URL{Path: path.String()}
 	queryVals := make(url.Values)
@@ -206,7 +207,7 @@ func (c *Client) Update(ctx context.Context, arg *ngrok.CertificateAuthorityUpda
 	var res ngrok.CertificateAuthority
 	var path bytes.Buffer
 	if err := template.Must(template.New("update_path").Parse("/certificate_authorities/{{ .ID }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for update: %w", err)
 	}
 	arg.ID = ""
 	var (

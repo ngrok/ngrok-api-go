@@ -5,6 +5,7 @@ package tls_edge_traffic_policy
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"net/url"
 	"text/template"
 
@@ -27,7 +28,7 @@ func (c *Client) Replace(ctx context.Context, arg *ngrok.EdgeTrafficPolicyReplac
 	var res ngrok.EndpointTrafficPolicy
 	var path bytes.Buffer
 	if err := template.Must(template.New("replace_path").Parse("/edges/tls/{{ .ID }}/traffic_policy")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for replace: %w", err)
 	}
 	arg.ID = ""
 	var (
@@ -49,7 +50,7 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.EndpointTrafficPoli
 	var res ngrok.EndpointTrafficPolicy
 	var path bytes.Buffer
 	if err := template.Must(template.New("get_path").Parse("/edges/tls/{{ .ID }}/traffic_policy")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for get: %w", err)
 	}
 	arg.ID = ""
 	var (
@@ -69,7 +70,7 @@ func (c *Client) Delete(ctx context.Context, id string) error {
 
 	var path bytes.Buffer
 	if err := template.Must(template.New("delete_path").Parse("/edges/tls/{{ .ID }}/traffic_policy")).Execute(&path, arg); err != nil {
-		panic(err)
+		return fmt.Errorf("error building path for delete: %w", err)
 	}
 	arg.ID = ""
 	var (

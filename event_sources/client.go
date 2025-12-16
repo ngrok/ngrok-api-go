@@ -5,6 +5,7 @@ package event_sources
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"net/url"
 	"text/template"
 
@@ -30,7 +31,7 @@ func (c *Client) Create(ctx context.Context, arg *ngrok.EventSourceCreate) (*ngr
 	var res ngrok.EventSource
 	var path bytes.Buffer
 	if err := template.Must(template.New("create_path").Parse("/event_subscriptions/{{ .SubscriptionID }}/sources")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for create: %w", err)
 	}
 	arg.SubscriptionID = ""
 	var (
@@ -55,7 +56,7 @@ func (c *Client) Delete(ctx context.Context, arg *ngrok.EventSourceItem) error {
 	}
 	var path bytes.Buffer
 	if err := template.Must(template.New("delete_path").Parse("/event_subscriptions/{{ .SubscriptionID }}/sources/{{ .Type }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return fmt.Errorf("error building path for delete: %w", err)
 	}
 	arg.SubscriptionID = ""
 	arg.Type = ""
@@ -81,7 +82,7 @@ func (c *Client) Get(ctx context.Context, arg *ngrok.EventSourceItem) (*ngrok.Ev
 	var res ngrok.EventSource
 	var path bytes.Buffer
 	if err := template.Must(template.New("get_path").Parse("/event_subscriptions/{{ .SubscriptionID }}/sources/{{ .Type }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for get: %w", err)
 	}
 	arg.SubscriptionID = ""
 	arg.Type = ""
@@ -106,7 +107,7 @@ func (c *Client) List(ctx context.Context, subscriptionId string) (*ngrok.EventS
 	var res ngrok.EventSourceList
 	var path bytes.Buffer
 	if err := template.Must(template.New("list_path").Parse("/event_subscriptions/{{ .SubscriptionID }}/sources")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for list: %w", err)
 	}
 	arg.SubscriptionID = ""
 	var (
@@ -131,7 +132,7 @@ func (c *Client) Update(ctx context.Context, arg *ngrok.EventSourceUpdate) (*ngr
 	var res ngrok.EventSource
 	var path bytes.Buffer
 	if err := template.Must(template.New("update_path").Parse("/event_subscriptions/{{ .SubscriptionID }}/sources/{{ .Type }}")).Execute(&path, arg); err != nil {
-		panic(err)
+		return nil, fmt.Errorf("error building path for update: %w", err)
 	}
 	arg.SubscriptionID = ""
 	arg.Type = ""
