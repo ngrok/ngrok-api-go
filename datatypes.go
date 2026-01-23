@@ -65,9 +65,18 @@ func (x *Paging) GoString() string {
 }
 
 type FilteredPaging struct {
+	// Expects a resource ID as its input. Returns earlier entries in the result set,
+	// sorted by ID.
 	BeforeID *string `json:"before_id,omitempty"`
-	Limit    *string `json:"limit,omitempty"`
-	Filter   *string `json:"filter,omitempty"`
+	// Constrains the number of results in the dataset. See the API Overview
+	// (https://ngrok.com/docs/api/index#pagination) for details.
+	Limit *string `json:"limit,omitempty"`
+	// A CEL expression to filter the list results. Supports logical and comparison
+	// operators to match on fields such as id, metadata, created_at, and more. See
+	// ngrok API Filtering for syntax and field details:
+	// https://ngrok.com/docs/api/api-filtering
+	// (https://ngrok.com/docs/api/api-filtering).
+	Filter *string `json:"filter,omitempty"`
 }
 
 func (x *FilteredPaging) String() string {
@@ -1800,8 +1809,9 @@ type CredentialCreate struct {
 	// permit all actions.
 	ACL []string `json:"acl,omitempty"`
 	// If supplied at credential creation, ownership will be assigned to the specified
-	// User or Bot. Only admins may specify an owner other than themselves. Defaults to
-	// the authenticated User or Bot.
+	// User or Service User. Only admins may specify an owner other than themselves.
+	// Defaults to the authenticated User or Service User. Accepts one of: User ID,
+	// User email, or SCIM User ID.
 	OwnerID *string `json:"owner_id,omitempty"`
 }
 
@@ -1894,8 +1904,9 @@ type Credential struct {
 	// permit all actions.
 	ACL []string `json:"acl,omitempty"`
 	// If supplied at credential creation, ownership will be assigned to the specified
-	// User or Bot. Only admins may specify an owner other than themselves. Defaults to
-	// the authenticated User or Bot.
+	// User or Service User. Only admins may specify an owner other than themselves.
+	// Defaults to the authenticated User or Service User. Accepts one of: User ID,
+	// User email, or SCIM User ID.
 	OwnerID *string `json:"owner_id,omitempty"`
 }
 
@@ -4192,11 +4203,22 @@ func (x *EndpointCreate) GoString() string {
 }
 
 type EndpointListArgs struct {
-	BeforeID *string  `json:"before_id,omitempty"`
-	Limit    *string  `json:"limit,omitempty"`
-	ID       []string `json:"id,omitempty"`
-	URL      []string `json:"url,omitempty"`
-	Filter   *string  `json:"filter,omitempty"`
+	// Expects a resource ID as its input. Returns earlier entries in the result set,
+	// sorted by ID.
+	BeforeID *string `json:"before_id,omitempty"`
+	// Constrains the number of results in the dataset. See the API Overview
+	// (https://ngrok.com/docs/api/index#pagination) for details.
+	Limit *string `json:"limit,omitempty"`
+	// Filter results by endpoint IDs. Deprecated: use filter instead.
+	ID []string `json:"id,omitempty"`
+	// Filter results by endpoint URLs. Deprecated: use filter instead.
+	URL []string `json:"url,omitempty"`
+	// A CEL expression to filter the list results. Supports logical and comparison
+	// operators to match on fields such as id, metadata, created_at, and more. See
+	// ngrok API Filtering for syntax and field details:
+	// https://ngrok.com/docs/api/api-filtering
+	// (https://ngrok.com/docs/api/api-filtering).
+	Filter *string `json:"filter,omitempty"`
 }
 
 func (x *EndpointListArgs) String() string {
@@ -5735,6 +5757,9 @@ type ReservedDomainCreate struct {
 	// null if automatic management is disabled. Optional, mutually exclusive with
 	// certificate_id.
 	CertificateManagementPolicy *ReservedDomainCertPolicy `json:"certificate_management_policy,omitempty"`
+	// DNS resolver targets configured for the reserved domain, or empty for "global"
+	// resolution.
+	ResolvesTo []ReservedDomainResolvesToEntry `json:"resolves_to,omitempty"`
 }
 
 func (x *ReservedDomainCreate) String() string {
@@ -5751,6 +5776,7 @@ func (x *ReservedDomainCreate) GoString() string {
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tCertificateID\t%v\n", x.CertificateID)
 	fmt.Fprintf(tw, "\tCertificateManagementPolicy\t%v\n", x.CertificateManagementPolicy)
+	fmt.Fprintf(tw, "\tResolvesTo\t%v\n", x.ResolvesTo)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -5770,6 +5796,9 @@ type ReservedDomainUpdate struct {
 	// null if automatic management is disabled. Optional, mutually exclusive with
 	// certificate_id.
 	CertificateManagementPolicy *ReservedDomainCertPolicy `json:"certificate_management_policy,omitempty"`
+	// DNS resolver targets configured for the reserved domain, or empty for "global"
+	// resolution.
+	ResolvesTo []ReservedDomainResolvesToEntry `json:"resolves_to,omitempty"`
 }
 
 func (x *ReservedDomainUpdate) String() string {
@@ -5786,6 +5815,7 @@ func (x *ReservedDomainUpdate) GoString() string {
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tCertificateID\t%v\n", x.CertificateID)
 	fmt.Fprintf(tw, "\tCertificateManagementPolicy\t%v\n", x.CertificateManagementPolicy)
+	fmt.Fprintf(tw, "\tResolvesTo\t%v\n", x.ResolvesTo)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -5828,6 +5858,9 @@ type ReservedDomain struct {
 	// non-ngrok reserved domains. Must be null for non-wildcard domains and ngrok
 	// subdomains.
 	ACMEChallengeCNAMETarget *string `json:"acme_challenge_cname_target,omitempty"`
+	// DNS resolver targets configured for the reserved domain, or empty for "global"
+	// resolution.
+	ResolvesTo []ReservedDomainResolvesToEntry `json:"resolves_to,omitempty"`
 }
 
 func (x *ReservedDomain) String() string {
@@ -5851,6 +5884,7 @@ func (x *ReservedDomain) GoString() string {
 	fmt.Fprintf(tw, "\tCertificateManagementPolicy\t%v\n", x.CertificateManagementPolicy)
 	fmt.Fprintf(tw, "\tCertificateManagementStatus\t%v\n", x.CertificateManagementStatus)
 	fmt.Fprintf(tw, "\tACMEChallengeCNAMETarget\t%v\n", x.ACMEChallengeCNAMETarget)
+	fmt.Fprintf(tw, "\tResolvesTo\t%v\n", x.ResolvesTo)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -5953,6 +5987,25 @@ func (x *ReservedDomainCertJob) GoString() string {
 	fmt.Fprintf(tw, "\tMsg\t%v\n", x.Msg)
 	fmt.Fprintf(tw, "\tStartedAt\t%v\n", x.StartedAt)
 	fmt.Fprintf(tw, "\tRetriesAt\t%v\n", x.RetriesAt)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type ReservedDomainResolvesToEntry struct {
+	// accepts an ngrok point-of-presence shortcode, or "global"
+	Value string `json:"value,omitempty"`
+}
+
+func (x *ReservedDomainResolvesToEntry) String() string {
+	return x.GoString()
+}
+
+func (x *ReservedDomainResolvesToEntry) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "ReservedDomainResolvesToEntry {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tValue\t%v\n", x.Value)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
