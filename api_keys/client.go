@@ -9,8 +9,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v7"
-	"github.com/ngrok/ngrok-api-go/v7/internal/api"
+	"github.com/ngrok/ngrok-api-go/v8"
+	"github.com/ngrok/ngrok-api-go/v8/internal/api"
 )
 
 // API Keys are used to authenticate to the ngrok
@@ -103,9 +103,9 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.APIKey, error) {
 // List all API keys owned by this account
 //
 // https://ngrok.com/docs/api#api-api-keys-list
-func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.APIKey] {
+func (c *Client) List(paging *ngrok.FilteredPaging) ngrok.Iter[*ngrok.APIKey] {
 	if paging == nil {
-		paging = new(ngrok.Paging)
+		paging = new(ngrok.FilteredPaging)
 	}
 	var path bytes.Buffer
 	if err := template.Must(template.New("list_path").Parse("/api_keys")).Execute(&path, paging); err != nil {
@@ -118,6 +118,9 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.APIKey] {
 	}
 	if paging.Limit != nil {
 		queryVals.Set("limit", *paging.Limit)
+	}
+	if paging.Filter != nil {
+		queryVals.Set("filter", *paging.Filter)
 	}
 	apiURL.RawQuery = queryVals.Encode()
 	return &iterList{

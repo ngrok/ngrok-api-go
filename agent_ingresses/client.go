@@ -9,8 +9,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v7"
-	"github.com/ngrok/ngrok-api-go/v7/internal/api"
+	"github.com/ngrok/ngrok-api-go/v8"
+	"github.com/ngrok/ngrok-api-go/v8/internal/api"
 )
 
 type Client struct {
@@ -94,9 +94,9 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.AgentIngress, error
 // List all Agent Ingresses owned by this account
 //
 // https://ngrok.com/docs/api#api-agent-ingresses-list
-func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.AgentIngress] {
+func (c *Client) List(paging *ngrok.FilteredPaging) ngrok.Iter[*ngrok.AgentIngress] {
 	if paging == nil {
-		paging = new(ngrok.Paging)
+		paging = new(ngrok.FilteredPaging)
 	}
 	var path bytes.Buffer
 	if err := template.Must(template.New("list_path").Parse("/agent_ingresses")).Execute(&path, paging); err != nil {
@@ -109,6 +109,9 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.AgentIngress] {
 	}
 	if paging.Limit != nil {
 		queryVals.Set("limit", *paging.Limit)
+	}
+	if paging.Filter != nil {
+		queryVals.Set("filter", *paging.Filter)
 	}
 	apiURL.RawQuery = queryVals.Encode()
 	return &iterList{

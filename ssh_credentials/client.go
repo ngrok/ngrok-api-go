@@ -9,8 +9,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v7"
-	"github.com/ngrok/ngrok-api-go/v7/internal/api"
+	"github.com/ngrok/ngrok-api-go/v8"
+	"github.com/ngrok/ngrok-api-go/v8/internal/api"
 )
 
 // SSH Credentials are SSH public keys that can be used to start SSH tunnels
@@ -97,9 +97,9 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.SSHCredential, erro
 // List all ssh credentials on this account
 //
 // https://ngrok.com/docs/api#api-ssh-credentials-list
-func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.SSHCredential] {
+func (c *Client) List(paging *ngrok.FilteredPaging) ngrok.Iter[*ngrok.SSHCredential] {
 	if paging == nil {
-		paging = new(ngrok.Paging)
+		paging = new(ngrok.FilteredPaging)
 	}
 	var path bytes.Buffer
 	if err := template.Must(template.New("list_path").Parse("/ssh_credentials")).Execute(&path, paging); err != nil {
@@ -112,6 +112,9 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.SSHCredential] {
 	}
 	if paging.Limit != nil {
 		queryVals.Set("limit", *paging.Limit)
+	}
+	if paging.Filter != nil {
+		queryVals.Set("filter", *paging.Filter)
 	}
 	apiURL.RawQuery = queryVals.Encode()
 	return &iterList{

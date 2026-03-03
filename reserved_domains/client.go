@@ -9,8 +9,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v7"
-	"github.com/ngrok/ngrok-api-go/v7/internal/api"
+	"github.com/ngrok/ngrok-api-go/v8"
+	"github.com/ngrok/ngrok-api-go/v8/internal/api"
 )
 
 // Reserved Domains are hostnames that you can listen for traffic on. Domains
@@ -101,9 +101,9 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.ReservedDomain, err
 // List all reserved domains on this account.
 //
 // https://ngrok.com/docs/api#api-reserved-domains-list
-func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.ReservedDomain] {
+func (c *Client) List(paging *ngrok.FilteredPaging) ngrok.Iter[*ngrok.ReservedDomain] {
 	if paging == nil {
-		paging = new(ngrok.Paging)
+		paging = new(ngrok.FilteredPaging)
 	}
 	var path bytes.Buffer
 	if err := template.Must(template.New("list_path").Parse("/reserved_domains")).Execute(&path, paging); err != nil {
@@ -116,6 +116,9 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.ReservedDomain] {
 	}
 	if paging.Limit != nil {
 		queryVals.Set("limit", *paging.Limit)
+	}
+	if paging.Filter != nil {
+		queryVals.Set("filter", *paging.Filter)
 	}
 	apiURL.RawQuery = queryVals.Encode()
 	return &iterList{
