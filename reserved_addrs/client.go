@@ -9,8 +9,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v7"
-	"github.com/ngrok/ngrok-api-go/v7/internal/api"
+	"github.com/ngrok/ngrok-api-go/v8"
+	"github.com/ngrok/ngrok-api-go/v8/internal/api"
 )
 
 // Reserved Addresses are TCP addresses that can be used to listen for traffic.
@@ -100,9 +100,9 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.ReservedAddr, error
 // List all reserved addresses on this account.
 //
 // https://ngrok.com/docs/api#api-reserved-addrs-list
-func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.ReservedAddr] {
+func (c *Client) List(paging *ngrok.FilteredPaging) ngrok.Iter[*ngrok.ReservedAddr] {
 	if paging == nil {
-		paging = new(ngrok.Paging)
+		paging = new(ngrok.FilteredPaging)
 	}
 	var path bytes.Buffer
 	if err := template.Must(template.New("list_path").Parse("/reserved_addrs")).Execute(&path, paging); err != nil {
@@ -115,6 +115,9 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.ReservedAddr] {
 	}
 	if paging.Limit != nil {
 		queryVals.Set("limit", *paging.Limit)
+	}
+	if paging.Filter != nil {
+		queryVals.Set("filter", *paging.Filter)
 	}
 	apiURL.RawQuery = queryVals.Encode()
 	return &iterList{

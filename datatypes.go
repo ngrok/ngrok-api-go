@@ -470,6 +470,135 @@ func (x *AgentIngressCertJob) GoString() string {
 	return b.String()
 }
 
+type AIGatewayAPIKeyCreate struct {
+	// human-readable description of this API key
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined metadata for this API key
+	Metadata string `json:"metadata,omitempty"`
+	// unique identifier of the AI Gateway endpoint this key is associated with
+	EndpointID string `json:"endpoint_id,omitempty"`
+}
+
+func (x *AIGatewayAPIKeyCreate) String() string {
+	return x.GoString()
+}
+
+func (x *AIGatewayAPIKeyCreate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AIGatewayAPIKeyCreate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tEndpointID\t%v\n", x.EndpointID)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type AIGatewayAPIKeyUpdate struct {
+	// unique identifier for this API key
+	ID string `json:"id,omitempty"`
+	// human-readable description of this API key
+	Description *string `json:"description,omitempty"`
+	// arbitrary user-defined metadata for this API key
+	Metadata *string `json:"metadata,omitempty"`
+	// unique identifier of the AI Gateway endpoint to associate this key with
+	EndpointID *string `json:"endpoint_id,omitempty"`
+}
+
+func (x *AIGatewayAPIKeyUpdate) String() string {
+	return fmt.Sprintf("AIGatewayAPIKeyUpdate{ID: %v}", x.ID)
+
+}
+
+func (x *AIGatewayAPIKeyUpdate) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AIGatewayAPIKeyUpdate {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tEndpointID\t%v\n", x.EndpointID)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type AIGatewayAPIKey struct {
+	// unique identifier for this API key
+	ID string `json:"id,omitempty"`
+	// URI of this AI Gateway API Key API resource
+	URI string `json:"uri,omitempty"`
+	// Timestamp when the API key was created (RFC 3339 format)
+	CreatedAt string `json:"created_at,omitempty"`
+	// Timestamp when the API key was last updated (RFC 3339 format)
+	UpdatedAt string `json:"updated_at,omitempty"`
+	// human-readable description of this API key
+	Description string `json:"description,omitempty"`
+	// arbitrary user-defined metadata for this API key
+	Metadata string `json:"metadata,omitempty"`
+	// reference to who created this API key
+	CreatedBy Ref `json:"created_by,omitempty"`
+	// reference to who last updated this API key
+	LastUpdatedBy Ref `json:"last_updated_by,omitempty"`
+	// reference to the AI Gateway endpoint this key is associated with
+	Endpoint Ref `json:"endpoint,omitempty"`
+	// the API key token. Only provided when the key is first created.
+	Token       string  `json:"token,omitempty"`
+	DisplayName string  `json:"display_name,omitempty"`
+	LastUsed    *string `json:"last_used,omitempty"`
+}
+
+func (x *AIGatewayAPIKey) String() string {
+	return fmt.Sprintf("AIGatewayAPIKey{ID: %v}", x.ID)
+
+}
+
+func (x *AIGatewayAPIKey) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AIGatewayAPIKey {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tID\t%v\n", x.ID)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tCreatedAt\t%v\n", x.CreatedAt)
+	fmt.Fprintf(tw, "\tUpdatedAt\t%v\n", x.UpdatedAt)
+	fmt.Fprintf(tw, "\tDescription\t%v\n", x.Description)
+	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
+	fmt.Fprintf(tw, "\tCreatedBy\t%v\n", x.CreatedBy)
+	fmt.Fprintf(tw, "\tLastUpdatedBy\t%v\n", x.LastUpdatedBy)
+	fmt.Fprintf(tw, "\tEndpoint\t%v\n", x.Endpoint)
+	fmt.Fprintf(tw, "\tToken\t%v\n", x.Token)
+	fmt.Fprintf(tw, "\tDisplayName\t%v\n", x.DisplayName)
+	fmt.Fprintf(tw, "\tLastUsed\t%v\n", x.LastUsed)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+type AIGatewayAPIKeyList struct {
+	// the list of AI Gateway API Keys for this account
+	AiGatewayApiKeys []AIGatewayAPIKey `json:"ai_gateway_api_keys,omitempty"`
+	URI              string            `json:"uri,omitempty"`
+	// URI of the next page of results, or null if there is no next page
+	NextPageURI *string `json:"next_page_uri,omitempty"`
+}
+
+func (x *AIGatewayAPIKeyList) String() string {
+	return x.GoString()
+}
+
+func (x *AIGatewayAPIKeyList) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "AIGatewayAPIKeyList {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tAiGatewayApiKeys\t%v\n", x.AiGatewayApiKeys)
+	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
+	fmt.Fprintf(tw, "\tNextPageURI\t%v\n", x.NextPageURI)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
 type APIKeyCreate struct {
 	// human-readable description of what uses the API key to authenticate. optional,
 	// max 255 bytes.
@@ -5757,8 +5886,7 @@ type ReservedDomainCreate struct {
 	// null if automatic management is disabled. Optional, mutually exclusive with
 	// certificate_id.
 	CertificateManagementPolicy *ReservedDomainCertPolicy `json:"certificate_management_policy,omitempty"`
-	// DNS resolver targets configured for the reserved domain, or empty for "global"
-	// resolution.
+	// Region and IP resolution targets configured for the Domain.
 	ResolvesTo []ReservedDomainResolvesToEntry `json:"resolves_to,omitempty"`
 }
 
@@ -5796,8 +5924,7 @@ type ReservedDomainUpdate struct {
 	// null if automatic management is disabled. Optional, mutually exclusive with
 	// certificate_id.
 	CertificateManagementPolicy *ReservedDomainCertPolicy `json:"certificate_management_policy,omitempty"`
-	// DNS resolver targets configured for the reserved domain, or empty for "global"
-	// resolution.
+	// Region and IP resolution targets configured for the Domain.
 	ResolvesTo []ReservedDomainResolvesToEntry `json:"resolves_to,omitempty"`
 }
 
@@ -5858,8 +5985,7 @@ type ReservedDomain struct {
 	// non-ngrok reserved domains. Must be null for non-wildcard domains and ngrok
 	// subdomains.
 	ACMEChallengeCNAMETarget *string `json:"acme_challenge_cname_target,omitempty"`
-	// DNS resolver targets configured for the reserved domain, or empty for "global"
-	// resolution.
+	// Region and IP resolution targets configured for the Domain.
 	ResolvesTo []ReservedDomainResolvesToEntry `json:"resolves_to,omitempty"`
 }
 

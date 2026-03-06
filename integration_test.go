@@ -8,8 +8,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/ngrok/ngrok-api-go/v7"
-	"github.com/ngrok/ngrok-api-go/v7/ip_policies"
+	"github.com/ngrok/ngrok-api-go/v8"
+	"github.com/ngrok/ngrok-api-go/v8/ip_policies"
 	"github.com/stretchr/testify/require"
 )
 

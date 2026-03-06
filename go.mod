@@ -1,8 +1,8 @@
 // Code generated for API Clients. DO NOT EDIT.
 
-module github.com/ngrok/ngrok-api-go/v7
+module github.com/ngrok/ngrok-api-go/v8
 
-go 1.18
+go 1.22
 
 require github.com/stretchr/testify v1.10.0
 

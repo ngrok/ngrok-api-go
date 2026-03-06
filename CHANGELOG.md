@@ -1,4 +1,9 @@
 <!-- Code generated for API Clients. DO NOT EDIT. -->
+## v8.0.0
+### Breaking Changes
+* List methods for resources that support CEL filtering now accept `*FilteredPaging` instead of `*Paging`. `FilteredPaging` adds a `Filter` field for passing CEL filter expressions.
+* The minimum go version supported is now go 1.22.
+
 ## v7.8.0
 * Add support for `resolves_to` on Reserved Domains.
 * Deprecate API filtering via `id` and `url` query parameters. Please migrate to the filtering syntax described in [API Filtering](https://ngrok.com/docs/api/api-filtering).

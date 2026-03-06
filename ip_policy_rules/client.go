@@ -9,8 +9,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v7"
-	"github.com/ngrok/ngrok-api-go/v7/internal/api"
+	"github.com/ngrok/ngrok-api-go/v8"
+	"github.com/ngrok/ngrok-api-go/v8/internal/api"
 )
 
 // IP Policy Rules are the IPv4 or IPv6 CIDRs entries that
@@ -96,9 +96,9 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.IPPolicyRule, error
 // List all IP policy rules on this account
 //
 // https://ngrok.com/docs/api#api-ip-policy-rules-list
-func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.IPPolicyRule] {
+func (c *Client) List(paging *ngrok.FilteredPaging) ngrok.Iter[*ngrok.IPPolicyRule] {
 	if paging == nil {
-		paging = new(ngrok.Paging)
+		paging = new(ngrok.FilteredPaging)
 	}
 	var path bytes.Buffer
 	if err := template.Must(template.New("list_path").Parse("/ip_policy_rules")).Execute(&path, paging); err != nil {
@@ -111,6 +111,9 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.IPPolicyRule] {
 	}
 	if paging.Limit != nil {
 		queryVals.Set("limit", *paging.Limit)
+	}
+	if paging.Filter != nil {
+		queryVals.Set("filter", *paging.Filter)
 	}
 	apiURL.RawQuery = queryVals.Encode()
 	return &iterList{
