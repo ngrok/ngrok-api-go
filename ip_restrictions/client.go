@@ -9,8 +9,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v7"
-	"github.com/ngrok/ngrok-api-go/v7/internal/api"
+	"github.com/ngrok/ngrok-api-go/v8"
+	"github.com/ngrok/ngrok-api-go/v8/internal/api"
 )
 
 // An IP restriction is a restriction placed on the CIDRs that are allowed to
@@ -100,9 +100,9 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.IPRestriction, erro
 // List all IP restrictions on this account
 //
 // https://ngrok.com/docs/api#api-ip-restrictions-list
-func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.IPRestriction] {
+func (c *Client) List(paging *ngrok.FilteredPaging) ngrok.Iter[*ngrok.IPRestriction] {
 	if paging == nil {
-		paging = new(ngrok.Paging)
+		paging = new(ngrok.FilteredPaging)
 	}
 	var path bytes.Buffer
 	if err := template.Must(template.New("list_path").Parse("/ip_restrictions")).Execute(&path, paging); err != nil {
@@ -115,6 +115,9 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.IPRestriction] {
 	}
 	if paging.Limit != nil {
 		queryVals.Set("limit", *paging.Limit)
+	}
+	if paging.Filter != nil {
+		queryVals.Set("filter", *paging.Filter)
 	}
 	apiURL.RawQuery = queryVals.Encode()
 	return &iterList{

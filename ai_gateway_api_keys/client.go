@@ -1,6 +1,6 @@
 // Code generated for API Clients. DO NOT EDIT.
 
-package credentials
+package ai_gateway_api_keys
 
 import (
 	"bytes"
@@ -13,10 +13,8 @@ import (
 	"github.com/ngrok/ngrok-api-go/v8/internal/api"
 )
 
-// Tunnel Credentials are ngrok agent authtokens. They authorize the ngrok
-//  agent to connect the ngrok service as your account. They are installed with
-//  the ngrok config add-authtoken command or by specifying it in the ngrok.yml
-//  configuration file with the authtoken property.
+// AIGatewayAPIKeys is an api service for managing API keys used to authenticate
+// requests to AI Gateway endpoints.
 
 type Client struct {
 	apiClient *api.Client
@@ -26,19 +24,13 @@ func NewClient(cfg *ngrok.ClientConfig) *Client {
 	return &Client{apiClient: api.NewClient(cfg)}
 }
 
-// Create a new tunnel authtoken credential. This authtoken credential can be used
-// to start a new tunnel session. The response to this API call is the only time
-// the generated token is available. If you need it for future use, you must save
-// it securely yourself.
+// Create a new AI Gateway API Key
 //
-// https://ngrok.com/docs/api#api-credentials-create
-func (c *Client) Create(ctx context.Context, arg *ngrok.CredentialCreate) (*ngrok.Credential, error) {
-	if arg == nil {
-		arg = new(ngrok.CredentialCreate)
-	}
-	var res ngrok.Credential
+// https://ngrok.com/docs/api#api-ai-gateway-api-keys-create
+func (c *Client) Create(ctx context.Context, arg *ngrok.AIGatewayAPIKeyCreate) (*ngrok.AIGatewayAPIKey, error) {
+	var res ngrok.AIGatewayAPIKey
 	var path bytes.Buffer
-	if err := template.Must(template.New("create_path").Parse("/credentials")).Execute(&path, arg); err != nil {
+	if err := template.Must(template.New("create_path").Parse("/ai_gateway_api_keys")).Execute(&path, arg); err != nil {
 		return nil, fmt.Errorf("error building path for create: %w", err)
 	}
 	var (
@@ -54,14 +46,40 @@ func (c *Client) Create(ctx context.Context, arg *ngrok.CredentialCreate) (*ngro
 	return &res, nil
 }
 
-// Delete a tunnel authtoken credential by ID
+// Update an existing AI Gateway API Key by ID
 //
-// https://ngrok.com/docs/api#api-credentials-delete
+// https://ngrok.com/docs/api#api-ai-gateway-api-keys-update
+func (c *Client) Update(ctx context.Context, arg *ngrok.AIGatewayAPIKeyUpdate) (*ngrok.AIGatewayAPIKey, error) {
+	if arg == nil {
+		arg = new(ngrok.AIGatewayAPIKeyUpdate)
+	}
+	var res ngrok.AIGatewayAPIKey
+	var path bytes.Buffer
+	if err := template.Must(template.New("update_path").Parse("/ai_gateway_api_keys/{{ .ID }}")).Execute(&path, arg); err != nil {
+		return nil, fmt.Errorf("error building path for update: %w", err)
+	}
+	arg.ID = ""
+	var (
+		apiURL  = &url.URL{Path: path.String()}
+		bodyArg interface{}
+	)
+	apiURL.Path = path.String()
+	bodyArg = arg
+
+	if err := c.apiClient.Do(ctx, "PATCH", apiURL, bodyArg, &res); err != nil {
+		return nil, err
+	}
+	return &res, nil
+}
+
+// Delete an AI Gateway API Key
+//
+// https://ngrok.com/docs/api#api-ai-gateway-api-keys-delete
 func (c *Client) Delete(ctx context.Context, id string) error {
 	arg := &ngrok.Item{ID: id}
 
 	var path bytes.Buffer
-	if err := template.Must(template.New("delete_path").Parse("/credentials/{{ .ID }}")).Execute(&path, arg); err != nil {
+	if err := template.Must(template.New("delete_path").Parse("/ai_gateway_api_keys/{{ .ID }}")).Execute(&path, arg); err != nil {
 		return fmt.Errorf("error building path for delete: %w", err)
 	}
 	arg.ID = ""
@@ -77,15 +95,15 @@ func (c *Client) Delete(ctx context.Context, id string) error {
 	return nil
 }
 
-// Get detailed information about a tunnel authtoken credential
+// Get an AI Gateway API Key by ID
 //
-// https://ngrok.com/docs/api#api-credentials-get
-func (c *Client) Get(ctx context.Context, id string) (*ngrok.Credential, error) {
+// https://ngrok.com/docs/api#api-ai-gateway-api-keys-get
+func (c *Client) Get(ctx context.Context, id string) (*ngrok.AIGatewayAPIKey, error) {
 	arg := &ngrok.Item{ID: id}
 
-	var res ngrok.Credential
+	var res ngrok.AIGatewayAPIKey
 	var path bytes.Buffer
-	if err := template.Must(template.New("get_path").Parse("/credentials/{{ .ID }}")).Execute(&path, arg); err != nil {
+	if err := template.Must(template.New("get_path").Parse("/ai_gateway_api_keys/{{ .ID }}")).Execute(&path, arg); err != nil {
 		return nil, fmt.Errorf("error building path for get: %w", err)
 	}
 	arg.ID = ""
@@ -101,15 +119,15 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.Credential, error) 
 	return &res, nil
 }
 
-// List all tunnel authtoken credentials on this account
+// List all AI Gateway API Keys owned by account
 //
-// https://ngrok.com/docs/api#api-credentials-list
-func (c *Client) List(paging *ngrok.FilteredPaging) ngrok.Iter[*ngrok.Credential] {
+// https://ngrok.com/docs/api#api-ai-gateway-api-keys-list
+func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.AIGatewayAPIKey] {
 	if paging == nil {
-		paging = new(ngrok.FilteredPaging)
+		paging = new(ngrok.Paging)
 	}
 	var path bytes.Buffer
-	if err := template.Must(template.New("list_path").Parse("/credentials")).Execute(&path, paging); err != nil {
+	if err := template.Must(template.New("list_path").Parse("/ai_gateway_api_keys")).Execute(&path, paging); err != nil {
 		return &iterList{err: fmt.Errorf("error building path for list: %w", err)}
 	}
 	var apiURL = &url.URL{Path: path.String()}
@@ -119,9 +137,6 @@ func (c *Client) List(paging *ngrok.FilteredPaging) ngrok.Iter[*ngrok.Credential
 	}
 	if paging.Limit != nil {
 		queryVals.Set("limit", *paging.Limit)
-	}
-	if paging.Filter != nil {
-		queryVals.Set("filter", *paging.Filter)
 	}
 	apiURL.RawQuery = queryVals.Encode()
 	return &iterList{
@@ -136,7 +151,7 @@ func (c *Client) List(paging *ngrok.FilteredPaging) ngrok.Iter[*ngrok.Credential
 type iterList struct {
 	client *Client
 	n      int
-	items  []ngrok.Credential
+	items  []ngrok.AIGatewayAPIKey
 	err    error
 
 	nextPage *url.URL
@@ -164,7 +179,7 @@ func (it *iterList) Next(ctx context.Context) bool {
 	}
 
 	// fetch the next page
-	var resp ngrok.CredentialList
+	var resp ngrok.AIGatewayAPIKeyList
 	err := it.client.apiClient.Do(ctx, "GET", it.nextPage, nil, &resp)
 	if err != nil {
 		it.err = err
@@ -183,18 +198,18 @@ func (it *iterList) Next(ctx context.Context) bool {
 	}
 
 	// page with zero items means there are no more
-	if len(resp.Credentials) == 0 {
+	if len(resp.AiGatewayApiKeys) == 0 {
 		return false
 	}
 
 	it.n = -1
-	it.items = resp.Credentials
+	it.items = resp.AiGatewayApiKeys
 	return it.Next(ctx)
 }
 
-// Item() returns the Credential currently
+// Item() returns the AIGatewayAPIKey currently
 // pointed to by the iterator.
-func (it *iterList) Item() *ngrok.Credential {
+func (it *iterList) Item() *ngrok.AIGatewayAPIKey {
 	return &it.items[it.n]
 }
 
@@ -203,30 +218,4 @@ func (it *iterList) Item() *ngrok.Credential {
 // after Next() returns false.
 func (it *iterList) Err() error {
 	return it.err
-}
-
-// Update attributes of an tunnel authtoken credential by ID
-//
-// https://ngrok.com/docs/api#api-credentials-update
-func (c *Client) Update(ctx context.Context, arg *ngrok.CredentialUpdate) (*ngrok.Credential, error) {
-	if arg == nil {
-		arg = new(ngrok.CredentialUpdate)
-	}
-	var res ngrok.Credential
-	var path bytes.Buffer
-	if err := template.Must(template.New("update_path").Parse("/credentials/{{ .ID }}")).Execute(&path, arg); err != nil {
-		return nil, fmt.Errorf("error building path for update: %w", err)
-	}
-	arg.ID = ""
-	var (
-		apiURL  = &url.URL{Path: path.String()}
-		bodyArg interface{}
-	)
-	apiURL.Path = path.String()
-	bodyArg = arg
-
-	if err := c.apiClient.Do(ctx, "PATCH", apiURL, bodyArg, &res); err != nil {
-		return nil, err
-	}
-	return &res, nil
 }

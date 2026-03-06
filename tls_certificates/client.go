@@ -9,8 +9,8 @@ import (
 	"net/url"
 	"text/template"
 
-	"github.com/ngrok/ngrok-api-go/v7"
-	"github.com/ngrok/ngrok-api-go/v7/internal/api"
+	"github.com/ngrok/ngrok-api-go/v8"
+	"github.com/ngrok/ngrok-api-go/v8/internal/api"
 )
 
 // TLS Certificates are pairs of x509 certificates and their matching private
@@ -99,9 +99,9 @@ func (c *Client) Get(ctx context.Context, id string) (*ngrok.TLSCertificate, err
 // List all TLS certificates on this account
 //
 // https://ngrok.com/docs/api#api-tls-certificates-list
-func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.TLSCertificate] {
+func (c *Client) List(paging *ngrok.FilteredPaging) ngrok.Iter[*ngrok.TLSCertificate] {
 	if paging == nil {
-		paging = new(ngrok.Paging)
+		paging = new(ngrok.FilteredPaging)
 	}
 	var path bytes.Buffer
 	if err := template.Must(template.New("list_path").Parse("/tls_certificates")).Execute(&path, paging); err != nil {
@@ -114,6 +114,9 @@ func (c *Client) List(paging *ngrok.Paging) ngrok.Iter[*ngrok.TLSCertificate] {
 	}
 	if paging.Limit != nil {
 		queryVals.Set("limit", *paging.Limit)
+	}
+	if paging.Filter != nil {
+		queryVals.Set("filter", *paging.Filter)
 	}
 	apiURL.RawQuery = queryVals.Encode()
 	return &iterList{
