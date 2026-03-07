@@ -2,7 +2,7 @@
 
 module github.com/ngrok/ngrok-api-go/v8
 
-go 1.18
+go 1.25
 
 require github.com/stretchr/testify v1.10.0
 
