@@ -4423,6 +4423,8 @@ type Endpoint struct {
 	Name string `json:"name,omitzero"`
 	// whether the endpoint allows pooling
 	PoolingEnabled bool `json:"pooling_enabled,omitzero"`
+	// where the ngrok Kubernetes operator projects this endpoint
+	Kubernetes *EndpointKubernetes `json:"kubernetes,omitzero"`
 }
 
 func (x *Endpoint) String() string {
@@ -4461,6 +4463,54 @@ func (x *Endpoint) GoString() string {
 	fmt.Fprintf(tw, "\tURI\t%v\n", x.URI)
 	fmt.Fprintf(tw, "\tName\t%v\n", x.Name)
 	fmt.Fprintf(tw, "\tPoolingEnabled\t%v\n", x.PoolingEnabled)
+	fmt.Fprintf(tw, "\tKubernetes\t%v\n", x.Kubernetes)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+// EndpointKubernetes tells the ngrok Kubernetes operator where to project an endpoint into a cluster. An endpoint without this field is never projected. The endpoint itself is unchanged: it keeps its own URL and bindings, and the operator reaches it over private dial.
+type EndpointKubernetes struct {
+	// the Kubernetes Services to create for this endpoint. one endpoint can project
+	// into several namespaces at once.
+	Targets []EndpointKubernetesTarget `json:"targets,omitzero"`
+}
+
+func (x *EndpointKubernetes) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointKubernetes) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointKubernetes {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tTargets\t%v\n", x.Targets)
+	tw.Flush()
+	fmt.Fprintf(&b, "}\n")
+	return b.String()
+}
+
+// EndpointKubernetesTarget is one Kubernetes Service projected from an endpoint.
+type EndpointKubernetesTarget struct {
+	// name of the Service to create. must be a DNS-1123 label.
+	Service string `json:"service,omitzero"`
+	// namespace to create the Service in. must be a DNS-1123 label.
+	Namespace string `json:"namespace,omitzero"`
+	// port the Service listens on.
+	Port int32 `json:"port,omitzero"`
+}
+
+func (x *EndpointKubernetesTarget) String() string {
+	return x.GoString()
+}
+
+func (x *EndpointKubernetesTarget) GoString() string {
+	var b bytes.Buffer
+	fmt.Fprintf(&b, "EndpointKubernetesTarget {\n")
+	tw := tabwriter.NewWriter(&b, 0, 4, 0, ' ', 0)
+	fmt.Fprintf(tw, "\tService\t%v\n", x.Service)
+	fmt.Fprintf(tw, "\tNamespace\t%v\n", x.Namespace)
+	fmt.Fprintf(tw, "\tPort\t%v\n", x.Port)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -4506,6 +4556,8 @@ type EndpointCreate struct {
 	// the bindings associated with this endpoint
 	Bindings       []string `json:"bindings,omitzero"`
 	PoolingEnabled *bool    `json:"pooling_enabled,omitzero"`
+	// where the ngrok Kubernetes operator projects this endpoint
+	Kubernetes *EndpointKubernetes `json:"kubernetes,omitzero"`
 }
 
 func (x *EndpointCreate) String() string {
@@ -4523,6 +4575,7 @@ func (x *EndpointCreate) GoString() string {
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tBindings\t%v\n", x.Bindings)
 	fmt.Fprintf(tw, "\tPoolingEnabled\t%v\n", x.PoolingEnabled)
+	fmt.Fprintf(tw, "\tKubernetes\t%v\n", x.Kubernetes)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
@@ -4573,6 +4626,9 @@ type EndpointUpdate struct {
 	// the bindings associated with this endpoint
 	Bindings       []string `json:"bindings,omitzero"`
 	PoolingEnabled *bool    `json:"pooling_enabled,omitzero"`
+	// where the ngrok Kubernetes operator projects this endpoint Send an empty target
+	// list to stop projecting this endpoint.
+	Kubernetes *EndpointKubernetes `json:"kubernetes,omitzero"`
 }
 
 func (x *EndpointUpdate) String() string {
@@ -4591,6 +4647,7 @@ func (x *EndpointUpdate) GoString() string {
 	fmt.Fprintf(tw, "\tMetadata\t%v\n", x.Metadata)
 	fmt.Fprintf(tw, "\tBindings\t%v\n", x.Bindings)
 	fmt.Fprintf(tw, "\tPoolingEnabled\t%v\n", x.PoolingEnabled)
+	fmt.Fprintf(tw, "\tKubernetes\t%v\n", x.Kubernetes)
 	tw.Flush()
 	fmt.Fprintf(&b, "}\n")
 	return b.String()
